@@ -13,7 +13,11 @@ public class New {
 	private int GRHEIGHT = (int) GRsize.getHeight() - 70; // (int)GRsize.getHeight() - 70
 	private int GRWIDTH = (int) (GRHEIGHT * 1.777777777778); // this sets the size of the grid to fit the screen size
 	private GraphicsConsole gc = new GraphicsConsole(GRWIDTH, GRHEIGHT);
+	
+	
+	private Image dartboardImg = Toolkit.getDefaultToolkit().getImage(gc.getClass().getClassLoader().getResource("bakground.png"));
 
+	
 	private int x = 0;
 	private int y = 0;
 	private int size = 50;

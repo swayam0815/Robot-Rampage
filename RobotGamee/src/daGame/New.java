@@ -1,6 +1,7 @@
 package daGame;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 import javax.crypto.spec.GCMParameterSpec;
 
@@ -13,16 +14,12 @@ public class New {
 	private int GRHEIGHT = (int) GRsize.getHeight() - 70; // (int)GRsize.getHeight() - 70
 	private int GRWIDTH = (int) (GRHEIGHT * 1.777777777778); // this sets the size of the grid to fit the screen size
 	private GraphicsConsole gc = new GraphicsConsole(GRWIDTH, GRHEIGHT);
-	
-	
-	private Image dartboardImg = Toolkit.getDefaultToolkit().getImage(gc.getClass().getClassLoader().getResource("bakground.png"));
+	ArrayList<Rectangle> bullets = new ArrayList<Rectangle>();
 
-	
 	private int x = 0;
 	private int y = 0;
 	private int size = 50;
 	private int counter = 0;
-	static Rectangle rect = null;
 
 	public static void main(String[] args) {
 		new New();
@@ -44,21 +41,16 @@ public class New {
 
 	public void mechanics() {
 		if (gc.isKeyDown(32)) {
-			counter = 0;
-			rect = new Rectangle(x + size / 4, y + size / 4, 500, 500);
+			bullets.add(new Rectangle(x + size / 4, y + size / 4, 225, 225));
+			// counter = 0;
+			// rect = new Rectangle(x + size / 4, y + size / 4, 500, 500);
 		}
-
-		if (rect != null) {
-			if (counter % 5 == 0) {
-				rect.y--;
-				rect.width--;
-				rect.height--;
-				if (rect.y <= 0)
-					rect = null;
-			}
-			counter++;
-
-		}
+		/*
+		 * if (rect != null) { if (counter % 2 == 0) { rect.y--; rect.width--;
+		 * rect.height--; if (rect.y <= 0) rect = null; } counter++;
+		 * 
+		 * }
+		 */
 
 		if (gc.isKeyDown(65) || gc.isKeyDown(97)) {
 			x -= 3;
@@ -83,9 +75,16 @@ public class New {
 			gc.clear();
 			gc.setColor(Color.GREEN);
 			gc.drawRect(x, y, size, size);
-			if (rect != null)
+			for (Rectangle rect : bullets) {
 				gc.drawRect(rect);
-
+				rect.y -= 1;
+				rect.width--;
+				rect.height--;
+				if (rect.y <= 0) {
+					rect.width = 0;
+					rect.height = 0;
+				}
+			}
 		}
 
 	}

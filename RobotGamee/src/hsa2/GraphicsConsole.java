@@ -1857,4 +1857,9 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 
 		
 	}
+	public void fillRect(Rectangle rect) {
+		// TODO Auto-generated method stub
+		canvas.fillRect(rect.x, rect.y, rect.width, rect.height);
+		
+	}
 }

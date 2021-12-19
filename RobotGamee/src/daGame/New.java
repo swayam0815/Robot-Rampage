@@ -65,7 +65,7 @@ public class New {
 			y += 3;
 		}
 
-		size = y / 2;
+		size = y / 4;
 
 	}
 
@@ -73,10 +73,11 @@ public class New {
 		synchronized (gc) {
 			gc.setBackgroundColor(Color.BLACK);
 			gc.clear();
-			gc.setColor(Color.GREEN);
-			gc.drawRect(x, y, size, size);
+			gc.setColor(Color.BLACK);
+			gc.fillRect(x, y, size, size);
 			for (Rectangle rect : bullets) {
-				gc.drawRect(rect);
+				gc.setColor(Color.GREEN);
+				gc.fillRect(rect);
 				rect.y -= 1;
 				rect.width--;
 				rect.height--;
@@ -85,6 +86,8 @@ public class New {
 					rect.height = 0;
 				}
 			}
+
+
 		}
 
 	}

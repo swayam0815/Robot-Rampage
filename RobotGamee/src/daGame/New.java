@@ -44,20 +44,16 @@ public class New {
 	}
 
 	public void mechanics() {
+		
+		// command to shoot bullets
+		// works by adding rectangle objects to bullets list
+		// and then animation draws whatever in array list
 		if (gc.isKeyDown(32)) {
 			bullets.add(new Rectangle(x, y, size, size));
 			enemgyC = Color.GREEN;
-
-			// counter = 0;
-			// rect = new Rectangle(x + size / 4, y + size / 4, 500, 500);
 		}
-		/*
-		 * if (rect != null) { if (counter % 2 == 0) { rect.y--; rect.width--;
-		 * rect.height--; if (rect.y <= 0) rect = null; } counter++;
-		 * 
-		 * }
-		 */
-
+		
+		// movement controls
 		if (gc.isKeyDown(65) || gc.isKeyDown(97)) {
 			x -= 3;
 		}
@@ -72,34 +68,43 @@ public class New {
 		}
 		
 		
-
+		// animating size
 		size = y / 4;
 
 	}
 
 	public void drawGraphics() {
 		synchronized (gc) {
+			//graphics stuff
 			gc.setBackgroundColor(Color.BLACK);
 			gc.clear();
 			gc.setColor(Color.GREEN);
 			gc.drawRect(x, y, size, size);
+			// drawing an enemy to test stuff on
 			gc.setColor(enemgyC);
 			gc.fillRect(enemy);
 
-			for (int i = 0; i < bullets.size(); i++) {
-
-			}
+			// for each loop to go through and draw everything from bullet list
+			// refer to mechanics method in regards for more logic
+			// loop draws the stuff, and then checks their values with if statements
+			// if some value is found to be true, it adds them to hit list
+			// hit list is just a list to keep track of what stuff to remove from the bullets arraylist
+			// 
+			//say for example the bullets touches the edges of screen,
+			// we wanna remove it, so add to hit list 
 			for (Rectangle rect : bullets) {
 				gc.setColor(Color.GREEN);
 				gc.drawRect(rect);
 				rect.y -= 1;
 				//rect.width--;
 				//rect.height--;
+				// if stuff touches the edges of screen, add to hit list
 				if (rect.y <= 0) {
 					rect.width = 0;
 					rect.height = 0;
 					hit.add(rect);
 				}
+				// checking to see if hit enenmy
 				if (rect.y == enemy.y && rect.x == enemy.x) {
 					
 					enemgyC = Color.WHITE;
@@ -108,6 +113,7 @@ public class New {
 				}
 			}
 			System.out.println(bullets.size());
+			// removing hit bullets from main bullets list
 			bullets.removeAll(hit);
 			System.out.println(bullets.size());
 		}

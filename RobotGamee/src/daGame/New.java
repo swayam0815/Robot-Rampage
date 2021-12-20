@@ -14,12 +14,16 @@ public class New {
 	private int GRHEIGHT = (int) GRsize.getHeight() - 70; // (int)GRsize.getHeight() - 70
 	private int GRWIDTH = (int) (GRHEIGHT * 1.777777777778); // this sets the size of the grid to fit the screen size
 	private GraphicsConsole gc = new GraphicsConsole(GRWIDTH, GRHEIGHT);
+
 	ArrayList<Rectangle> bullets = new ArrayList<Rectangle>();
+	ArrayList<Rectangle> hit = new ArrayList<Rectangle>();
 
 	private int x = 0;
 	private int y = 0;
 	private int size = 50;
 	private int counter = 0;
+	private Rectangle enemy = new Rectangle(GRWIDTH / 2, 50, 250, 250);
+	private static Color enemgyC = Color.RED;
 
 	public static void main(String[] args) {
 		new New();
@@ -41,7 +45,9 @@ public class New {
 
 	public void mechanics() {
 		if (gc.isKeyDown(32)) {
-			bullets.add(new Rectangle(x + size / 4, y + size / 4, 225, 225));
+			bullets.add(new Rectangle(x, y, size, size));
+			enemgyC = Color.GREEN;
+
 			// counter = 0;
 			// rect = new Rectangle(x + size / 4, y + size / 4, 500, 500);
 		}
@@ -64,6 +70,8 @@ public class New {
 		if (gc.isKeyDown(83) || gc.isKeyDown(115)) {
 			y += 3;
 		}
+		
+		
 
 		size = y / 4;
 
@@ -73,20 +81,35 @@ public class New {
 		synchronized (gc) {
 			gc.setBackgroundColor(Color.BLACK);
 			gc.clear();
-			gc.setColor(Color.BLACK);
-			gc.fillRect(x, y, size, size);
+			gc.setColor(Color.GREEN);
+			gc.drawRect(x, y, size, size);
+			gc.setColor(enemgyC);
+			gc.fillRect(enemy);
+
+			for (int i = 0; i < bullets.size(); i++) {
+
+			}
 			for (Rectangle rect : bullets) {
 				gc.setColor(Color.GREEN);
-				gc.fillRect(rect);
+				gc.drawRect(rect);
 				rect.y -= 1;
-				rect.width--;
-				rect.height--;
+				//rect.width--;
+				//rect.height--;
 				if (rect.y <= 0) {
 					rect.width = 0;
 					rect.height = 0;
+					hit.add(rect);
+				}
+				if (rect.y == enemy.y && rect.x == enemy.x) {
+					
+					enemgyC = Color.WHITE;
+					gc.setColor(Color.RED);
+					gc.drawRect(rect.x, rect.y, rect.width, rect.width);
 				}
 			}
-
+			System.out.println(bullets.size());
+			bullets.removeAll(hit);
+			System.out.println(bullets.size());
 		}
 
 	}

@@ -22,7 +22,7 @@ public class New {
 	private int y = 0;
 	private int size = 50;
 	private int counter = 0;
-	private Rectangle enemy = new Rectangle(GRWIDTH / 2, 50, 250, 250);
+	private Rectangle enemy = new Rectangle(0, GRHEIGHT / 8, GRWIDTH, 100);
 	private static Color enemgyC = Color.RED;
 
 	public static void main(String[] args) {
@@ -105,9 +105,10 @@ public class New {
 					hit.add(rect);
 				}
 				// checking to see if hit enenmy
-				if (rect.y == enemy.y && rect.x == enemy.x) {
+				if (rect.y == enemy.y || rect.x == enemy.x) {
 					
-					enemgyC = Color.WHITE;
+					enemy.width -= 2;
+					enemy.height -= 2;
 					gc.setColor(Color.RED);
 					gc.drawRect(rect.x, rect.y, rect.width, rect.width);
 				}

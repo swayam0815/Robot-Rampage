@@ -1,5 +1,8 @@
 package daGame;
 
+// class to combine bunch of features
+
+
 import java.awt.*;
 import java.util.ArrayList;
 

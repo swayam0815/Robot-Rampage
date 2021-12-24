@@ -154,7 +154,7 @@ public class AnimationMain {
 			moveX += 10;
 		
 		if (gc.isKeyDown(32) || gc.getMouseClick() > 0) {
-			bullets.add(new Rectangle(gc.getMouseX(), gc.getMouseY(), bulletSize, bulletSize));
+			bullets.add(new Rectangle(pistolX - 500, pistolY, bulletSize, bulletSize));
 		}
 		
 		
@@ -230,7 +230,7 @@ public class AnimationMain {
 		if (x > moveX)
 			x -= 2;
 
-		if (counter % 10 == 0)
+		if (counter % 5 == 0)
 			y++;
 
 		size = y / 2 + 50;
@@ -240,7 +240,7 @@ public class AnimationMain {
 			y = GRHEIGHT - (size + size / 2);
 
 		if (x < 0)
-			x = 0;	
+			x = 1;	
 	}
 	
 	

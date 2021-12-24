@@ -312,6 +312,8 @@ public class AnimationMain {
 				gc.setColor(Color.GREEN);
 				gc.drawRect(rect);
 				rect.y -= 1;
+				rect.width--;
+				rect.height--;
 			}
 			// removing hit bullets from main bullets list
 			bullets.removeAll(hit);

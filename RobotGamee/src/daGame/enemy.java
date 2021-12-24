@@ -20,6 +20,7 @@ public class enemy {
 	ArrayList<Rectangle> hit = new ArrayList<Rectangle>();
 	private static Color ene = Color.RED;
 
+	// enemy/robot variables
 	private int x = 0;
 	private int y = 0;
 	private int size = 50;

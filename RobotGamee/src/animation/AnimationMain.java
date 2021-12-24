@@ -41,7 +41,7 @@ public class AnimationMain {
 
 	
 	//pictures
-	private Image backGround = Toolkit.getDefaultToolkit().getImage(gc.getClass().getClassLoader().getResource("BackgroundTargetPractice.png"));
+	private Image backGround = Toolkit.getDefaultToolkit().getImage(gc.getClass().getClassLoader().getResource("bakground.jpg"));
 	private Image bullet = Toolkit.getDefaultToolkit().getImage(gc.getClass().getClassLoader().getResource("bullet cartoon.png"));
 	private Image pistol = Toolkit.getDefaultToolkit().getImage(gc.getClass().getClassLoader().getResource("pov pistol.png"));
 	private Image pistolFlipped = Toolkit.getDefaultToolkit().getImage(gc.getClass().getClassLoader().getResource("pov pistol flipped.png"));
@@ -73,6 +73,13 @@ public class AnimationMain {
 	
 	private int moveX;
 	
+	// enemy/robot variables
+	private int x = 0;
+	private int y = 0;
+	private int size = 50;
+	private int counter = 0;
+		
+	
 	
 //	private int temp = 0;
 	
@@ -82,6 +89,7 @@ public class AnimationMain {
 		while(gc.getKeyCode() != 'Q') {
 			
 			mechanics();
+			enemyMechanics();
 			
 //			move_Pistol();
 			moveTarget(dartboard);
@@ -133,6 +141,13 @@ public class AnimationMain {
 	
 	
 	private void mechanics() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+		//moving left and right
+		if (gc.isKeyDown(37) || gc.isKeyDown(65))
+			moveX -= 10;
+		if (gc.isKeyDown(39) || gc.isKeyDown(100) || gc.isKeyDown(68))
+			moveX += 10;
+		
+		
 		//gun reloads with the 'R' key OR by hovering over button
 		if (gc.isKeyDown(82) || (!reloading && CrossHair.intersects(ReloadButton))) {
 			reloading = true;
@@ -198,6 +213,27 @@ public class AnimationMain {
 		
 	}
 	
+	public void enemyMechanics() {
+		if (x < moveX)
+			x += 2;
+
+		if (x > moveX)
+			x -= 2;
+
+		if (counter % 5 == 0)
+			y++;
+
+		size = y / 2 + 50;
+		counter++;
+
+		if (y >= GRHEIGHT - (size + size / 2))
+			y = GRHEIGHT - (size + size / 2);
+
+		if (x < 0)
+			x = 0;	
+	}
+	
+	
 //	private void move_Pistol() {	//does not work ---- fix later
 //		
 //		if (kickback) {
@@ -254,6 +290,10 @@ public class AnimationMain {
 			//target
 			gc.drawImage(dartboardImg, dartboard.x, dartboard.y, dartboard.width, dartboard.height);
 			
+			// player tracking enemy code thing
+			gc.setColor(Color.RED);
+			gc.fillRect(x, y, size, size);
+			
 			//bullet hole
 			for (int j = 0; j < bulletholes.length; j++)
 				gc.drawImage(bulletholeImg, bulletholes[j].x - 10, bulletholes[j].y - 10, bulletholes[j].width, bulletholes[j].height);
@@ -277,12 +317,6 @@ public class AnimationMain {
 			else
 				gc.drawImage(pistolFlipped, pistolX + moveX, pistolY, GRHEIGHT / 2, GRHEIGHT / 2);
 
-			
-			//moving left and right
-			if (gc.isKeyDown(37))
-				moveX -= 10;
-			if (gc.isKeyDown(39))
-				moveX += 10;
 			
 			//reloading process
 			if (reloading) {

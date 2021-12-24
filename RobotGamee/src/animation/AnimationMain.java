@@ -1,6 +1,7 @@
 package animation;
 
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
@@ -71,7 +72,7 @@ public class AnimationMain {
 	private int targetXSpeed = 1;
 	private int targetYSpeed = 1;
 	
-	private int moveX;
+	private int moveX = 0;
 	
 	// enemy/robot variables
 	private int x = 0;
@@ -79,6 +80,11 @@ public class AnimationMain {
 	private int size = 50;
 	private int counter = 0;
 		
+	// bullet attributes
+	ArrayList<Rectangle> bullets = new ArrayList<Rectangle>();
+	ArrayList<Rectangle> hit = new ArrayList<Rectangle>();
+	private int bulletSize = 50;
+
 	
 	
 //	private int temp = 0;
@@ -146,6 +152,10 @@ public class AnimationMain {
 			moveX -= 10;
 		if (gc.isKeyDown(39) || gc.isKeyDown(100) || gc.isKeyDown(68))
 			moveX += 10;
+		
+		if (gc.isKeyDown(32) || gc.getMouseClick() > 0) {
+			bullets.add(new Rectangle(gc.getMouseX(), gc.getMouseY(), bulletSize, bulletSize));
+		}
 		
 		
 		//gun reloads with the 'R' key OR by hovering over button
@@ -220,7 +230,7 @@ public class AnimationMain {
 		if (x > moveX)
 			x -= 2;
 
-		if (counter % 5 == 0)
+		if (counter % 10 == 0)
 			y++;
 
 		size = y / 2 + 50;
@@ -280,7 +290,6 @@ public class AnimationMain {
 	
 	private void drawGraphics() {
 		synchronized(gc) {
-			
 			gc.setBackgroundColor(Color.BLACK);
 			gc.clear();
 			
@@ -297,6 +306,16 @@ public class AnimationMain {
 			//bullet hole
 			for (int j = 0; j < bulletholes.length; j++)
 				gc.drawImage(bulletholeImg, bulletholes[j].x - 10, bulletholes[j].y - 10, bulletholes[j].width, bulletholes[j].height);
+			
+			// animating projectiles/bullets
+			for (Rectangle rect : bullets) {
+				gc.setColor(Color.GREEN);
+				gc.drawRect(rect);
+				rect.y -= 1;
+			}
+			// removing hit bullets from main bullets list
+			bullets.removeAll(hit);
+		
 			
 			//fire out of the gun
 			if (shotFired || fireCounter < 3) {

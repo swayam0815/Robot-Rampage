@@ -2,7 +2,6 @@ package daGame;
 
 // class to combine bunch of features
 
-
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -25,14 +24,12 @@ public class enemy {
 	private int y = 0;
 	private int size = 50;
 	private int counter = 0;
-	
+
 	private int playerX = 50;
 	private int playerY = 50;
 	private int bulletSize = 50;
 	private int counter1 = 0;
-	
-	
-	
+
 	public static void main(String[] args) {
 		new enemy();
 	}
@@ -68,14 +65,14 @@ public class enemy {
 			y = GRHEIGHT - (size + size / 2);
 
 		if (x < 0)
-			x = 0;	
+			x = 0;
 	}
-	
+
 	public void mechanics() {
 		if (gc.isKeyDown(32)) {
 			bullets.add(new Rectangle(playerX, playerY, bulletSize, bulletSize));
 		}
-		
+
 		// movement controls
 		if (gc.isKeyDown(65) || gc.isKeyDown(97)) {
 			playerX -= 3;
@@ -89,16 +86,15 @@ public class enemy {
 		if (gc.isKeyDown(83) || gc.isKeyDown(115)) {
 			playerY += 3;
 		}
-		
-		
+
 		// animating size
 		bulletSize = playerY / 4;
 	}
 
 	public void drawGraphics() {
 		synchronized (gc) {
-			
-			//graphics stuff
+
+			// graphics stuff
 			gc.setBackgroundColor(Color.BLACK);
 			gc.clear();
 			gc.setColor(ene);
@@ -110,27 +106,10 @@ public class enemy {
 				gc.setColor(Color.GREEN);
 				gc.drawRect(rect);
 				rect.y -= 1;
-				//rect.width--;
-				//rect.height--;
-				// if stuff touches the edges of screen, add to hit list
-				if (rect.y <= 0) {
-					rect.width = 0;
-					rect.height = 0;
-					hit.add(rect);
-				}
-				// checking to see if hit enenmy
-				if (rect.y == y && rect.x == x) {
-					
-					size -= 5;
-					ene = Color.ORANGE;
-				}
 			}
-			System.out.println(bullets.size());
 			// removing hit bullets from main bullets list
 			bullets.removeAll(hit);
-			System.out.println(bullets.size());
-			
-			
+		
 		}
 
 	}

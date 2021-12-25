@@ -224,13 +224,13 @@ public class AnimationMain {
 	}
 	
 	public void enemyMechanics() {
-		if (x < moveX)
+		if (x < pistolX + moveX + (pistolX/8))
 			x += 2;
-
-		if (x > moveX)
+		
+		if (x > pistolX + moveX + (pistolX/8))
 			x -= 2;
 
-		if (counter % 5 == 0)
+		if (counter % 1 == 0)
 			y++;
 
 		size = y / 2 + 50;

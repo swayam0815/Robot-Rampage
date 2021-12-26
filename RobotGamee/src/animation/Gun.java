@@ -5,16 +5,17 @@ public class Gun {
 	private int damage;
 	private int reloadTime;
 	private int magazineSize;
+	private int price;
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
 	}
 	
-	public Gun(int damage, int reloadTime, int magazineSize) {
+	public Gun(int damage, int reloadTime, int magazineSize, int price) {
 		this.damage = damage;
 		this.reloadTime = reloadTime;
 		this.magazineSize = magazineSize;
+		this.price = price;
 		
 	}
 

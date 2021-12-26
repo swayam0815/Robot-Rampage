@@ -42,5 +42,9 @@ public class Gun {
 	public void setMagazineSize(int magazineSize) {
 		this.magazineSize = magazineSize;
 	}
+	
+	public int getPrice() {
+		return price;
+	}
 
 }

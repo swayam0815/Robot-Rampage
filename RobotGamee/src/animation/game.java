@@ -18,10 +18,10 @@ import java.awt.Dimension;
 
 import hsa2.GraphicsConsole;
 
-public class AnimationMain extends Rectangle {
+public class game extends Rectangle {
 
 	public static void main(String[] args) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-		new AnimationMain();
+		new game();
 	}
 
 	/***** Global Variables ******/
@@ -101,7 +101,7 @@ public class AnimationMain extends Rectangle {
 	private Rectangle enemy = new Rectangle(x, y, size, size);
 	private static boolean defeat = false;
 
-	private AnimationMain() throws LineUnavailableException, IOException, UnsupportedAudioFileException {
+	private game() throws LineUnavailableException, IOException, UnsupportedAudioFileException {
 		initiate();
 
 		while (gc.getKeyCode() != 'Q') {

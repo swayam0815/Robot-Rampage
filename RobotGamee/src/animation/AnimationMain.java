@@ -99,7 +99,7 @@ public class AnimationMain extends Rectangle {
 //	private int temp = 0;
 
 	private Rectangle enemy = new Rectangle(x, y, size, size);
-	private boolean defeat = false;
+	private static boolean defeat = false;
 
 	private AnimationMain() throws LineUnavailableException, IOException, UnsupportedAudioFileException {
 		initiate();
@@ -107,6 +107,7 @@ public class AnimationMain extends Rectangle {
 		while (gc.getKeyCode() != 'Q') {
 
 			mechanics();
+			
 			if (!defeat)
 				enemyMechanics();
 
@@ -328,6 +329,8 @@ public class AnimationMain extends Rectangle {
 					rect.width--;
 					rect.height--;
 				}
+				if(rect.intersects(enemy))
+					defeat = true;
 			}
 			bulletSpeed++; // incrementing counter for above statement
 

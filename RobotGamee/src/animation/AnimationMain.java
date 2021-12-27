@@ -26,7 +26,7 @@ public class AnimationMain extends Rectangle {
 
 	/***** Global Variables ******/
 	private Dimension GRsize = Toolkit.getDefaultToolkit().getScreenSize(); // creates a variable to get screen size
-	private int GRHEIGHT = (int) GRsize.getHeight() - 70; // (int)GRsize.getHeight() - 70
+	private int GRHEIGHT = (int) GRsize.getHeight() - 100; // (int)GRsize.getHeight() - 70
 	private int GRWIDTH = (int) (GRHEIGHT * 1.777777777778); // this sets the size of the grid to fit the screen size
 	private GraphicsConsole gc = new GraphicsConsole(GRWIDTH, GRHEIGHT);
 
@@ -231,13 +231,15 @@ public class AnimationMain extends Rectangle {
 
 	public void enemyMechanics() {
 
-		if (enemy.x < pistolX + moveX + (pistolX / 8))
+		//robot moves toward the player by changing the x value
+		if (enemy.x < pistolX + moveX)
 			enemy.x += 2;
 
-		if (enemy.x > pistolX + moveX + (pistolX / 8))
+		if (enemy.x > pistolX + moveX + enemy.width)
 			enemy.x -= 2;
 
-		if (counter % 1 == 0)
+		//robot moves down by one pixel
+		if (counter % 2 == 0)
 			enemy.y++;
 
 		enemy.width = enemy.height = enemy.y / 2 + 50;
@@ -245,9 +247,7 @@ public class AnimationMain extends Rectangle {
 
 		if (enemy.y >= GRHEIGHT - (enemy.width + enemy.height / 2))
 			enemy.y = GRHEIGHT - (enemy.width + enemy.height / 2);
-
-		if (enemy.x < 0)
-			enemy.x = 1;
+		
 	}
 
 //	private void move_Pistol() {	//does not work ---- fix later
@@ -361,6 +361,7 @@ public class AnimationMain extends Rectangle {
 				gc.setColor(Color.DARK_GRAY);
 				gc.fillArc(ReloadButton.x - (ReloadButton.width / 6), ReloadButton.y - (ReloadButton.width / 6),
 						ReloadButton.width * 8 / 6, ReloadButton.width * 8 / 6, 0, reload);
+				
 				reload += (int) (GRHEIGHT / 200);
 				// the arc takes a full turn
 				if (reload > 360) {
@@ -368,7 +369,6 @@ public class AnimationMain extends Rectangle {
 					bulletsLeft = 9;
 					reloading = false;
 					canShoot = true;
-
 				}
 			}
 			// reload button

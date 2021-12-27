@@ -26,7 +26,7 @@ public class AnimationMain extends Rectangle {
 
 	/***** Global Variables ******/
 	private Dimension GRsize = Toolkit.getDefaultToolkit().getScreenSize(); // creates a variable to get screen size
-	private int GRHEIGHT = (int) GRsize.getHeight() - 100; // (int)GRsize.getHeight() - 70
+	private int GRHEIGHT = (int) GRsize.getHeight() - 70; // (int)GRsize.getHeight() - 70
 	private int GRWIDTH = (int) (GRHEIGHT * 1.777777777778); // this sets the size of the grid to fit the screen size
 	private GraphicsConsole gc = new GraphicsConsole(GRWIDTH, GRHEIGHT);
 
@@ -85,6 +85,9 @@ public class AnimationMain extends Rectangle {
 	private int moveX = 0;
 
 	// enemy/robot variables
+	private int x = 0;
+	private int y = 0;
+	private int size = 50;
 	private int counter = 0;
 
 	// bullet attributes
@@ -92,10 +95,14 @@ public class AnimationMain extends Rectangle {
 	ArrayList<Rectangle> hit = new ArrayList<Rectangle>();
 	private int bulletSize = 50;
 	private int bulletSpeed = 0;
+	
+	// gun object for player gun
+	// damange, reload time, bullet #, price, fire rate
+	private static Gun playerGun = new Gun(0, 2, 5, 100, 5);
 
 //	private int temp = 0;
 
-	private Rectangle enemy = new Rectangle(0, 0, 50, 50);
+	private Rectangle enemy = new Rectangle(x, y, size, size);
 	private static boolean defeat = false;
 
 	private AnimationMain() throws LineUnavailableException, IOException, UnsupportedAudioFileException {
@@ -137,8 +144,8 @@ public class AnimationMain extends Rectangle {
 		dartboard.y = GRHEIGHT / 5; // 63 * GRHEIGHT / 90 - dartboard.height //this is the limit
 
 		// set the value for all variables
-		bulletsLeft = 9;
-		reload = 0;
+		bulletsLeft = playerGun.getMagazineSize();
+		reload = playerGun.getReloadTime();
 		reloading = false;
 		canShoot = true;
 		shotFired = false;
@@ -231,23 +238,26 @@ public class AnimationMain extends Rectangle {
 
 	public void enemyMechanics() {
 
-		//robot moves toward the player by changing the x value
-		if (enemy.x < pistolX + moveX)
-			enemy.x += 2;
+		if (x < pistolX + moveX + (pistolX / 8))
+			x += 2;
 
-		if (enemy.x > pistolX + moveX + enemy.width)
-			enemy.x -= 2;
+		if (x > pistolX + moveX + (pistolX / 8))
+			x -= 2;
 
-		//robot moves down by one pixel
-		if (counter % 2 == 0)
-			enemy.y++;
+		if (counter % 10 == 0)
+			y++;
 
-		enemy.width = enemy.height = enemy.y / 2 + 50;
+		size = y / 2 + 50;
 		counter++;
 
-		if (enemy.y >= GRHEIGHT - (enemy.width + enemy.height / 2))
-			enemy.y = GRHEIGHT - (enemy.width + enemy.height / 2);
+		if (y >= GRHEIGHT - (size + size / 2))
+			y = GRHEIGHT - (size + size / 2);
+
+		if (x < 0)
+			x = 1;
 		
+		enemy = new Rectangle(x, y, size, size);
+
 	}
 
 //	private void move_Pistol() {	//does not work ---- fix later
@@ -306,7 +316,7 @@ public class AnimationMain extends Rectangle {
 			gc.drawImage(dartboardImg, dartboard.x, dartboard.y, dartboard.width, dartboard.height);
 
 			// player tracking enemy code thing
-			gc.drawImage(robo, enemy.x, enemy.y, enemy.width, enemy.height);
+			gc.drawImage(robo, x, y, size, size);
 
 			// bullet hole
 			for (int j = 0; j < bulletholes.length; j++)
@@ -322,7 +332,7 @@ public class AnimationMain extends Rectangle {
 				
 				// basically nerfing bullet speed by using this if statement
 				// so bullet only moves every factor of 5
-				if (bulletSpeed % 5 == 0) {
+				if (bulletSpeed % playerGun.getFireRate() == 0) {
 					rect.y--;
 					rect.width--;
 					rect.height--;
@@ -361,14 +371,14 @@ public class AnimationMain extends Rectangle {
 				gc.setColor(Color.DARK_GRAY);
 				gc.fillArc(ReloadButton.x - (ReloadButton.width / 6), ReloadButton.y - (ReloadButton.width / 6),
 						ReloadButton.width * 8 / 6, ReloadButton.width * 8 / 6, 0, reload);
-				
 				reload += (int) (GRHEIGHT / 200);
 				// the arc takes a full turn
 				if (reload > 360) {
 					reload = 0;
-					bulletsLeft = 9;
+					bulletsLeft = playerGun.getMagazineSize();
 					reloading = false;
 					canShoot = true;
+
 				}
 			}
 			// reload button

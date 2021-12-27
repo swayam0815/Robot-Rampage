@@ -85,9 +85,6 @@ public class AnimationMain extends Rectangle {
 	private int moveX = 0;
 
 	// enemy/robot variables
-	private int x = 0;
-	private int y = 0;
-	private int size = 50;
 	private int counter = 0;
 
 	// bullet attributes
@@ -98,7 +95,7 @@ public class AnimationMain extends Rectangle {
 
 //	private int temp = 0;
 
-	private Rectangle enemy = new Rectangle(x, y, size, size);
+	private Rectangle enemy = new Rectangle(0, 0, 50, 50);
 	private static boolean defeat = false;
 
 	private AnimationMain() throws LineUnavailableException, IOException, UnsupportedAudioFileException {
@@ -234,23 +231,23 @@ public class AnimationMain extends Rectangle {
 
 	public void enemyMechanics() {
 
-		if (x < pistolX + moveX + (pistolX / 8))
-			x += 2;
+		if (enemy.x < pistolX + moveX + (pistolX / 8))
+			enemy.x += 2;
 
-		if (x > pistolX + moveX + (pistolX / 8))
-			x -= 2;
+		if (enemy.x > pistolX + moveX + (pistolX / 8))
+			enemy.x -= 2;
 
 		if (counter % 1 == 0)
-			y++;
+			enemy.y++;
 
-		size = y / 2 + 50;
+		enemy.width = enemy.height = enemy.y / 2 + 50;
 		counter++;
 
-		if (y >= GRHEIGHT - (size + size / 2))
-			y = GRHEIGHT - (size + size / 2);
+		if (enemy.y >= GRHEIGHT - (enemy.width + enemy.height / 2))
+			enemy.y = GRHEIGHT - (enemy.width + enemy.height / 2);
 
-		if (x < 0)
-			x = 1;
+		if (enemy.x < 0)
+			enemy.x = 1;
 	}
 
 //	private void move_Pistol() {	//does not work ---- fix later
@@ -309,7 +306,7 @@ public class AnimationMain extends Rectangle {
 			gc.drawImage(dartboardImg, dartboard.x, dartboard.y, dartboard.width, dartboard.height);
 
 			// player tracking enemy code thing
-			gc.drawImage(robo, x, y, size, size);
+			gc.drawImage(robo, enemy.x, enemy.y, enemy.width, enemy.height);
 
 			// bullet hole
 			for (int j = 0; j < bulletholes.length; j++)

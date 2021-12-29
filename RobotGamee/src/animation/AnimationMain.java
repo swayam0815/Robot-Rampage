@@ -95,7 +95,7 @@ public class AnimationMain extends Rectangle {
 	ArrayList<Rectangle> hit = new ArrayList<Rectangle>();
 	private int bulletSize = 50;
 	private int bulletSpeed = 0;
-	
+
 	// gun object for player gun
 	// damange, reload time, bullet #, price, fire rate
 	private static Gun playerGun = new Gun(0, 2, 5, 100, 5);
@@ -105,13 +105,22 @@ public class AnimationMain extends Rectangle {
 	private Rectangle enemy = new Rectangle(x, y, size, size);
 	private static boolean defeat = false;
 
+	// THE ENEMIES
+	private ArrayList<Rectangle> enemies = new ArrayList<Rectangle>();
+	private static int wave = 0;
+	private ArrayList<Rectangle> destroyedEnemies = new ArrayList<Rectangle>();
+	private static boolean newWave = true;
+
+	private int initX;
+	private int initY = 0;
+
 	private AnimationMain() throws LineUnavailableException, IOException, UnsupportedAudioFileException {
 		initiate();
 
 		while (gc.getKeyCode() != 'Q') {
 
 			mechanics();
-			
+
 			if (!defeat)
 				enemyMechanics();
 
@@ -236,27 +245,46 @@ public class AnimationMain extends Rectangle {
 
 	}
 
+	/*
+	 * Method Name: ranNum Author: Swayam Sachdeva Creation Date: November 29, 2021
+	 * Modified Date: December 01 2021 Description: method to generate a random for
+	 * a specific range Parameters: int highestNum and int highestNum Return Value:
+	 * array Throws/Exceptions: NONE
+	 */
+	public static int ranNum(int highestNum, int lowest) {
+		return (int) Math.floor(Math.random() * highestNum) + lowest;
+	}
+
 	public void enemyMechanics() {
 
-		if (x < pistolX + moveX + (pistolX / 8))
-			x += 2;
+		if (newWave) {
+			for (int i = 0; i < wave; i++) {
+				enemies.add(new Rectangle(ranNum(0, GRWIDTH - 50), initY, size, size));
+			}
+		}
 
-		if (x > pistolX + moveX + (pistolX / 8))
-			x -= 2;
+		for (Rectangle rect : enemies) {
 
-		if (counter % 10 == 0)
-			y++;
+			if (rect.x < pistolX + moveX + (pistolX / 8))
+				rect.x += 2;
 
-		size = y / 2 + 50;
-		counter++;
+			if (rect.x > pistolX + moveX + (pistolX / 8))
+				rect.x -= 2;
 
-		if (y >= GRHEIGHT - (size + size / 2))
-			y = GRHEIGHT - (size + size / 2);
+			if (counter % 10 == 0)
+				rect.y++;
 
-		if (x < 0)
-			x = 1;
-		
-		enemy = new Rectangle(x, y, size, size);
+			rect.width = y / 2 + 50;
+			rect.height = y / 2 + 50;
+
+			counter++;
+
+			if (rect.y >= GRHEIGHT - (size + size / 2))
+				rect.y = GRHEIGHT - (size + size / 2);
+
+			if (rect.x < 0)
+				rect.x = 1;
+		}
 
 	}
 
@@ -323,13 +351,15 @@ public class AnimationMain extends Rectangle {
 				gc.drawImage(bulletholeImg, bulletholes[j].x - 10, bulletholes[j].y - 10, bulletholes[j].width,
 						bulletholes[j].height);
 
-			
+			for (Rectangle rect : enemies) {
+				gc.drawImage(robo, rect);
+			}
+
 			// animating projectiles/bullets
 			for (Rectangle rect : bullets) {
 				gc.setColor(Color.GREEN);
 				gc.fillRect(rect);
-				
-				
+
 				// basically nerfing bullet speed by using this if statement
 				// so bullet only moves every factor of 5
 				if (bulletSpeed % playerGun.getFireRate() == 0) {
@@ -337,7 +367,7 @@ public class AnimationMain extends Rectangle {
 					rect.width--;
 					rect.height--;
 				}
-				if(rect.intersects(enemy))
+				if (rect.intersects(enemy))
 					defeat = true;
 			}
 			bulletSpeed++; // incrementing counter for above statement
@@ -389,6 +419,9 @@ public class AnimationMain extends Rectangle {
 				gc.drawImage(bullet, ReloadButton.width * 8 / 6 + (GRWIDTH / 20) + b * (ReloadButton.width / 3 + 1),
 						GRHEIGHT - (GRWIDTH / 10), ReloadButton.width / 3, (int) (ReloadButton.width / 3 * (2.68421)));
 			}
+
+			if (wave + 1 < 5)
+				wave++;
 
 		}
 	}

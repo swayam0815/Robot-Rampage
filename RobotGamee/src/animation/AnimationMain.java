@@ -108,14 +108,14 @@ public class AnimationMain extends Rectangle {
 
 	// gun object for player guns
 	// damage, reload time, bullet #, price, fire rate
-	private static Gun pistol = new Gun(10, 1, 7, 0, 5);
+	private static Gun pistol = new Gun(10, 1, 7, 0, 2);
 	private static Gun AR15 = new Gun(6, 2, 30, 1500, 5);
 	private static Gun sniper = new Gun(30, 4, 10, 4000, 5);
 	private static Gun minigun = new Gun(3, 8, 100, 8500, 5);
 	private static Gun grenade = new Gun(50, 5, 5, 12000, 5);
 	private static Gun hose = new Gun(2, 10, 1000, 20000, 5);
-	
-	private static Gun equippedGun;	//the gun being help by the player
+
+	private static Gun equippedGun; // the gun being help by the player
 
 	private Rectangle enemy = new Rectangle(x, y, size, size);
 	private static boolean defeat = false;
@@ -137,9 +137,9 @@ public class AnimationMain extends Rectangle {
 			mechanics();
 
 			if (!defeat)
-				enemyMechanics();
+				// enemyMechanics();
 
-			moveTarget(dartboard);
+				moveTarget(dartboard);
 
 			drawGraphics();
 
@@ -190,12 +190,12 @@ public class AnimationMain extends Rectangle {
 			moveX -= 10;
 		if (gc.isKeyDown(39) || gc.isKeyDown(100) || gc.isKeyDown(68))
 			moveX += 10;
-		
-		//limits for player movement
-				if (moveX > 0)
-					moveX = 0;
-				if (moveX < -(GRWIDTH + (GRWIDTH / 11)))
-					moveX = -(GRWIDTH + (GRWIDTH / 11));
+
+		// limits for player movement
+		if (moveX > 0)
+			moveX = 0;
+		if (moveX < -(GRWIDTH + (GRWIDTH / 11)))
+			moveX = -(GRWIDTH + (GRWIDTH / 11));
 
 		if (gc.getMouseClick() > 0 && bulletsLeft > 0) {
 			bullets.add(new Rectangle(CrossHair.x + 15, CrossHair.y + 15, bulletSize, bulletSize));
@@ -328,7 +328,7 @@ public class AnimationMain extends Rectangle {
 			targetXSpeed *= -1;
 		}
 	}
-	
+
 	private void drawGraphics() {
 		synchronized (gc) {
 			gc.setBackgroundColor(Color.BLACK);
@@ -358,24 +358,30 @@ public class AnimationMain extends Rectangle {
 
 				// basically nerfing bullet speed by using this if statement
 				// so bullet only moves every factor of 5
-				if (bulletSpeed % pistol.getFireRate() == 0) {
+				if (rect.y - 1 > 0 && bulletSpeed % pistol.getFireRate() == 0) {
 					rect.y--;
 					rect.width--;
 					rect.height--;
+					if (rect.y < 0)
+						hit.add(rect);
+
 				}
+
 				for (Rectangle robot : enemies)
 					if (rect.intersects(robot))
 						destroyedEnemies.add(robot);
+
 			}
 			bulletSpeed++; // incrementing counter for above statement
 
 			// removing hit bullets from main bullets list
 			bullets.removeAll(hit);
+			System.out.println(bullets.size());
 			enemies.removeAll(destroyedEnemies);
-			
-			//Forcefield
+
+			// Forcefield
 			gc.drawImage(forcefield, 0, 0, GRWIDTH, GRHEIGHT);
-			
+
 			// fire out of the gun
 			if (shotFired || fireCounter < 3) {
 				if (pistolX + moveX > GRWIDTH / 3)
@@ -393,9 +399,11 @@ public class AnimationMain extends Rectangle {
 
 			// pistol in hand
 			if (pistolX + moveX > GRWIDTH / 3)
-				gc.drawImage(pistolImg, pistolX + moveX, pistolY, (int)(GRHEIGHT / 2 * 1.777777777777778), GRHEIGHT / 2);
+				gc.drawImage(pistolImg, pistolX + moveX, pistolY, (int) (GRHEIGHT / 2 * 1.777777777777778),
+						GRHEIGHT / 2);
 			else
-				gc.drawImage(pistolFlipped, pistolX + moveX, pistolY, (int)(GRHEIGHT / 2 * 1.777777777777778), GRHEIGHT / 2);
+				gc.drawImage(pistolFlipped, pistolX + moveX, pistolY, (int) (GRHEIGHT / 2 * 1.777777777777778),
+						GRHEIGHT / 2);
 
 			// reloading process
 			if (reloading) {
@@ -419,18 +427,18 @@ public class AnimationMain extends Rectangle {
 			if (bulletsLeft < 13) {
 				for (int b = 0; b < bulletsLeft; b++) {
 					gc.drawImage(bullet, ReloadButton.width * 8 / 6 + (GRWIDTH / 20) + b * (ReloadButton.width / 3 + 1),
-							GRHEIGHT - (GRWIDTH / 10), ReloadButton.width / 3, (int) (ReloadButton.width / 3 * (2.68421)));
+							GRHEIGHT - (GRWIDTH / 10), ReloadButton.width / 3,
+							(int) (ReloadButton.width / 3 * (2.68421)));
 				}
-			}
-			else {
-				gc.drawImage(bullet, ReloadButton.width * 8 / 6 + (GRWIDTH / 20), 
-						GRHEIGHT - (GRWIDTH / 10), ReloadButton.width / 3, (int) (ReloadButton.width / 3 * (2.68421)));
-				
+			} else {
+				gc.drawImage(bullet, ReloadButton.width * 8 / 6 + (GRWIDTH / 20), GRHEIGHT - (GRWIDTH / 10),
+						ReloadButton.width / 3, (int) (ReloadButton.width / 3 * (2.68421)));
+
 				gc.setColor(Color.WHITE);
-				gc.drawString("x" + bulletsLeft, 
-						ReloadButton.width * 8 / 6 + (GRWIDTH / 13), GRHEIGHT - (GRWIDTH / 16));
+				gc.drawString("x" + bulletsLeft, ReloadButton.width * 8 / 6 + (GRWIDTH / 13),
+						GRHEIGHT - (GRWIDTH / 16));
 			}
-			
+
 			if (wave + 1 < 5)
 				wave++;
 

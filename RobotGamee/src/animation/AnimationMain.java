@@ -116,7 +116,7 @@ public class AnimationMain extends Rectangle {
 //	private static Gun grenade = new Gun(50, 5, 5, 12000, 5);
 //	private static Gun hose = new Gun(2, 10, 1000, 20000, 5);
 
-	private static Gun equippedGun = pistol;	//the gun being help by the player
+	private static Gun equippedGun = pistol;	//the gun being held by the player
 
 	private Rectangle enemy = new Rectangle(x, y, size, size);
 	private static boolean defeat = false;

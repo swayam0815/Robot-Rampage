@@ -21,13 +21,17 @@ import hsa2.GraphicsConsole;
 public class AnimationMain extends Rectangle {
 
 	public static void main(String[] args) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+		
+
 		new AnimationMain();
 	}
 
 	/***** Global Variables ******/
-	private Dimension GRsize = Toolkit.getDefaultToolkit().getScreenSize(); // creates a variable to get screen size
-	private int GRHEIGHT = (int) GRsize.getHeight() - 70; // (int)GRsize.getHeight() - 70
-	private int GRWIDTH = (int) (GRHEIGHT * 1.777777777778); // this sets the size of the grid to fit the screen size
+	private static Dimension GRsize = Toolkit.getDefaultToolkit().getScreenSize(); // creates a variable to get screen
+																					// size
+	private static int GRHEIGHT = (int) GRsize.getHeight() - 70; // (int)GRsize.getHeight() - 70
+	private static int GRWIDTH = (int) (GRHEIGHT * 1.777777777778); // this sets the size of the grid to fit the screen
+																	// size
 	private GraphicsConsole gc = new GraphicsConsole(GRWIDTH, GRHEIGHT);
 
 	// sound effects
@@ -88,7 +92,7 @@ public class AnimationMain extends Rectangle {
 	private int x = 0;
 	private int y = 0;
 	private int size = 50;
-	private int counter = 0;
+	private static int counter = 0;
 
 	// bullet attributes
 	ArrayList<Rectangle> bullets = new ArrayList<Rectangle>();
@@ -251,31 +255,29 @@ public class AnimationMain extends Rectangle {
 	 * a specific range Parameters: int highestNum and int highestNum Return Value:
 	 * array Throws/Exceptions: NONE
 	 */
-	public static int ranNum(int highestNum, int lowest) {
-		return (int) Math.floor(Math.random() * highestNum) + lowest;
+	public static int ranNum(int max, int min) {
+		return (int)(Math.random()*(max-min+1)+min);
 	}
 
 	public void enemyMechanics() {
 
-		if (newWave) {
-			for (int i = 0; i < wave; i++) {
-				enemies.add(new Rectangle(ranNum(0, GRWIDTH - 50), initY, size, size));
-			}
-		}
+		if (counter % 10 == 0)
+			enemies.add(new Rectangle(ranNum(1, GRWIDTH), initY, size, size));
 
 		for (Rectangle rect : enemies) {
 
+			/*
 			if (rect.x < pistolX + moveX + (pistolX / 8))
 				rect.x += 2;
 
 			if (rect.x > pistolX + moveX + (pistolX / 8))
 				rect.x -= 2;
-
+		*/
 			if (counter % 10 == 0)
 				rect.y++;
 
-			rect.width = y / 2 + 50;
-			rect.height = y / 2 + 50;
+			rect.width = y  + 50;
+			rect.height = y + 50;
 
 			counter++;
 

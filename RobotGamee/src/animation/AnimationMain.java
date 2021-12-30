@@ -46,6 +46,8 @@ public class AnimationMain extends Rectangle {
 	// pictures
 	private Image backGround = Toolkit.getDefaultToolkit()
 			.getImage(gc.getClass().getClassLoader().getResource("bakground.jpg"));
+	private Image forcefield = Toolkit.getDefaultToolkit()
+			.getImage(gc.getClass().getClassLoader().getResource("ForceField.png"));
 	private Image bullet = Toolkit.getDefaultToolkit()
 			.getImage(gc.getClass().getClassLoader().getResource("bullet cartoon.png"));
 	private Image pistolImg = Toolkit.getDefaultToolkit()
@@ -378,7 +380,10 @@ public class AnimationMain extends Rectangle {
 			// removing hit bullets from main bullets list
 			bullets.removeAll(hit);
 			enemies.removeAll(destroyedEnemies);
-
+			
+			//Forcefield
+			gc.drawImage(forcefield, 0, 0, GRWIDTH, GRHEIGHT);
+			
 			// fire out of the gun
 			if (shotFired || fireCounter < 3) {
 				if (pistolX + moveX > GRWIDTH / 3)

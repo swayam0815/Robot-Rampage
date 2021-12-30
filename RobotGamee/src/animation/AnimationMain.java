@@ -341,14 +341,6 @@ public class AnimationMain extends Rectangle {
 			// target
 			gc.drawImage(dartboardImg, dartboard.x, dartboard.y, dartboard.width, dartboard.height);
 
-			// player tracking enemy code thing
-			gc.drawImage(robo, x, y, size, size);
-
-			// bullet hole
-			for (int j = 0; j < bulletholes.length; j++)
-				gc.drawImage(bulletholeImg, bulletholes[j].x - 10, bulletholes[j].y - 10, bulletholes[j].width,
-						bulletholes[j].height);
-
 			for (Rectangle rect : enemies) {
 				gc.drawImage(robo, rect);
 			}
@@ -359,19 +351,14 @@ public class AnimationMain extends Rectangle {
 
 				// basically nerfing bullet speed by using this if statement
 				// so bullet only moves every factor of 5
-				if (rect.y - 1 > 0 && bulletSpeed % pistol.getFireRate() == 0) {
+				if (bulletSpeed % pistol.getFireRate() == 0) {
 					rect.y--;
 					rect.width--;
 					rect.height--;
+					
 					if (rect.y < 0)
 						hit.add(rect);
-
 				}
-
-				for (Rectangle robot : enemies)
-					if (rect.intersects(robot))
-						destroyedEnemies.add(robot);
-
 			}
 			bulletSpeed++; // incrementing counter for above statement
 

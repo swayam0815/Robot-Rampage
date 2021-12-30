@@ -100,10 +100,8 @@ public class AnimationMain extends Rectangle {
 	private int bulletSpeed = 0;
 
 	// gun object for player gun
-	// damange, reload time, bullet #, price, fire rate
-	private static Gun playerGun = new Gun(0, 2, 5, 100, 5);
-
-//	private int temp = 0;
+	// damage, reload time, bullet #, price, fire rate
+	private static Gun playerGun = new Gun(0, 2, 7, 100, 5);
 
 	private Rectangle enemy = new Rectangle(x, y, size, size);
 	private static boolean defeat = false;

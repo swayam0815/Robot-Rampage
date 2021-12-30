@@ -50,10 +50,6 @@ public class AnimationMain extends Rectangle {
 			.getImage(gc.getClass().getClassLoader().getResource("ForceField.png"));
 	private Image bullet = Toolkit.getDefaultToolkit()
 			.getImage(gc.getClass().getClassLoader().getResource("bullet cartoon.png"));
-	private Image pistolImg = Toolkit.getDefaultToolkit()
-			.getImage(gc.getClass().getClassLoader().getResource("Pistol POV.png"));
-	private Image pistolFlipped = Toolkit.getDefaultToolkit()
-			.getImage(gc.getClass().getClassLoader().getResource("Pistol POV flipped.png"));
 	private Image crosshair = Toolkit.getDefaultToolkit()
 			.getImage(gc.getClass().getClassLoader().getResource("crosshair.png"));
 	private Image dartboardImg = Toolkit.getDefaultToolkit()
@@ -62,10 +58,18 @@ public class AnimationMain extends Rectangle {
 			.getImage(gc.getClass().getClassLoader().getResource("reload button.png"));
 	private Image bulletholeImg = Toolkit.getDefaultToolkit()
 			.getImage(gc.getClass().getClassLoader().getResource("bullethole.png"));
+	private Image bulletBottom = Toolkit.getDefaultToolkit()
+			.getImage(gc.getClass().getClassLoader().getResource("Bullet Bottom.png"));
 	private Image gunshotFire = Toolkit.getDefaultToolkit()
 			.getImage(gc.getClass().getClassLoader().getResource("gunshot fire.png"));
 
 	private Image robo = Toolkit.getDefaultToolkit().getImage(gc.getClass().getClassLoader().getResource("enemy.png"));
+
+	// gun pictures
+	private Image pistolImg = Toolkit.getDefaultToolkit()
+			.getImage(gc.getClass().getClassLoader().getResource("Pistol POV.png"));
+	private Image pistolFlipped = Toolkit.getDefaultToolkit()
+			.getImage(gc.getClass().getClassLoader().getResource("Pistol POV flipped.png"));
 
 	private Target CrossHair = new Target(); // this is the crosshair to aim with
 	private Target dartboard = new Target(); // the target to shoot at
@@ -346,8 +350,7 @@ public class AnimationMain extends Rectangle {
 
 			// animating projectiles/bullets
 			for (Rectangle rect : bullets) {
-				gc.setColor(Color.GREEN);
-				gc.fillRect(rect);
+				gc.drawImage(bulletBottom, rect);
 
 				// basically nerfing bullet speed by using this if statement
 				// so bullet only moves every factor of 5

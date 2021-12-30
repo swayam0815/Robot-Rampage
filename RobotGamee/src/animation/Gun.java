@@ -3,7 +3,7 @@ package animation;
 import java.awt.Image;
 
 public class Gun {
-	
+	 
 	private int damage;
 	private int reloadTime;
 	private int magazineSize;

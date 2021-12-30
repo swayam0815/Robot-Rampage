@@ -15,6 +15,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 
 import hsa2.GraphicsConsole;
 
@@ -107,12 +108,14 @@ public class AnimationMain extends Rectangle {
 
 	// gun object for player guns
 	// damage, reload time, bullet #, price, fire rate
-	private static Gun pistol = new Gun(0, 2, 7, 100, 5);
-	private static Gun AR15 = new Gun(0, 2, 7, 100, 5);
-	private static Gun sniper = new Gun(0, 2, 7, 100, 5);
-	private static Gun minigun = new Gun(0, 2, 7, 100, 5);
-	private static Gun grenade = new Gun(0, 2, 7, 100, 5);
-	private static Gun hose = new Gun(0, 2, 7, 100, 5);
+	private static Gun pistol = new Gun(10, 1, 7, 0, 5);
+	private static Gun AR15 = new Gun(6, 2, 30, 1500, 5);
+	private static Gun sniper = new Gun(30, 4, 10, 4000, 5);
+	private static Gun minigun = new Gun(3, 8, 100, 8500, 5);
+	private static Gun grenade = new Gun(50, 5, 5, 12000, 5);
+	private static Gun hose = new Gun(2, 10, 1000, 20000, 5);
+	
+	private static Gun equippedGun;	//the gun being help by the player
 
 	private Rectangle enemy = new Rectangle(x, y, size, size);
 	private static boolean defeat = false;
@@ -147,6 +150,7 @@ public class AnimationMain extends Rectangle {
 	private void initiate() {
 		gc.enableMouseMotion();
 		gc.enableMouse(); // enables motion and click for the mouse
+		gc.setFont(new Font("Georgia", Font.PLAIN, 50));
 
 		// sets the initial coordinates of the corsshair
 		CrossHair.x = GRWIDTH / 2;
@@ -412,11 +416,21 @@ public class AnimationMain extends Rectangle {
 			gc.drawImage(reloadButton, ReloadButton.x, ReloadButton.y, ReloadButton.width, ReloadButton.height);
 
 			// bullets
-			for (int b = 0; b < bulletsLeft; b++) {
-				gc.drawImage(bullet, ReloadButton.width * 8 / 6 + (GRWIDTH / 20) + b * (ReloadButton.width / 3 + 1),
-						GRHEIGHT - (GRWIDTH / 10), ReloadButton.width / 3, (int) (ReloadButton.width / 3 * (2.68421)));
+			if (bulletsLeft < 13) {
+				for (int b = 0; b < bulletsLeft; b++) {
+					gc.drawImage(bullet, ReloadButton.width * 8 / 6 + (GRWIDTH / 20) + b * (ReloadButton.width / 3 + 1),
+							GRHEIGHT - (GRWIDTH / 10), ReloadButton.width / 3, (int) (ReloadButton.width / 3 * (2.68421)));
+				}
 			}
-
+			else {
+				gc.drawImage(bullet, ReloadButton.width * 8 / 6 + (GRWIDTH / 20), 
+						GRHEIGHT - (GRWIDTH / 10), ReloadButton.width / 3, (int) (ReloadButton.width / 3 * (2.68421)));
+				
+				gc.setColor(Color.WHITE);
+				gc.drawString("x" + bulletsLeft, 
+						ReloadButton.width * 8 / 6 + (GRWIDTH / 13), GRHEIGHT - (GRWIDTH / 16));
+			}
+			
 			if (wave + 1 < 5)
 				wave++;
 

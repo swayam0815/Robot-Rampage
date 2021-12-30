@@ -21,7 +21,6 @@ import hsa2.GraphicsConsole;
 public class AnimationMain extends Rectangle {
 
 	public static void main(String[] args) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-		
 
 		new AnimationMain();
 	}
@@ -256,7 +255,7 @@ public class AnimationMain extends Rectangle {
 	 * array Throws/Exceptions: NONE
 	 */
 	public static int ranNum(int max, int min) {
-		return (int)(Math.random()*(max-min+1)+min);
+		return (int) (Math.random() * (max - min + 1) + min);
 	}
 
 	public void enemyMechanics() {
@@ -267,17 +266,15 @@ public class AnimationMain extends Rectangle {
 		for (Rectangle rect : enemies) {
 
 			/*
-			if (rect.x < pistolX + moveX + (pistolX / 8))
-				rect.x += 2;
-
-			if (rect.x > pistolX + moveX + (pistolX / 8))
-				rect.x -= 2;
-		*/
+			 * if (rect.x < pistolX + moveX + (pistolX / 8)) rect.x += 2;
+			 * 
+			 * if (rect.x > pistolX + moveX + (pistolX / 8)) rect.x -= 2;
+			 */
 			if (counter % 10 == 0)
 				rect.y++;
 
-			rect.width = y  + 50;
-			rect.height = y + 50;
+			rect.width += y * 5;
+			rect.height += y * 5;
 
 			counter++;
 
@@ -369,13 +366,15 @@ public class AnimationMain extends Rectangle {
 					rect.width--;
 					rect.height--;
 				}
-				if (rect.intersects(enemy))
-					defeat = true;
+				for (Rectangle robot : enemies)
+					if (rect.intersects(robot))
+						destroyedEnemies.add(robot);
 			}
 			bulletSpeed++; // incrementing counter for above statement
 
 			// removing hit bullets from main bullets list
 			bullets.removeAll(hit);
+			enemies.removeAll(destroyedEnemies);
 
 			// fire out of the gun
 			if (shotFired || fireCounter < 3) {

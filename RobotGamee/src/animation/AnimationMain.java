@@ -132,7 +132,6 @@ public class AnimationMain extends Rectangle {
 			if (!defeat)
 				enemyMechanics();
 
-//			move_Pistol();
 			moveTarget(dartboard);
 
 			drawGraphics();
@@ -166,7 +165,6 @@ public class AnimationMain extends Rectangle {
 		reloading = false;
 		canShoot = true;
 		shotFired = false;
-//		kickback = false;
 		numOfShots = 0;
 		fireCounter = 10;
 		score = 0;
@@ -208,7 +206,6 @@ public class AnimationMain extends Rectangle {
 				shotFired = true;
 				bulletsLeft--;
 				numOfShots++;
-//				kickback = true;
 				fireCounter = 0;
 
 				// gunshot sound
@@ -292,24 +289,6 @@ public class AnimationMain extends Rectangle {
 
 	}
 
-//	private void move_Pistol() {	//does not work ---- fix later
-//		
-//		if (kickback) {
-//			canShoot = false;
-//
-//			temp += 9;
-//			if(temp < pistolX + 10) {
-//				pistolX += 10;
-//			}
-//		}
-//		else {
-//			canShoot = true;//check
-//			
-//		}
-//		
-//		temp = pistolX;
-//	}
-
 	private void moveTarget(Target target) {
 		target.x += targetXSpeed;
 		target.y += targetYSpeed;
@@ -388,10 +367,10 @@ public class AnimationMain extends Rectangle {
 			if (shotFired || fireCounter < 3) {
 				if (pistolX + moveX > GRWIDTH / 3)
 					gc.drawImage(gunshotFire, (int) (pistolX - (GRHEIGHT / 5) * 1.85) + moveX, pistolY - GRHEIGHT / 5,
-							1024, 623);
+							GRWIDTH / 10 * 6, GRHEIGHT / 10 * 7);
 				else
 					gc.drawImage(gunshotFire, (int) (pistolX - (GRHEIGHT / 5) * 0.5) + moveX, pistolY - GRHEIGHT / 5,
-							1024, 623);
+							GRWIDTH / 10 * 6, GRHEIGHT / 10 * 7);
 
 				fireCounter++;
 			}

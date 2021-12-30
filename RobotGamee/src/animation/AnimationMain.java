@@ -48,7 +48,7 @@ public class AnimationMain extends Rectangle {
 			.getImage(gc.getClass().getClassLoader().getResource("bakground.jpg"));
 	private Image bullet = Toolkit.getDefaultToolkit()
 			.getImage(gc.getClass().getClassLoader().getResource("bullet cartoon.png"));
-	private Image pistol = Toolkit.getDefaultToolkit()
+	private Image pistolImg = Toolkit.getDefaultToolkit()
 			.getImage(gc.getClass().getClassLoader().getResource("pov pistol.png"));
 	private Image pistolFlipped = Toolkit.getDefaultToolkit()
 			.getImage(gc.getClass().getClassLoader().getResource("pov pistol flipped.png"));
@@ -99,9 +99,14 @@ public class AnimationMain extends Rectangle {
 	private int bulletSize = 50;
 	private int bulletSpeed = 0;
 
-	// gun object for player gun
+	// gun object for player guns
 	// damage, reload time, bullet #, price, fire rate
-	private static Gun playerGun = new Gun(0, 2, 7, 100, 5);
+	private static Gun pistol = new Gun(0, 2, 7, 100, 5);
+	private static Gun AR15 = new Gun(0, 2, 7, 100, 5);
+	private static Gun sniper = new Gun(0, 2, 7, 100, 5);
+	private static Gun minigun = new Gun(0, 2, 7, 100, 5);
+	private static Gun grenade = new Gun(0, 2, 7, 100, 5);
+	private static Gun hose = new Gun(0, 2, 7, 100, 5);
 
 	private Rectangle enemy = new Rectangle(x, y, size, size);
 	private static boolean defeat = false;
@@ -154,8 +159,8 @@ public class AnimationMain extends Rectangle {
 		dartboard.y = GRHEIGHT / 5; // 63 * GRHEIGHT / 90 - dartboard.height //this is the limit
 
 		// set the value for all variables
-		bulletsLeft = playerGun.getMagazineSize();
-		reload = playerGun.getReloadTime();
+		bulletsLeft = pistol.getMagazineSize();
+		reload = pistol.getReloadTime();
 		reloading = false;
 		canShoot = true;
 		shotFired = false;
@@ -359,7 +364,7 @@ public class AnimationMain extends Rectangle {
 
 				// basically nerfing bullet speed by using this if statement
 				// so bullet only moves every factor of 5
-				if (bulletSpeed % playerGun.getFireRate() == 0) {
+				if (bulletSpeed % pistol.getFireRate() == 0) {
 					rect.y--;
 					rect.width--;
 					rect.height--;
@@ -391,7 +396,7 @@ public class AnimationMain extends Rectangle {
 
 			// pistol in hand
 			if (pistolX + moveX > GRWIDTH / 3)
-				gc.drawImage(pistol, pistolX + moveX, pistolY, GRHEIGHT / 2, GRHEIGHT / 2);
+				gc.drawImage(pistolImg, pistolX + moveX, pistolY, GRHEIGHT / 2, GRHEIGHT / 2);
 			else
 				gc.drawImage(pistolFlipped, pistolX + moveX, pistolY, GRHEIGHT / 2, GRHEIGHT / 2);
 
@@ -404,7 +409,7 @@ public class AnimationMain extends Rectangle {
 				// the arc takes a full turn
 				if (reload > 360) {
 					reload = 0;
-					bulletsLeft = playerGun.getMagazineSize();
+					bulletsLeft = pistol.getMagazineSize();
 					reloading = false;
 					canShoot = true;
 

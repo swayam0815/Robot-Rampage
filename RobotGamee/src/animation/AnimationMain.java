@@ -32,7 +32,7 @@ public class AnimationMain extends Rectangle {
 	private static int GRHEIGHT = (int) GRsize.getHeight() - 70; // (int)GRsize.getHeight() - 70
 	private static int GRWIDTH = (int) (GRHEIGHT * 1.777777777778); // this sets the size of the grid to fit the screen
 																	// size
-	private GraphicsConsole gc = new GraphicsConsole(GRWIDTH, GRHEIGHT);
+	private static GraphicsConsole gc = new GraphicsConsole(GRWIDTH, GRHEIGHT);
 
 	// sound effects
 	private static Clip gunshotSound;
@@ -63,13 +63,14 @@ public class AnimationMain extends Rectangle {
 			.getImage(gc.getClass().getClassLoader().getResource("Bullet Bottom.png"));
 	private Image gunshotFire = Toolkit.getDefaultToolkit()
 			.getImage(gc.getClass().getClassLoader().getResource("gunshot fire.png"));
-
+	
+	//robot pictures
 	private Image robo = Toolkit.getDefaultToolkit().getImage(gc.getClass().getClassLoader().getResource("enemy.png"));
 
 	// gun pictures
-	private Image pistolImg = Toolkit.getDefaultToolkit()
+	private static Image pistolImg = Toolkit.getDefaultToolkit()
 			.getImage(gc.getClass().getClassLoader().getResource("Pistol POV.png"));
-	private Image pistolFlipped = Toolkit.getDefaultToolkit()
+	private static Image pistolFlipped = Toolkit.getDefaultToolkit()
 			.getImage(gc.getClass().getClassLoader().getResource("Pistol POV flipped.png"));
 
 	private Target CrossHair = new Target(); // this is the crosshair to aim with
@@ -108,14 +109,14 @@ public class AnimationMain extends Rectangle {
 
 	// gun object for player guns
 	// damage, reload time, bullet #, price, fire rate
-	private static Gun pistol = new Gun(10, 1, 7, 0, 2);
-	private static Gun AR15 = new Gun(6, 2, 30, 1500, 5);
-	private static Gun sniper = new Gun(30, 4, 10, 4000, 5);
-	private static Gun minigun = new Gun(3, 8, 100, 8500, 5);
-	private static Gun grenade = new Gun(50, 5, 5, 12000, 5);
-	private static Gun hose = new Gun(2, 10, 1000, 20000, 5);
+	private static Gun pistol = new Gun(10, 1, 7, 0, 5, pistolImg, pistolFlipped);
+//	private static Gun AR15 = new Gun(6, 2, 30, 1500, 5);
+//	private static Gun sniper = new Gun(30, 4, 10, 4000, 5);
+//	private static Gun minigun = new Gun(3, 8, 100, 8500, 5);
+//	private static Gun grenade = new Gun(50, 5, 5, 12000, 5);
+//	private static Gun hose = new Gun(2, 10, 1000, 20000, 5);
 
-	private static Gun equippedGun; // the gun being help by the player
+	private static Gun equippedGun = pistol;	//the gun being held by the player
 
 	private Rectangle enemy = new Rectangle(x, y, size, size);
 	private static boolean defeat = false;
@@ -168,8 +169,8 @@ public class AnimationMain extends Rectangle {
 		dartboard.y = GRHEIGHT / 5; // 63 * GRHEIGHT / 90 - dartboard.height //this is the limit
 
 		// set the value for all variables
-		bulletsLeft = pistol.getMagazineSize();
-		reload = pistol.getReloadTime();
+		bulletsLeft = equippedGun.getMagazineSize();
+		reload = equippedGun.getReloadTime();
 		reloading = false;
 		canShoot = true;
 		shotFired = false;
@@ -385,11 +386,10 @@ public class AnimationMain extends Rectangle {
 
 			// pistol in hand
 			if (pistolX + moveX > GRWIDTH / 3)
-				gc.drawImage(pistolImg, pistolX + moveX, pistolY, (int) (GRHEIGHT / 2 * 1.777777777777778),
-						GRHEIGHT / 2);
+				gc.drawImage(equippedGun.getPic(), pistolX + moveX, pistolY, 
+						(int)(GRHEIGHT / 2 * 1.777777777777778), GRHEIGHT / 2);
 			else
-				gc.drawImage(pistolFlipped, pistolX + moveX, pistolY, (int) (GRHEIGHT / 2 * 1.777777777777778),
-						GRHEIGHT / 2);
+				gc.drawImage(equippedGun.getPicFlipped(), pistolX + moveX, pistolY, (int)(GRHEIGHT / 2 * 1.777777777777778), GRHEIGHT / 2);
 
 			// reloading process
 			if (reloading) {
@@ -400,7 +400,7 @@ public class AnimationMain extends Rectangle {
 				// the arc takes a full turn
 				if (reload > 360) {
 					reload = 0;
-					bulletsLeft = pistol.getMagazineSize();
+					bulletsLeft = equippedGun.getMagazineSize();
 					reloading = false;
 					canShoot = true;
 

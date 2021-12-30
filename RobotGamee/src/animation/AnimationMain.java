@@ -51,9 +51,9 @@ public class AnimationMain extends Rectangle {
 	private Image bullet = Toolkit.getDefaultToolkit()
 			.getImage(gc.getClass().getClassLoader().getResource("bullet cartoon.png"));
 	private Image pistolImg = Toolkit.getDefaultToolkit()
-			.getImage(gc.getClass().getClassLoader().getResource("pov pistol.png"));
+			.getImage(gc.getClass().getClassLoader().getResource("Pistol POV.png"));
 	private Image pistolFlipped = Toolkit.getDefaultToolkit()
-			.getImage(gc.getClass().getClassLoader().getResource("pov pistol flipped.png"));
+			.getImage(gc.getClass().getClassLoader().getResource("Pistol POV flipped.png"));
 	private Image crosshair = Toolkit.getDefaultToolkit()
 			.getImage(gc.getClass().getClassLoader().getResource("crosshair.png"));
 	private Image dartboardImg = Toolkit.getDefaultToolkit()
@@ -335,7 +335,7 @@ public class AnimationMain extends Rectangle {
 			targetXSpeed *= -1;
 		}
 	}
-
+	
 	private void drawGraphics() {
 		synchronized (gc) {
 			gc.setBackgroundColor(Color.BLACK);
@@ -401,9 +401,9 @@ public class AnimationMain extends Rectangle {
 
 			// pistol in hand
 			if (pistolX + moveX > GRWIDTH / 3)
-				gc.drawImage(pistolImg, pistolX + moveX, pistolY, GRHEIGHT / 2, GRHEIGHT / 2);
+				gc.drawImage(pistolImg, pistolX + moveX, pistolY, (int)(GRHEIGHT / 2 * 1.777777777777778), GRHEIGHT / 2);
 			else
-				gc.drawImage(pistolFlipped, pistolX + moveX, pistolY, GRHEIGHT / 2, GRHEIGHT / 2);
+				gc.drawImage(pistolFlipped, pistolX + moveX, pistolY, (int)(GRHEIGHT / 2 * 1.777777777777778), GRHEIGHT / 2);
 
 			// reloading process
 			if (reloading) {

@@ -234,7 +234,7 @@ public class game extends Rectangle {
 
 	public void enemyMechanics() {
 
-		if (x < pistolX + moveX + (pistolX / 8))
+		if (enemy.x < pistolX + moveX + (pistolX / 8))
 			x += 2;
 
 		if (x > pistolX + moveX + (pistolX / 8))
@@ -251,6 +251,8 @@ public class game extends Rectangle {
 
 		if (x < 0)
 			x = 1;
+		
+		enemy = new Rectangle(x, y, size, size);
 	}
 
 //	private void move_Pistol() {	//does not work ---- fix later
@@ -309,7 +311,7 @@ public class game extends Rectangle {
 			gc.drawImage(dartboardImg, dartboard.x, dartboard.y, dartboard.width, dartboard.height);
 
 			// player tracking enemy code thing
-			gc.drawImage(robo, x, y, size, size);
+			gc.drawRect(x, y, size, size);
 
 			// bullet hole
 			for (int j = 0; j < bulletholes.length; j++)
@@ -330,8 +332,9 @@ public class game extends Rectangle {
 					rect.width--;
 					rect.height--;
 				}
-				if(rect.intersects(enemy))
-					defeat = true;
+				if(rect.intersects(enemy)) {
+					enemy.width = 0;
+					enemy.height = 0;}
 			}
 			bulletSpeed++; // incrementing counter for above statement
 

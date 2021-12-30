@@ -182,6 +182,12 @@ public class AnimationMain extends Rectangle {
 			moveX -= 10;
 		if (gc.isKeyDown(39) || gc.isKeyDown(100) || gc.isKeyDown(68))
 			moveX += 10;
+		
+		//limits for player movement
+				if (moveX > 0)
+					moveX = 0;
+				if (moveX < -(GRWIDTH + (GRWIDTH / 11)))
+					moveX = -(GRWIDTH + (GRWIDTH / 11));
 
 		if (gc.getMouseClick() > 0 && bulletsLeft > 0) {
 			bullets.add(new Rectangle(CrossHair.x + 15, CrossHair.y + 15, bulletSize, bulletSize));

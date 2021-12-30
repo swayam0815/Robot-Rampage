@@ -354,7 +354,6 @@ public class AnimationMain extends Rectangle {
 					rect.y--;
 					rect.width--;
 					rect.height--;
-					
 					if (rect.y < 0)
 						hit.add(rect);
 				}

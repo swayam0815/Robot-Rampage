@@ -63,8 +63,8 @@ public class AnimationMain extends Rectangle {
 			.getImage(gc.getClass().getClassLoader().getResource("Bullet Bottom.png"));
 	private Image gunshotFire = Toolkit.getDefaultToolkit()
 			.getImage(gc.getClass().getClassLoader().getResource("gunshot fire.png"));
-	
-	//robot pictures
+
+	// robot pictures
 	private Image robo = Toolkit.getDefaultToolkit().getImage(gc.getClass().getClassLoader().getResource("enemy.png"));
 
 	// gun pictures
@@ -116,7 +116,7 @@ public class AnimationMain extends Rectangle {
 //	private static Gun grenade = new Gun(50, 5, 5, 12000, 5);
 //	private static Gun hose = new Gun(2, 10, 1000, 20000, 5);
 
-	private static Gun equippedGun = pistol;	//the gun being held by the player
+	private static Gun equippedGun = pistol; // the gun being held by the player
 
 	private Rectangle enemy = new Rectangle(x, y, size, size);
 	private static boolean defeat = false;
@@ -177,11 +177,6 @@ public class AnimationMain extends Rectangle {
 		numOfShots = 0;
 		fireCounter = 10;
 		score = 0;
-
-		// bullet holes
-		for (int i = 0; i < bulletholes.length; i++) {
-			bulletholes[i] = new Target();
-		}
 
 	}
 
@@ -351,13 +346,14 @@ public class AnimationMain extends Rectangle {
 
 				// basically nerfing bullet speed by using this if statement
 				// so bullet only moves every factor of 5
+
 				if (bulletSpeed % pistol.getFireRate() == 0) {
 					rect.y--;
 					rect.width--;
 					rect.height--;
-					if (rect.y < 0)
-						hit.add(rect);
 				}
+				if (rect.width == 0 && rect.height == 0)
+					hit.add(rect);
 			}
 			bulletSpeed++; // incrementing counter for above statement
 
@@ -386,10 +382,11 @@ public class AnimationMain extends Rectangle {
 
 			// pistol in hand
 			if (pistolX + moveX > GRWIDTH / 3)
-				gc.drawImage(equippedGun.getPic(), pistolX + moveX, pistolY, 
-						(int)(GRHEIGHT / 2 * 1.777777777777778), GRHEIGHT / 2);
+				gc.drawImage(equippedGun.getPic(), pistolX + moveX, pistolY, (int) (GRHEIGHT / 2 * 1.777777777777778),
+						GRHEIGHT / 2);
 			else
-				gc.drawImage(equippedGun.getPicFlipped(), pistolX + moveX, pistolY, (int)(GRHEIGHT / 2 * 1.777777777777778), GRHEIGHT / 2);
+				gc.drawImage(equippedGun.getPicFlipped(), pistolX + moveX, pistolY,
+						(int) (GRHEIGHT / 2 * 1.777777777777778), GRHEIGHT / 2);
 
 			// reloading process
 			if (reloading) {

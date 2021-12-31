@@ -125,6 +125,9 @@ public class AnimationMain extends Rectangle {
 	private static int wave = 0;
 	private ArrayList<Rectangle> destroyedEnemies = new ArrayList<Rectangle>();
 	private static boolean newWave = true;
+	
+	
+	private static int forceStrength = 100;
 
 	private int initX;
 	private int initY = 0;
@@ -137,9 +140,9 @@ public class AnimationMain extends Rectangle {
 			mechanics();
 
 			if (!defeat)
-				// enemyMechanics();
+				enemyMechanics();
 
-				drawGraphics();
+			drawGraphics();
 
 			gc.sleep(1);
 		}
@@ -269,12 +272,13 @@ public class AnimationMain extends Rectangle {
 
 		for (Rectangle rect : enemies) {
 
-			/*
-			 * if (rect.x < pistolX + moveX + (pistolX / 8)) rect.x += 2;
-			 * 
-			 * if (rect.x > pistolX + moveX + (pistolX / 8)) rect.x -= 2;
-			 */
-			if (counter % 10 == 0)
+			if (rect.x < pistolX + moveX + (pistolX / 8))
+				rect.x += 2;
+
+			if (rect.x > pistolX + moveX + (pistolX / 8))
+				rect.x -= 2;
+
+			if (counter % 2 == 0)
 				rect.y++;
 
 			rect.width += y * 5;
@@ -282,8 +286,10 @@ public class AnimationMain extends Rectangle {
 
 			counter++;
 
-			if (rect.y >= GRHEIGHT - (size + size / 2))
+			if (rect.y >= GRHEIGHT - (size + size / 2)) {
 				rect.y = GRHEIGHT - (size + size / 2);
+				forceStrength--;	
+			}
 
 			if (rect.x < 0)
 				rect.x = 1;
@@ -299,13 +305,14 @@ public class AnimationMain extends Rectangle {
 			// background
 			gc.drawImage(backGround, 0, 0, (int) (GRHEIGHT * 1.777777777778), GRHEIGHT);
 
+			// drawing enemies
 			for (Rectangle rect : enemies) {
 				gc.drawImage(robo, rect);
 			}
 
 			// animating projectiles/bullets
 			for (Rectangle rect : bullets) {
-				gc.drawImage(bulletBottom, rect);
+				gc.drawImage(bulletBottom, rect, size, size);
 
 				// basically nerfing bullet speed by using this if statement
 				// so bullet only moves every factor of 5
@@ -317,12 +324,17 @@ public class AnimationMain extends Rectangle {
 				}
 				if (rect.width == 0 && rect.height == 0)
 					hit.add(rect);
+				for (Rectangle enem : enemies) {
+					if (rect.intersects(enem)) {
+						destroyedEnemies.add(enem);
+						hit.add(rect);
+					}
+				}
 			}
 			bulletSpeed++; // incrementing counter for above statement
 
 			// removing hit bullets from main bullets list
 			bullets.removeAll(hit);
-			System.out.println(bullets.size());
 			enemies.removeAll(destroyedEnemies);
 
 			// Forcefield
@@ -368,7 +380,8 @@ public class AnimationMain extends Rectangle {
 			}
 			// reload button
 			gc.drawImage(reloadButton, ReloadButton.x, ReloadButton.y, ReloadButton.width, ReloadButton.height);
-
+			
+			gc.drawString(String.valueOf(forceStrength), 500, 500);
 			// bullets
 			if (bulletsLeft < 13) {
 				for (int b = 0; b < bulletsLeft; b++) {

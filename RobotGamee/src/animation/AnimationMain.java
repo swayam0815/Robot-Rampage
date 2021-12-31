@@ -22,7 +22,6 @@ import hsa2.GraphicsConsole;
 public class AnimationMain extends Rectangle {
 
 	public static void main(String[] args) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-
 		new AnimationMain();
 	}
 
@@ -61,7 +60,8 @@ public class AnimationMain extends Rectangle {
 			.getImage(gc.getClass().getClassLoader().getResource("gunshot fire.png"));
 
 	// robot pictures
-	private Image robo = Toolkit.getDefaultToolkit().getImage(gc.getClass().getClassLoader().getResource("enemy.png"));
+	private Image robo = Toolkit.getDefaultToolkit().
+			getImage(gc.getClass().getClassLoader().getResource("enemy.png"));
 
 	// gun pictures
 	private static Image pistolImg = Toolkit.getDefaultToolkit()
@@ -91,8 +91,6 @@ public class AnimationMain extends Rectangle {
 	private int fireCounter; // counter for the fire out of the gun
 	private int score; // score of the player
 
-	private int pistolX;
-	private int pistolY;
 	private int targetXSpeed = 1;
 	private int targetYSpeed = 1;
 
@@ -112,14 +110,15 @@ public class AnimationMain extends Rectangle {
 
 	// gun object for player guns
 	// damage, reload time, bullet #, price, fire rate
-	private static Gun pistol = new Gun(10, 1, 7, 0, 2, pistolImg, pistolFlipped);
-//	private static Gun AR15 = new Gun(6, 2, 30, 1500, 5);
-	private static Gun sniper = new Gun(30, 4, 10, 4000, 5, sniperImg, sniperFlipped);
-//	private static Gun minigun = new Gun(3, 8, 100, 8500, 5);
-	private static Gun grenadeLauncher = new Gun(50, 5, 5, 12000, 5, grenadeLauncherImg, grenadeLauncherFlipped);
-//	private static Gun hose = new Gun(2, 10, 1000, 20000, 5);
+	private static Gun pistol = new Gun(10, 100, 7, 0, 2, pistolImg, pistolFlipped);
+//	private static Gun AR15 = new Gun(6, 200, 30, 1500, 5);
+	private static Gun sniper = new Gun(30, 250, 10, 4000, 5, sniperImg, sniperFlipped);
+//	private static Gun minigun = new Gun(3, 8, 400, 8500, 5);
+	private static Gun grenadeLauncher = new Gun(50, 170, 5, 12000, 5, grenadeLauncherImg, grenadeLauncherFlipped);
+//	private static Gun hose = new Gun(2, 800, 1000, 20000, 5);
 
 	private static Gun equippedGun = pistol; // the gun being held by the player
+	private Rectangle player = new Rectangle(0,0,(int) (GRHEIGHT / 2 * 1.777777777777778), GRHEIGHT / 2);
 
 	private Rectangle enemy = new Rectangle(x, y, size, size);
 	private static boolean defeat = false;
@@ -169,7 +168,7 @@ public class AnimationMain extends Rectangle {
 
 		// set the value for all variables
 		bulletsLeft = equippedGun.getMagazineSize();
-		reload = equippedGun.getReloadTime();
+		reload = 0;
 		reloading = false;
 		canShoot = true;
 		shotFired = false;
@@ -254,8 +253,8 @@ public class AnimationMain extends Rectangle {
 			numOfShots = 0;
 
 		// sets the coordinates for the moving hands
-		pistolX = GRWIDTH - (GRHEIGHT / 2) + (CrossHair.x / 5) + 10;
-		pistolY = GRHEIGHT - (GRHEIGHT / 2) + (CrossHair.y / 5) + 10;
+		player.x = GRWIDTH - (GRHEIGHT / 2) + (CrossHair.x / 5) + 10;
+		player.y = GRHEIGHT - (GRHEIGHT / 2) + (CrossHair.y / 5) + 10;
 
 	}
 
@@ -276,10 +275,10 @@ public class AnimationMain extends Rectangle {
 
 		for (Rectangle rect : enemies) {
 
-			if (rect.x < pistolX + moveX + (pistolX / 8))
+			if (rect.x < player.x + moveX + (player.x / 8))
 				rect.x += 2;
 
-			if (rect.x > pistolX + moveX + (pistolX / 8))
+			if (rect.x > player.x + moveX + (player.x / 8))
 				rect.x -= 2;
 
 			if (counter % 2 == 0)
@@ -287,6 +286,9 @@ public class AnimationMain extends Rectangle {
 
 			rect.width += y * 5;
 			rect.height += y * 5;
+			//rect.height = rect.width = rect.y + size;
+			//this is for robots to increase size when moving forward
+
 
 			counter++;
 
@@ -297,6 +299,8 @@ public class AnimationMain extends Rectangle {
 
 			if (rect.x < 0)
 				rect.x = 1;
+			if (rect.x + rect.width > GRWIDTH)
+				rect.x = GRWIDTH - rect.width;
 		}
 
 	}
@@ -316,12 +320,12 @@ public class AnimationMain extends Rectangle {
 
 			// animating projectiles/bullets
 			for (Rectangle rect : bullets) {
-				gc.drawImage(bulletBottom, rect, size, size);
+				gc.drawImage(bulletBottom, rect, rect.width, rect.height);
 
 				// basically nerfing bullet speed by using this if statement
-				// so bullet only moves every factor of 5
+				// so bullet only moves every factor of FireRate
 
-				if (bulletSpeed % pistol.getFireRate() == 0) {
+				if (bulletSpeed % equippedGun.getFireRate() == 0) {
 					rect.y--;
 					rect.width--;
 					rect.height--;
@@ -346,11 +350,11 @@ public class AnimationMain extends Rectangle {
 
 			// fire out of the gun
 			if (shotFired || fireCounter < 3) {
-				if (pistolX + moveX > GRWIDTH / 3)
-					gc.drawImage(gunshotFire, (int) (pistolX - (GRHEIGHT / 5) * 1.85) + moveX, pistolY - GRHEIGHT / 5,
+				if (player.x + moveX > GRWIDTH / 3)
+					gc.drawImage(gunshotFire, (int) (player.x - (GRHEIGHT / 5) * 1.85) + moveX, player.y - GRHEIGHT / 5,
 							GRWIDTH / 10 * 6, GRHEIGHT / 10 * 7);
 				else
-					gc.drawImage(gunshotFire, (int) (pistolX - (GRHEIGHT / 5) * 0.5) + moveX, pistolY - GRHEIGHT / 5,
+					gc.drawImage(gunshotFire, (int) (player.x - (GRHEIGHT / 5) * 0.5) + moveX, player.y - GRHEIGHT / 5,
 							GRWIDTH / 10 * 6, GRHEIGHT / 10 * 7);
 
 				fireCounter++;
@@ -360,19 +364,19 @@ public class AnimationMain extends Rectangle {
 			gc.drawImage(crosshair, CrossHair.x, CrossHair.y, CrossHair.width, CrossHair.height);
 
 			// pistol in hand
-			if (pistolX + moveX > GRWIDTH / 3)
-				gc.drawImage(equippedGun.getPic(), pistolX + moveX, pistolY, (int) (GRHEIGHT / 2 * 1.777777777777778),
-						GRHEIGHT / 2);
+			if (player.x + moveX > GRWIDTH / 3)
+				gc.drawImage(equippedGun.getPic(), player.x + moveX, player.y, 
+						player.width, player.height);
 			else
-				gc.drawImage(equippedGun.getPicFlipped(), pistolX + moveX, pistolY,
-						(int) (GRHEIGHT / 2 * 1.777777777777778), GRHEIGHT / 2);
+				gc.drawImage(equippedGun.getPicFlipped(), player.x + moveX, player.y,
+						player.width, player.height);
 
 			// reloading process
 			if (reloading) {
 				gc.setColor(Color.DARK_GRAY);
 				gc.fillArc(ReloadButton.x - (ReloadButton.width / 6), ReloadButton.y - (ReloadButton.width / 6),
 						ReloadButton.width * 8 / 6, ReloadButton.width * 8 / 6, 0, reload);
-				reload += (int) (GRHEIGHT / 200);
+				reload += (int) (GRHEIGHT / equippedGun.getReloadTime());
 				// the arc takes a full turn
 				if (reload > 360) {
 					reload = 0;

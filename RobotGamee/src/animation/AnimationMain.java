@@ -53,12 +53,8 @@ public class AnimationMain extends Rectangle {
 			.getImage(gc.getClass().getClassLoader().getResource("bullet cartoon.png"));
 	private Image crosshair = Toolkit.getDefaultToolkit()
 			.getImage(gc.getClass().getClassLoader().getResource("crosshair.png"));
-	private Image dartboardImg = Toolkit.getDefaultToolkit()
-			.getImage(gc.getClass().getClassLoader().getResource("dartboard.png"));
 	private Image reloadButton = Toolkit.getDefaultToolkit()
 			.getImage(gc.getClass().getClassLoader().getResource("reload button.png"));
-	private Image bulletholeImg = Toolkit.getDefaultToolkit()
-			.getImage(gc.getClass().getClassLoader().getResource("bullethole.png"));
 	private Image bulletBottom = Toolkit.getDefaultToolkit()
 			.getImage(gc.getClass().getClassLoader().getResource("Bullet Bottom.png"));
 	private Image gunshotFire = Toolkit.getDefaultToolkit()
@@ -72,6 +68,14 @@ public class AnimationMain extends Rectangle {
 			.getImage(gc.getClass().getClassLoader().getResource("Pistol POV.png"));
 	private static Image pistolFlipped = Toolkit.getDefaultToolkit()
 			.getImage(gc.getClass().getClassLoader().getResource("Pistol POV flipped.png"));
+	private static Image sniperImg = Toolkit.getDefaultToolkit()
+			.getImage(gc.getClass().getClassLoader().getResource("Sniper POV.png"));
+	private static Image sniperFlipped = Toolkit.getDefaultToolkit()
+			.getImage(gc.getClass().getClassLoader().getResource("Sniper POV flipped.png"));
+	private static Image grenadeLauncherImg = Toolkit.getDefaultToolkit()
+			.getImage(gc.getClass().getClassLoader().getResource("Grenade Launcher POV.png"));
+	private static Image grenadeLauncherFlipped = Toolkit.getDefaultToolkit()
+			.getImage(gc.getClass().getClassLoader().getResource("Grenade Launcher POV flipped.png"));
 
 	private Target CrossHair = new Target(); // this is the crosshair to aim with
 	private Target ReloadButton = new Target(); // this button reloads the gun
@@ -110,9 +114,9 @@ public class AnimationMain extends Rectangle {
 	// damage, reload time, bullet #, price, fire rate
 	private static Gun pistol = new Gun(10, 1, 7, 0, 2, pistolImg, pistolFlipped);
 //	private static Gun AR15 = new Gun(6, 2, 30, 1500, 5);
-//	private static Gun sniper = new Gun(30, 4, 10, 4000, 5);
+	private static Gun sniper = new Gun(30, 4, 10, 4000, 5, sniperImg, sniperFlipped);
 //	private static Gun minigun = new Gun(3, 8, 100, 8500, 5);
-//	private static Gun grenade = new Gun(50, 5, 5, 12000, 5);
+	private static Gun grenadeLauncher = new Gun(50, 5, 5, 12000, 5, grenadeLauncherImg, grenadeLauncherFlipped);
 //	private static Gun hose = new Gun(2, 10, 1000, 20000, 5);
 
 	private static Gun equippedGun = pistol; // the gun being held by the player
@@ -381,7 +385,11 @@ public class AnimationMain extends Rectangle {
 			// reload button
 			gc.drawImage(reloadButton, ReloadButton.x, ReloadButton.y, ReloadButton.width, ReloadButton.height);
 			
+			
+			
 			gc.drawString(String.valueOf(forceStrength), 500, 500);
+			
+			
 			// bullets
 			if (bulletsLeft < 13) {
 				for (int b = 0; b < bulletsLeft; b++) {

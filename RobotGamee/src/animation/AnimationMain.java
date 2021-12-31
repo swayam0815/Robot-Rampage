@@ -364,7 +364,7 @@ public class AnimationMain extends Rectangle {
 			gc.drawImage(crosshair, CrossHair.x, CrossHair.y, CrossHair.width, CrossHair.height);
 
 			// pistol in hand
-			if (player.x + moveX > GRWIDTH / 3)
+			if (player.x + moveX > GRWIDTH / 3 && CrossHair.x + CrossHair.width < player.x)
 				gc.drawImage(equippedGun.getPic(), player.x + moveX, player.y, 
 						player.width, player.height);
 			else

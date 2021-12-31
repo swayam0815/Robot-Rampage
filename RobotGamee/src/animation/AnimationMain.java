@@ -275,10 +275,10 @@ public class AnimationMain extends Rectangle {
 
 		for (Rectangle rect : enemies) {
 
-			if (rect.x < player.x + moveX + (player.x / 8))
+			if (rect.x + rect.width < player.x + moveX)
 				rect.x += 2;
 
-			if (rect.x > player.x + moveX + (player.x / 8))
+			if (rect.x > player.x + moveX + player.width)
 				rect.x -= 2;
 
 			if (counter % 2 == 0)

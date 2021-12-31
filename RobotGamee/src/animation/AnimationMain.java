@@ -60,8 +60,7 @@ public class AnimationMain extends Rectangle {
 			.getImage(gc.getClass().getClassLoader().getResource("gunshot fire.png"));
 
 	// robot pictures
-	private Image robo = Toolkit.getDefaultToolkit().
-			getImage(gc.getClass().getClassLoader().getResource("enemy.png"));
+	private Image robo = Toolkit.getDefaultToolkit().getImage(gc.getClass().getClassLoader().getResource("enemy.png"));
 
 	// gun pictures
 	private static Image pistolImg = Toolkit.getDefaultToolkit()
@@ -118,7 +117,7 @@ public class AnimationMain extends Rectangle {
 //	private static Gun hose = new Gun(2, 800, 1000, 20000, 5);
 
 	private static Gun equippedGun = pistol; // the gun being held by the player
-	private Rectangle player = new Rectangle(0,0,(int) (GRHEIGHT / 2 * 1.777777777777778), GRHEIGHT / 2);
+	private Rectangle player = new Rectangle(0, 0, (int) (GRHEIGHT / 2 * 1.777777777777778), GRHEIGHT / 2);
 
 	private Rectangle enemy = new Rectangle(x, y, size, size);
 	private static boolean defeat = false;
@@ -128,8 +127,7 @@ public class AnimationMain extends Rectangle {
 	private static int wave = 0;
 	private ArrayList<Rectangle> destroyedEnemies = new ArrayList<Rectangle>();
 	private static boolean newWave = true;
-	
-	
+
 	private static int forceStrength = 100;
 
 	private int initX;
@@ -281,20 +279,23 @@ public class AnimationMain extends Rectangle {
 			if (rect.x > player.x + moveX + player.width)
 				rect.x -= 2;
 
-			if (counter % 2 == 0)
+			if (counter % 2 == 0) {
 				rect.y++;
 
-			rect.width += y * 5;
-			rect.height += y * 5;
-			//rect.height = rect.width = rect.y + size;
-			//this is for robots to increase size when moving forward
-
+			}
+			
+			if(counter % 5 == 0) {
+				rect.width++;
+				rect.height++;
+			}
+			// rect.height = rect.width = rect.y + size;
+			// this is for robots to increase size when moving forward
 
 			counter++;
 
 			if (rect.y >= GRHEIGHT - (size + size / 2)) {
 				rect.y = GRHEIGHT - (size + size / 2);
-				forceStrength--;	
+				forceStrength--;
 			}
 
 			if (rect.x < 0)
@@ -320,7 +321,7 @@ public class AnimationMain extends Rectangle {
 
 			// animating projectiles/bullets
 			for (Rectangle rect : bullets) {
-				gc.drawImage(bulletBottom, rect, rect.width, rect.height);
+				gc.drawImage(bulletBottom, rect);
 
 				// basically nerfing bullet speed by using this if statement
 				// so bullet only moves every factor of FireRate
@@ -365,11 +366,9 @@ public class AnimationMain extends Rectangle {
 
 			// pistol in hand
 			if (player.x + moveX > GRWIDTH / 3 && CrossHair.x + CrossHair.width < player.x)
-				gc.drawImage(equippedGun.getPic(), player.x + moveX, player.y, 
-						player.width, player.height);
+				gc.drawImage(equippedGun.getPic(), player.x + moveX, player.y, player.width, player.height);
 			else
-				gc.drawImage(equippedGun.getPicFlipped(), player.x + moveX, player.y,
-						player.width, player.height);
+				gc.drawImage(equippedGun.getPicFlipped(), player.x + moveX, player.y, player.width, player.height);
 
 			// reloading process
 			if (reloading) {
@@ -388,12 +387,9 @@ public class AnimationMain extends Rectangle {
 			}
 			// reload button
 			gc.drawImage(reloadButton, ReloadButton.x, ReloadButton.y, ReloadButton.width, ReloadButton.height);
-			
-			
-			
+
 			gc.drawString(String.valueOf(forceStrength), 500, 500);
-			
-			
+
 			// bullets
 			if (bulletsLeft < 13) {
 				for (int b = 0; b < bulletsLeft; b++) {

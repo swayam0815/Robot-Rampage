@@ -74,7 +74,6 @@ public class AnimationMain extends Rectangle {
 			.getImage(gc.getClass().getClassLoader().getResource("Pistol POV flipped.png"));
 
 	private Target CrossHair = new Target(); // this is the crosshair to aim with
-	private Target dartboard = new Target(); // the target to shoot at
 	private Target ReloadButton = new Target(); // this button reloads the gun
 	private Target[] bulletholes = new Target[20]; // all the bullet holes are stored here
 
@@ -109,7 +108,7 @@ public class AnimationMain extends Rectangle {
 
 	// gun object for player guns
 	// damage, reload time, bullet #, price, fire rate
-	private static Gun pistol = new Gun(10, 1, 7, 0, 5, pistolImg, pistolFlipped);
+	private static Gun pistol = new Gun(10, 1, 7, 0, 2, pistolImg, pistolFlipped);
 //	private static Gun AR15 = new Gun(6, 2, 30, 1500, 5);
 //	private static Gun sniper = new Gun(30, 4, 10, 4000, 5);
 //	private static Gun minigun = new Gun(3, 8, 100, 8500, 5);
@@ -140,9 +139,7 @@ public class AnimationMain extends Rectangle {
 			if (!defeat)
 				// enemyMechanics();
 
-				moveTarget(dartboard);
-
-			drawGraphics();
+				drawGraphics();
 
 			gc.sleep(1);
 		}
@@ -162,11 +159,6 @@ public class AnimationMain extends Rectangle {
 		ReloadButton.x = (GRWIDTH / 20) - (GRWIDTH / 50);
 		ReloadButton.y = GRHEIGHT - (GRWIDTH / 10);
 		ReloadButton.width = ReloadButton.height = GRHEIGHT / 10;
-
-		// set the coordinates of the target
-		dartboard.width = dartboard.height = GRHEIGHT / 4;
-		dartboard.x = GRWIDTH / 4; // 31 * GRWIDTH / 45 - dartboard.width //this is the limit
-		dartboard.y = GRHEIGHT / 5; // 63 * GRHEIGHT / 90 - dartboard.height //this is the limit
 
 		// set the value for all variables
 		bulletsLeft = equippedGun.getMagazineSize();
@@ -299,32 +291,6 @@ public class AnimationMain extends Rectangle {
 
 	}
 
-	private void moveTarget(Target target) {
-		target.x += targetXSpeed;
-		target.y += targetYSpeed;
-
-		// from the top
-		if (target.y < 0) {
-			target.y = 1;
-			targetYSpeed *= -1;
-		}
-		// from the bottom
-		if (target.y > 63 * GRHEIGHT / 90 - dartboard.height) {
-			target.y = (63 * GRHEIGHT / 90 - dartboard.height) - 1;
-			targetYSpeed *= -1;
-		}
-		// from the left
-		if (target.x < 0) {
-			target.x = 1;
-			targetXSpeed *= -1;
-		}
-		// from the right
-		if (target.x > 31 * GRWIDTH / 45 - dartboard.width) {
-			target.x = (31 * GRWIDTH / 45 - dartboard.width) - 1;
-			targetXSpeed *= -1;
-		}
-	}
-
 	private void drawGraphics() {
 		synchronized (gc) {
 			gc.setBackgroundColor(Color.BLACK);
@@ -332,9 +298,6 @@ public class AnimationMain extends Rectangle {
 
 			// background
 			gc.drawImage(backGround, 0, 0, (int) (GRHEIGHT * 1.777777777778), GRHEIGHT);
-
-			// target
-			gc.drawImage(dartboardImg, dartboard.x, dartboard.y, dartboard.width, dartboard.height);
 
 			for (Rectangle rect : enemies) {
 				gc.drawImage(robo, rect);

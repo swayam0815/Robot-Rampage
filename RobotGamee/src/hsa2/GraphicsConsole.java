@@ -1867,12 +1867,9 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 		canvas.drawOval(rect.x, rect.y, rect.width, rect.height);
 		
 	}
+	
 	public void drawImage(Image img, Rectangle rect) {
 		// TODO Auto-generated method stub
 		canvas.drawImage(img, rect.x, rect.y, rect.width, rect.height);	
-	}
-	public void drawImage(Image img, Rectangle rect, int width, int height) {
-		// TODO Auto-generated method stub
-		canvas.drawImage(img, rect.x, rect.y, width, height);	
 	}
 }

@@ -60,8 +60,10 @@ public class AnimationMain extends Rectangle {
 			.getImage(gc.getClass().getClassLoader().getResource("gunshot fire.png"));
 
 	// robot pictures
-	//private Image robo = Toolkit.getDefaultToolkit().getImage(gc.getClass().getClassLoader().getResource("enemy.png"));
-	private Image robo = Toolkit.getDefaultToolkit().getImage(gc.getClass().getClassLoader().getResource("Thomas face.png"));
+	// private Image robo =
+	// Toolkit.getDefaultToolkit().getImage(gc.getClass().getClassLoader().getResource("enemy.png"));
+	private Image robo = Toolkit.getDefaultToolkit()
+			.getImage(gc.getClass().getClassLoader().getResource("Thomas face.png"));
 
 	// gun pictures
 	private static Image pistolImg = Toolkit.getDefaultToolkit()
@@ -288,8 +290,8 @@ public class AnimationMain extends Rectangle {
 				rect.y++;
 
 			}
-			
-			if(counter % 5 == 0) {
+
+			if (counter % 5 == 0) {
 				rect.width++;
 				rect.height++;
 			}
@@ -339,7 +341,10 @@ public class AnimationMain extends Rectangle {
 				if (rect.width == 0 && rect.height == 0)
 					hit.add(rect);
 				for (Rectangle enem : enemies) {
-					if (rect.intersects(enem)) {
+					if ((rect.x <= enem.x + (size / 5) || rect.x >= enem.x)
+							&& (rect.y <= enem.y + (size / 5) || rect.y >= enem.y)
+
+					) {
 						destroyedEnemies.add(enem);
 						hit.add(rect);
 					}
@@ -370,7 +375,7 @@ public class AnimationMain extends Rectangle {
 			gc.drawImage(crosshair, CrossHair.x, CrossHair.y, CrossHair.width, CrossHair.height);
 
 			// pistol in hand
-			if (CrossHair.x  < player.x + moveX + (player.width / 2))
+			if (CrossHair.x < player.x + moveX + (player.width / 2))
 				gc.drawImage(equippedGun.getPic(), player.x + moveX, player.y, player.width, player.height);
 			else
 				gc.drawImage(equippedGun.getPicFlipped(), player.x + moveX, player.y, player.width, player.height);

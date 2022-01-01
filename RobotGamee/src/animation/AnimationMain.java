@@ -60,7 +60,8 @@ public class AnimationMain extends Rectangle {
 			.getImage(gc.getClass().getClassLoader().getResource("gunshot fire.png"));
 
 	// robot pictures
-	private Image robo = Toolkit.getDefaultToolkit().getImage(gc.getClass().getClassLoader().getResource("enemy.png"));
+	//private Image robo = Toolkit.getDefaultToolkit().getImage(gc.getClass().getClassLoader().getResource("enemy.png"));
+	private Image robo = Toolkit.getDefaultToolkit().getImage(gc.getClass().getClassLoader().getResource("Thomas face.png"));
 
 	// gun pictures
 	private static Image pistolImg = Toolkit.getDefaultToolkit()

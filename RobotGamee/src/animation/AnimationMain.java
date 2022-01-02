@@ -82,6 +82,10 @@ public class AnimationMain extends Rectangle {
 			.getImage(gc.getClass().getClassLoader().getResource("Grenade Launcher POV.png"));
 	private static Image grenadeLauncherFlipped = Toolkit.getDefaultToolkit()
 			.getImage(gc.getClass().getClassLoader().getResource("Grenade Launcher POV flipped.png"));
+	private static Image hoseImg = Toolkit.getDefaultToolkit()
+			.getImage(gc.getClass().getClassLoader().getResource("Water Hose POV.png"));
+	private static Image hoseFlipped = Toolkit.getDefaultToolkit()
+			.getImage(gc.getClass().getClassLoader().getResource("Water Hose POV flipped.png"));
 
 	private Target CrossHair = new Target(); // this is the crosshair to aim with
 	private Target ReloadButton = new Target(); // this button reloads the gun
@@ -121,9 +125,9 @@ public class AnimationMain extends Rectangle {
 	private static Gun sniper = new Gun(30, 250, 10, 4000, 5, sniperImg, sniperFlipped);
 //	private static Gun minigun = new Gun(3, 8, 400, 8500, 5);
 	private static Gun grenadeLauncher = new Gun(50, 170, 5, 12000, 5, grenadeLauncherImg, grenadeLauncherFlipped);
-//	private static Gun hose = new Gun(2, 800, 1000, 20000, 5);
+	private static Gun hose = new Gun(2, 500, 1000, 20000, 5, hoseImg, hoseFlipped);
 
-	private static Gun equippedGun = AR15; // the gun being held by the player
+	private static Gun equippedGun = hose; // the gun being held by the player
 	private Rectangle player = new Rectangle(0, 0, (int) (GRHEIGHT / 2 * 1.777777777777778), GRHEIGHT / 2);
 
 	private Rectangle enemy = new Rectangle(x, y, size, size);

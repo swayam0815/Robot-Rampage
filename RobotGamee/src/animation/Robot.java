@@ -7,6 +7,7 @@ public class Robot {
 	private int damage;
 	private int health;
 	private int speed;
+	private int ATKSpeed;
 	private Image standImg;
 	private Image rightImg;
 	private Image leftImg;
@@ -14,10 +15,11 @@ public class Robot {
 	public static void main(String[] args) {
 	}
 	
-	public Robot(int damage, int health, int speed, Image standImg, Image rightImg, Image leftImg) {
+	public Robot(int damage, int health, int speed, int ATKSpeed, Image standImg, Image rightImg, Image leftImg) {
 		this.damage = damage;
 		this.health = health;
 		this.speed = speed;
+		this.ATKSpeed = ATKSpeed;
 		this.standImg = standImg;
 		this.rightImg = rightImg;
 		this.leftImg = leftImg;
@@ -37,6 +39,10 @@ public class Robot {
 	
 	public int getSpeed() {
 		return speed;
+	}
+	
+	public int getATKSpeed() {
+		return ATKSpeed;
 	}
 
 	public Image getStandImg() {

@@ -87,24 +87,19 @@ public class AnimationMain extends Rectangle {
 	private static Image hoseFlipped = Toolkit.getDefaultToolkit()
 			.getImage(gc.getClass().getClassLoader().getResource("Water Hose POV flipped.png"));
 
-	private Target CrossHair = new Target(); // this is the crosshair to aim with
-	private Target ReloadButton = new Target(); // this button reloads the gun
-	private Target[] bulletholes = new Target[20]; // all the bullet holes are stored here
+	private Rectangle CrossHair = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, 
+			GRHEIGHT / 10, GRHEIGHT / 10);	// this is the crosshair to aim with
+	private Rectangle ReloadButton = new Rectangle((GRWIDTH / 20) - (GRWIDTH / 50), 
+			GRHEIGHT - (GRWIDTH / 10), GRHEIGHT / 10, GRHEIGHT / 10);	// this button reloads the gun
 
-	private int bulletsLeft; // number of bullets left in the gun
-	private int reload; // provides an angle for the arc around the reload button
-	private boolean reloading; // checks if the gun is reloading
-	private boolean canShoot; // checks if the player is able to shoot
-	private boolean shotFired; // checks if the player has shot the gun
-//	private boolean kickback;
-	private int numOfShots; // counts the number of shots fired
-	private int fireCounter; // counter for the fire out of the gun
-	private int score; // score of the player
-
-	private int targetXSpeed = 1;
-	private int targetYSpeed = 1;
-
-	private int moveX = 0;
+	private int bulletsLeft;	// number of bullets left in the gun
+	private int reload;			// provides an angle for the arc around the reload button
+	private boolean reloading;	// checks if the gun is reloading
+	private boolean canShoot;	// checks if the player is able to shoot
+	private boolean shotFired;	// checks if the player has shot the gun
+	private int fireCounter;	// counter for the fire out of the gun
+	private int moveX = 0;		//the amount of movement for the player
+	private static int forceStrength = 100;	//health of the forcefield protecting the player
 
 	// enemy/robot variables
 	private int x = 0;
@@ -127,22 +122,18 @@ public class AnimationMain extends Rectangle {
 	private static Gun grenadeLauncher = new Gun(50, 170, 5, 12000, 5, grenadeLauncherImg, grenadeLauncherFlipped);
 	private static Gun hose = new Gun(2, 500, 1000, 20000, 5, hoseImg, hoseFlipped);
 
-	private static Gun equippedGun = hose; // the gun being held by the player
+	private static Gun equippedGun = pistol; // the gun being held by the player
 	private Rectangle player = new Rectangle(0, 0, (int) (GRHEIGHT / 2 * 1.777777777777778), GRHEIGHT / 2);
 
-	private Rectangle enemy = new Rectangle(x, y, size, size);
-	private static boolean defeat = false;
 
 	// THE ENEMIES
+	private Rectangle enemy = new Rectangle(x, y, size, size);
+	private static boolean defeat = false;
+	
 	private ArrayList<Rectangle> enemies = new ArrayList<Rectangle>();
 	private static int wave = 0;
 	private ArrayList<Rectangle> destroyedEnemies = new ArrayList<Rectangle>();
 	private static boolean newWave = true;
-
-	private static int forceStrength = 100;
-
-	private int initX;
-	private int initY = 0;
 
 	private AnimationMain() throws LineUnavailableException, IOException, UnsupportedAudioFileException {
 		initiate();
@@ -163,17 +154,7 @@ public class AnimationMain extends Rectangle {
 	private void initiate() {
 		gc.enableMouseMotion();
 		gc.enableMouse(); // enables motion and click for the mouse
-		gc.setFont(new Font("Georgia", Font.PLAIN, 50));
-
-		// sets the initial coordinates of the corsshair
-		CrossHair.x = GRWIDTH / 2;
-		CrossHair.y = GRHEIGHT / 2;
-		CrossHair.width = CrossHair.height = GRHEIGHT / 10;
-
-		// sets the coordinates of the reload button
-		ReloadButton.x = (GRWIDTH / 20) - (GRWIDTH / 50);
-		ReloadButton.y = GRHEIGHT - (GRWIDTH / 10);
-		ReloadButton.width = ReloadButton.height = GRHEIGHT / 10;
+		gc.setFont(new Font("Georgia", Font.PLAIN, 50));	//
 
 		// set the value for all variables
 		bulletsLeft = equippedGun.getMagazineSize();
@@ -181,9 +162,7 @@ public class AnimationMain extends Rectangle {
 		reloading = false;
 		canShoot = true;
 		shotFired = false;
-		numOfShots = 0;
 		fireCounter = 10;
-		score = 0;
 
 	}
 
@@ -222,7 +201,6 @@ public class AnimationMain extends Rectangle {
 			if (bulletsLeft > 0) {
 				shotFired = true;
 				bulletsLeft--;
-				numOfShots++;
 				fireCounter = 0;
 
 				// gunshot sound
@@ -251,16 +229,6 @@ public class AnimationMain extends Rectangle {
 		CrossHair.x = gc.getMouseX() - (CrossHair.width / 2);
 		CrossHair.y = gc.getMouseY() - (CrossHair.height / 2);
 
-		// sets the coordinates of each bullet hole when a shot is fired
-		if (shotFired) {
-			bulletholes[numOfShots - 1].width = bulletholes[numOfShots - 1].height = GRHEIGHT / 50;
-			bulletholes[numOfShots - 1].x = gc.getMouseX();
-			bulletholes[numOfShots - 1].y = gc.getMouseY();
-			shotFired = false;
-		} // resets the coordinates for older bullet holes
-		if (numOfShots > bulletholes.length - 1)
-			numOfShots = 0;
-
 		// sets the coordinates for the moving hands
 		player.x = GRWIDTH - (GRHEIGHT / 2) + (CrossHair.x / 5) + 10;
 		player.y = GRHEIGHT - (GRHEIGHT / 2) + (CrossHair.y / 5) + 10;
@@ -280,7 +248,7 @@ public class AnimationMain extends Rectangle {
 	public void enemyMechanics() {
 
 		if (counter % 10 == 0)
-			enemies.add(new Rectangle(ranNum(1, GRWIDTH), initY, size, size));
+			enemies.add(new Rectangle(ranNum(1, GRWIDTH), 0, size, size));
 
 		for (Rectangle rect : enemies) {
 

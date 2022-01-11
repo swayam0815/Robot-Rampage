@@ -345,13 +345,20 @@ public class AnimationMain extends Rectangle {
 				if (rect.width == 0 && rect.height == 0)
 					hit.add(rect);
 				for (Rectangle enem : enemies) {
-					if ((rect.x <= enem.x + (size / 5) || rect.x >= enem.x)
-							&& (rect.y <= enem.y + (size / 5) || rect.y >= enem.y)
 
-					) {
+					// something for splash damage stuff
+					/*
+					 * if ((rect.x <= enem.x + (size / 5) || rect.x >= enem.x) && (rect.y <= enem.y
+					 * + (size / 5) || rect.y >= enem.y)
+					 * 
+					 * ) { destroyedEnemies.add(enem); hit.add(rect); }
+					 */
+
+					if (rect.intersects(enem)) {
 						destroyedEnemies.add(enem);
 						hit.add(rect);
 					}
+
 				}
 			}
 			bulletSpeed++; // incrementing counter for above statement

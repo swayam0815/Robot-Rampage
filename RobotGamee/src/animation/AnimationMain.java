@@ -101,6 +101,8 @@ public class AnimationMain extends Rectangle {
 	private int moveX = 0;		//the amount of movement for the player
 	private static int forceStrength = 100;	//health of the forcefield protecting the player
 
+	private static boolean autoReload = true;	//code for purchasing to be added later
+	
 	// enemy/robot variables
 	private int x = 0;
 	private int y = 0;
@@ -185,7 +187,9 @@ public class AnimationMain extends Rectangle {
 		}
 
 		// gun reloads with the 'R' key OR by hovering over button
-		if (gc.isKeyDown(82) || (!reloading && CrossHair.intersects(ReloadButton))) {
+		if (gc.isKeyDown(82) || (!reloading && CrossHair.intersects(ReloadButton)) ||
+				(autoReload && bulletsLeft == 0)) {
+			bulletsLeft = -1;	//this makes the reload sound play ONLY once
 			reloading = true;
 			canShoot = false;
 

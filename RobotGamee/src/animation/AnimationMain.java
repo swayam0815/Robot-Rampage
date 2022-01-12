@@ -63,7 +63,7 @@ public class AnimationMain extends Rectangle {
 	// private Image robo =
 	// Toolkit.getDefaultToolkit().getImage(gc.getClass().getClassLoader().getResource("enemy.png"));
 	private Image robo = Toolkit.getDefaultToolkit()
-			.getImage(gc.getClass().getClassLoader().getResource("Thomas face.png"));
+			.getImage(gc.getClass().getClassLoader().getResource("tinyRobot stand.png"));
 
 	// gun pictures
 	private static Image pistolImg = Toolkit.getDefaultToolkit()
@@ -252,7 +252,7 @@ public class AnimationMain extends Rectangle {
 	public void enemyMechanics() {
 
 		if (counter % 10 == 0)
-			enemies.add(new Rectangle(ranNum(1, GRWIDTH), 0, size, size));
+			enemies.add(new Rectangle(ranNum(1, GRWIDTH), 0, size, (int)(size * 1.7777777777778)));
 
 		for (Rectangle rect : enemies) {
 

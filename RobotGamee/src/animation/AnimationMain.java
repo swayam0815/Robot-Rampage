@@ -87,19 +87,23 @@ public class AnimationMain extends Rectangle {
 	private static Image hoseFlipped = Toolkit.getDefaultToolkit()
 			.getImage(gc.getClass().getClassLoader().getResource("Water Hose POV flipped.png"));
 
-	private Rectangle CrossHair = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, 
-			GRHEIGHT / 10, GRHEIGHT / 10);	// this is the crosshair to aim with
-	private Rectangle ReloadButton = new Rectangle((GRWIDTH / 20) - (GRWIDTH / 50), 
-			GRHEIGHT - (GRWIDTH / 10), GRHEIGHT / 10, GRHEIGHT / 10);	// this button reloads the gun
+	private Rectangle CrossHair = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 10, GRHEIGHT / 10); // this is the
+																											// crosshair
+																											// to aim
+																											// with
+	private Rectangle ReloadButton = new Rectangle((GRWIDTH / 20) - (GRWIDTH / 50), GRHEIGHT - (GRWIDTH / 10),
+			GRHEIGHT / 10, GRHEIGHT / 10); // this button reloads the gun
 
-	private int bulletsLeft;	// number of bullets left in the gun
-	private int reload;			// provides an angle for the arc around the reload button
-	private boolean reloading;	// checks if the gun is reloading
-	private boolean canShoot;	// checks if the player is able to shoot
-	private boolean shotFired;	// checks if the player has shot the gun
-	private int fireCounter;	// counter for the fire out of the gun
-	private int moveX = 0;		//the amount of movement for the player
-	private static int forceStrength = 100;	//health of the forcefield protecting the player
+	private int bulletsLeft; // number of bullets left in the gun
+	private int reload; // provides an angle for the arc around the reload button
+	private boolean reloading; // checks if the gun is reloading
+	private boolean canShoot; // checks if the player is able to shoot
+	private boolean shotFired; // checks if the player has shot the gun
+	private int fireCounter; // counter for the fire out of the gun
+	private int moveX = 0; // the amount of movement for the player
+	private static int forceStrength = 100; // health of the forcefield protecting the player
+
+	private static boolean autoReload = true; // code for purchasing to be added later
 
 	// enemy/robot variables
 	private int x = 0;
@@ -125,11 +129,10 @@ public class AnimationMain extends Rectangle {
 	private static Gun equippedGun = pistol; // the gun being held by the player
 	private Rectangle player = new Rectangle(0, 0, (int) (GRHEIGHT / 2 * 1.777777777777778), GRHEIGHT / 2);
 
-
 	// THE ENEMIES
 	private Rectangle enemy = new Rectangle(x, y, size, size);
 	private static boolean defeat = false;
-	
+
 	private ArrayList<Rectangle> enemies = new ArrayList<Rectangle>();
 	private static int wave = 0;
 	private ArrayList<Rectangle> destroyedEnemies = new ArrayList<Rectangle>();
@@ -154,7 +157,7 @@ public class AnimationMain extends Rectangle {
 	private void initiate() {
 		gc.enableMouseMotion();
 		gc.enableMouse(); // enables motion and click for the mouse
-		gc.setFont(new Font("Georgia", Font.PLAIN, 50));	//
+		gc.setFont(new Font("Georgia", Font.PLAIN, 50)); //
 
 		// set the value for all variables
 		bulletsLeft = equippedGun.getMagazineSize();
@@ -185,7 +188,9 @@ public class AnimationMain extends Rectangle {
 		}
 
 		// gun reloads with the 'R' key OR by hovering over button
-		if (gc.isKeyDown(82) || (!reloading && CrossHair.intersects(ReloadButton))) {
+		if (gc.isKeyDown(82) || (!reloading && CrossHair.intersects(ReloadButton))
+				|| (autoReload && bulletsLeft == 0)) {
+			bulletsLeft = -1; // this makes the reload sound play ONLY once
 			reloading = true;
 			canShoot = false;
 
@@ -323,6 +328,9 @@ public class AnimationMain extends Rectangle {
 					 */
 
 					if (rect.intersects(enem)) {
+
+					if (rect.intersects(enem))
+//(rect.x <= enem.x + (size / 5) || rect.x >= enem.x) && (rect.y <= enem.y + (size / 5) || rect.y >= enem.y)
 						destroyedEnemies.add(enem);
 						hit.add(rect);
 					}
@@ -403,3 +411,4 @@ public class AnimationMain extends Rectangle {
 	}
 
 }
+

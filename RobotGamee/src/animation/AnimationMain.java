@@ -1,8 +1,6 @@
 package animation;
 
-import java.awt.Image;
-import java.awt.Rectangle;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,10 +10,6 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
 
 import hsa2.GraphicsConsole;
 
@@ -126,7 +120,7 @@ public class AnimationMain extends Rectangle {
 	private static Gun grenadeLauncher = new Gun(50, 170, 5, 12000, 5, grenadeLauncherImg, grenadeLauncherFlipped);
 	private static Gun hose = new Gun(2, 500, 1000, 20000, 5, hoseImg, hoseFlipped);
 
-	private static Gun equippedGun = pistol; // the gun being held by the player
+	private static Gun equippedGun = hose; // the gun being held by the player
 	private Rectangle player = new Rectangle(0, 0, (int) (GRHEIGHT / 2 * 1.777777777777778), GRHEIGHT / 2);
 
 	// THE ENEMIES
@@ -181,8 +175,10 @@ public class AnimationMain extends Rectangle {
 			moveX = 0;
 		if (moveX < -(GRWIDTH + (GRWIDTH / 11)))
 			moveX = -(GRWIDTH + (GRWIDTH / 11));
-
-		if (gc.getMouseClick() > 0 && bulletsLeft > 0) {
+		
+		
+		// firing the gun
+		if ((gc.getMouseClick() > 0 || gc.isKeyDown(32)) && bulletsLeft > 0) {
 			bullets.add(new Rectangle(CrossHair.x + 15, CrossHair.y + 15, bulletSize, bulletSize));
 			bulletsLeft--;
 		}
@@ -201,34 +197,7 @@ public class AnimationMain extends Rectangle {
 			gunCocking.start();
 		}
 
-		// player shoots the gun
-		if (gc.getMouseClick() > 0 && canShoot) {
-			if (bulletsLeft > 0) {
-				shotFired = true;
-				bulletsLeft--;
-				fireCounter = 0;
 
-				// gunshot sound
-				gunshotEffect = AudioSystem.getAudioInputStream(new File("gunshot sound.wav").getAbsoluteFile());
-				gunshotSound = AudioSystem.getClip(); // saving the audio into clip object so program can use
-				gunshotSound.open(gunshotEffect);
-				gunshotSound.start();
-
-				// shell fall sound
-				shellFallEffect = AudioSystem.getAudioInputStream(new File("bullet shell fall.wav").getAbsoluteFile());
-				shellFall = AudioSystem.getClip();
-				shellFall.open(shellFallEffect);
-				shellFall.start();
-
-			} else {
-				// empty gun sound
-				dryFireEffect = AudioSystem.getAudioInputStream(new File("gun dry fire.wav").getAbsoluteFile());
-				dryFire = AudioSystem.getClip();
-				dryFire.open(dryFireEffect);
-				dryFire.start();
-			}
-
-		}
 
 		// the crosshair moves to the position of mouse
 		CrossHair.x = gc.getMouseX() - (CrossHair.width / 2);
@@ -315,7 +284,7 @@ public class AnimationMain extends Rectangle {
 					rect.width--;
 					rect.height--;
 				}
-				if (rect.width == 0 && rect.height == 0)
+				if (rect.width <= 10 && rect.height <= 1)
 					hit.add(rect);
 				for (Rectangle enem : enemies) {
 

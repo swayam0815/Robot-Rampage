@@ -26,21 +26,22 @@ public class New {
 	private static Color enemgyC = Color.RED;
 
 	public static void main(String[] args) {
-		new New();
 	}
 
-	private New() {
-		gc.enableMouseMotion();
-		gc.enableMouse(); // enables motion and click for the mouse
-
-		while (gc.getKeyCode() != 'Q') {
-
-			mechanics();
-
-			drawGraphics();
-
-			gc.sleep(1);
-		}
+	public New() {
+	
+		/*
+		 * gc.enableMouseMotion(); gc.enableMouse(); // enables motion and click for the
+		 * mouse
+		 * 
+		 * while (gc.getKeyCode() != 'Q') {
+		 * 
+		 * mechanics();
+		 * 
+		 * drawGraphics();
+		 * 
+		 * gc.sleep(1);
+		 */		//}
 	}
 
 	public void mechanics() {
@@ -71,6 +72,9 @@ public class New {
 		// animating size
 		size = y / 4;
 
+	}
+	public static void shoot (int x) {
+		x--;
 	}
 
 	public void drawGraphics() {

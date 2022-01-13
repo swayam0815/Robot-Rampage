@@ -48,7 +48,7 @@ public class AnimationMain extends Rectangle {
     private Image bullet;
     //= ("bullet cartoon.png"));
     private Image crosshair;
-    = ("crosshair.png"));
+   // = ("crosshair.png"));
     private Image reloadButton;
     //= ("reload button.png"));
     private Image bulletBottom;

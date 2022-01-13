@@ -39,47 +39,28 @@ public class AnimationMain extends Rectangle {
 	private static AudioInputStream shellFallEffect;
 
 	// pictures
-	private Image backGround;
-	// = ("bakground.jpg"));
-	private Image forcefield;
-	// = ("ForceField.png"));
-	private Image bullet;
-	// = ("bullet cartoon.png"));
-	private Image crosshair;
-	// = ("crosshair.png"));
-	private Image reloadButton;
-	// = ("reload button.png"));
-	private Image bulletBottom;
-	// = ("Bullet Bottom.png"));
-	private Image gunshotFire;
-	// = ("gunshot fire.png"));
+	private Image backGround;	//"bakground.jpg"
+	private Image forcefield;	//"ForceField.png"
+	private Image bullet;		//"bullet cartoon.png"
+	private Image crosshair;	//"crosshair.png"
+	private Image reloadButton;	//"reload button.png"
+	private Image bulletBottom;	//"Bullet Bottom.png"
+	private Image gunshotFire;	//"gunshot fire.png"
 
 	// robot pictures
-	private Image robo;
-	// = ("Thomas face.png"));
+	private Image robo;			//"Thomas face.png"
 
 	// gun pictures
-	private static Image pistolImg;
-	// =("Pistol POV.png"));
-	private static Image pistolFlipped;
-	/// = ("Pistol POV flipped.png"));
-
-	private static Image AR15Img = Toolkit.getDefaultToolkit()
-			.getImage(gc.getClass().getClassLoader().getResource("AR15 POV.png"));
-	private static Image AR15Flipped = Toolkit.getDefaultToolkit()
-			.getImage(gc.getClass().getClassLoader().getResource("AR15 POV flipped.png"));
-	private static Image sniperImg = Toolkit.getDefaultToolkit()
-			.getImage(gc.getClass().getClassLoader().getResource("Sniper POV.png"));
-	private static Image sniperFlipped = Toolkit.getDefaultToolkit()
-			.getImage(gc.getClass().getClassLoader().getResource("Sniper POV flipped.png"));
-	private static Image grenadeLauncherImg = Toolkit.getDefaultToolkit()
-			.getImage(gc.getClass().getClassLoader().getResource("Grenade Launcher POV.png"));
-	private static Image grenadeLauncherFlipped = Toolkit.getDefaultToolkit()
-			.getImage(gc.getClass().getClassLoader().getResource("Grenade Launcher POV flipped.png"));
-	private static Image hoseImg = Toolkit.getDefaultToolkit()
-			.getImage(gc.getClass().getClassLoader().getResource("Water Hose POV.png"));
-	private static Image hoseFlipped = Toolkit.getDefaultToolkit()
-			.getImage(gc.getClass().getClassLoader().getResource("Water Hose POV flipped.png"));
+	private static Image pistolImg;				//"Pistol POV.png"
+	private static Image pistolFlipped;			//"Pistol POV flipped.png"
+	private static Image AR15Img;				//"AR15 POV.png"
+	private static Image AR15Flipped;			//"AR15 POV flipped.png"
+	private static Image sniperImg;				//"Sniper POV.png"
+	private static Image sniperFlipped;			//"Sniper POV flipped.png"
+	private static Image grenadeLauncherImg;	//"Grenade Launcher POV.png"
+	private static Image grenadeLauncherFlipped;//"Grenade Launcher POV flipped.png"
+	private static Image hoseImg;				//"Water Hose POV.png"
+	private static Image hoseFlipped;			//"Water Hose POV flipped.png"
 
 	private Rectangle CrossHair = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 10, GRHEIGHT / 10); // this is the
 																											// crosshair
@@ -155,7 +136,6 @@ public class AnimationMain extends Rectangle {
 	private void initiate() throws IOException {
 
 		backGround = ImageIO.read(new File("bakground.png"));
-
 		forcefield = ImageIO.read(new File(("ForceField.png")));
 		bullet = ImageIO.read(new File(("bullet cartoon.png")));
 		crosshair = ImageIO.read(new File("crosshair.png"));
@@ -169,7 +149,26 @@ public class AnimationMain extends Rectangle {
 		// gun pictures
 		pistolImg = ImageIO.read(new File("Pistol POV.png"));
 		pistolFlipped = ImageIO.read(new File("Pistol POV flipped.png"));
+		AR15Img = ImageIO.read(new File("AR15 POV.png"));
+		AR15Flipped = ImageIO.read(new File("AR15 POV flipped.png"));
+		sniperImg = ImageIO.read(new File("Sniper POV.png"));
+		sniperFlipped = ImageIO.read(new File("Sniper POV flipped.png"));
+		grenadeLauncherImg = ImageIO.read(new File("Grenade Launcher POV.png"));
+		grenadeLauncherFlipped = ImageIO.read(new File("Grenade Launcher POV flipped.png"));
+		hoseImg = ImageIO.read(new File("Water Hose POV.png"));
+		hoseFlipped = ImageIO.read(new File("Water Hose POV flipped.png"));
 
+//		//gun objects
+//		// damage, reload time, bullet #, price, fire rate, pic, picFlipped
+//		pistol = new Gun(10, 100, 7, 0, 2, pistolImg, pistolFlipped);
+//		AR15 = new Gun(6, 200, 30, 1500, 1, AR15Img, AR15Flipped);
+//		sniper = new Gun(30, 250, 10, 4000, 5, sniperImg, sniperFlipped);
+////		minigun = new Gun(3, 8, 400, 8500, 5);
+//		grenadeLauncher = new Gun(50, 170, 5, 12000, 5, grenadeLauncherImg, grenadeLauncherFlipped);
+//		hose = new Gun(2, 500, 1000, 20000, 5, hoseImg, hoseFlipped);
+		
+
+		
 		gc.enableMouseMotion();
 		gc.enableMouse(); // enables motion and click for the mouse
 		gc.setFont(new Font("Georgia", Font.PLAIN, 50)); //
@@ -196,7 +195,8 @@ public class AnimationMain extends Rectangle {
 			moveX = 0;
 		if (moveX < -(GRWIDTH + (GRWIDTH / 11)))
 			moveX = -(GRWIDTH + (GRWIDTH / 11));
-
+		
+		//shooting the gun
 		if ((gc.getMouseClick() > 0 || gc.isKeyDown(32)) && bulletsLeft > 0) {
 			bullets.add(new Rectangle(CrossHair.x + 15, CrossHair.y + 15, bulletSize, bulletSize));
 			bulletsLeft--;

@@ -17,16 +17,19 @@ import hsa2.GraphicsConsole;
 public class AnimationMain extends Rectangle {
 
 	public static void main(String[] args) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-		new AnimationMain();
 	}
 
 	/***** Global Variables ******/
 	private static Dimension GRsize = Toolkit.getDefaultToolkit().getScreenSize(); // creates a variable to get screen
 																					// size
-	private static int GRHEIGHT = (int) GRsize.getHeight() - 70; // (int)GRsize.getHeight() - 70
-	private static int GRWIDTH = (int) (GRHEIGHT * 1.777777777778); // this sets the size of the grid to fit the screen
+	private int GRHEIGHT;
+	// = (int) GRsize.getHeight() - 70; // (int)GRsize.getHeight() - 70
+	private int GRWIDTH;// = (int) (GRHEIGHT * 1.777777777778); // this sets the size of the grid to fit
+								// the screen
 
-	private static GraphicsConsole gc = new GraphicsConsole(GRWIDTH, GRHEIGHT);
+	private GraphicsConsole gc;
+	//
+		//	= new GraphicsConsole(GRWIDTH, GRHEIGHT);
 
 	// sound effects
 	private static Clip gunshotSound;
@@ -39,28 +42,28 @@ public class AnimationMain extends Rectangle {
 	private static AudioInputStream shellFallEffect;
 
 	// pictures
-	private Image backGround;	//"bakground.jpg"
-	private Image forcefield;	//"ForceField.png"
-	private Image bullet;		//"bullet cartoon.png"
-	private Image crosshair;	//"crosshair.png"
-	private Image reloadButton;	//"reload button.png"
-	private Image bulletBottom;	//"Bullet Bottom.png"
-	private Image gunshotFire;	//"gunshot fire.png"
+	private Image backGround; // "bakground.jpg"
+	private Image forcefield; // "ForceField.png"
+	private Image bullet; // "bullet cartoon.png"
+	private Image crosshair; // "crosshair.png"
+	private Image reloadButton; // "reload button.png"
+	private Image bulletBottom; // "Bullet Bottom.png"
+	private Image gunshotFire; // "gunshot fire.png"
 
 	// robot pictures
-	private Image robo;			//"Thomas face.png"
+	private Image robo; // "Thomas face.png"
 
 	// gun pictures
-	private static Image pistolImg;				//"Pistol POV.png"
-	private static Image pistolFlipped;			//"Pistol POV flipped.png"
-	private static Image AR15Img;				//"AR15 POV.png"
-	private static Image AR15Flipped;			//"AR15 POV flipped.png"
-	private static Image sniperImg;				//"Sniper POV.png"
-	private static Image sniperFlipped;			//"Sniper POV flipped.png"
-	private static Image grenadeLauncherImg;	//"Grenade Launcher POV.png"
-	private static Image grenadeLauncherFlipped;//"Grenade Launcher POV flipped.png"
-	private static Image hoseImg;				//"Water Hose POV.png"
-	private static Image hoseFlipped;			//"Water Hose POV flipped.png"
+	private static Image pistolImg; // "Pistol POV.png"
+	private static Image pistolFlipped; // "Pistol POV flipped.png"
+	private static Image AR15Img; // "AR15 POV.png"
+	private static Image AR15Flipped; // "AR15 POV flipped.png"
+	private static Image sniperImg; // "Sniper POV.png"
+	private static Image sniperFlipped; // "Sniper POV flipped.png"
+	private static Image grenadeLauncherImg; // "Grenade Launcher POV.png"
+	private static Image grenadeLauncherFlipped;// "Grenade Launcher POV flipped.png"
+	private static Image hoseImg; // "Water Hose POV.png"
+	private static Image hoseFlipped; // "Water Hose POV flipped.png"
 
 	private Rectangle CrossHair = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 10, GRHEIGHT / 10); // this is the
 																											// crosshair
@@ -101,7 +104,7 @@ public class AnimationMain extends Rectangle {
 	private static Gun grenadeLauncher = new Gun(50, 170, 5, 12000, 5, grenadeLauncherImg, grenadeLauncherFlipped);
 	private static Gun hose = new Gun(2, 500, 1000, 20000, 5, hoseImg, hoseFlipped);
 
-	private static Gun equippedGun = hose; // the gun being held by the player
+	private static Gun equippedGun = pistol; // the gun being held by the player
 	private Rectangle player = new Rectangle(0, 0, (int) (GRHEIGHT / 2 * 1.777777777777778), GRHEIGHT / 2);
 
 	// THE ENEMIES
@@ -113,13 +116,15 @@ public class AnimationMain extends Rectangle {
 	private ArrayList<Rectangle> destroyedEnemies = new ArrayList<Rectangle>();
 	private static boolean newWave = true;
 
-	public AnimationMain() throws LineUnavailableException, IOException, UnsupportedAudioFileException {
-		/*
-		 * gc = x; this.GRWIDTH = GRWIDTH; this.GRHEIGHT = GRHEIGHT;
-		 */
+	public AnimationMain(GraphicsConsole x, int GRWIDTH, int GRHEIGHT)
+			throws LineUnavailableException, IOException, UnsupportedAudioFileException {
+
+		gc = x;
+		this.GRWIDTH = GRWIDTH;
+		this.GRHEIGHT = GRHEIGHT;
 
 		initiate();
-		
+
 		while (gc.getKeyCode() != 'Q') {
 
 			mechanics();
@@ -166,9 +171,7 @@ public class AnimationMain extends Rectangle {
 ////		minigun = new Gun(3, 8, 400, 8500, 5);
 //		grenadeLauncher = new Gun(50, 170, 5, 12000, 5, grenadeLauncherImg, grenadeLauncherFlipped);
 //		hose = new Gun(2, 500, 1000, 20000, 5, hoseImg, hoseFlipped);
-		
 
-		
 		gc.enableMouseMotion();
 		gc.enableMouse(); // enables motion and click for the mouse
 		gc.setFont(new Font("Georgia", Font.PLAIN, 50)); //
@@ -195,8 +198,8 @@ public class AnimationMain extends Rectangle {
 			moveX = 0;
 		if (moveX < -(GRWIDTH + (GRWIDTH / 11)))
 			moveX = -(GRWIDTH + (GRWIDTH / 11));
-		
-		//shooting the gun
+
+		// shooting the gun
 		if ((gc.getMouseClick() > 0 || gc.isKeyDown(32)) && bulletsLeft > 0) {
 			bullets.add(new Rectangle(CrossHair.x + 15, CrossHair.y + 15, bulletSize, bulletSize));
 			bulletsLeft--;

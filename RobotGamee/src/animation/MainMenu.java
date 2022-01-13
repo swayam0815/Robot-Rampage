@@ -19,7 +19,7 @@ public class MainMenu {
 	private static GraphicsConsole gc = new GraphicsConsole(GRWIDTH, GRHEIGHT);
 	
 	public static void main(String[] args) throws LineUnavailableException, IOException, UnsupportedAudioFileException {
-		NEW j = new NEW(gc);
+		new AnimationMain(gc, GRWIDTH, GRHEIGHT);
 	}
 
 }

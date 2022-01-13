@@ -22,9 +22,8 @@ public class AnimationMain extends Rectangle {
 	/***** Global Variables ******/
 	private static Dimension GRsize = Toolkit.getDefaultToolkit().getScreenSize(); // creates a variable to get screen
 																					// size
-	private int GRHEIGHT;
-	// = (int) GRsize.getHeight() - 70; // (int)GRsize.getHeight() - 70
-	private int GRWIDTH;// = (int) (GRHEIGHT * 1.777777777778); // this sets the size of the grid to fit
+	private int GRHEIGHT = (int) GRsize.getHeight() - 70; // (int)GRsize.getHeight() - 70
+	private int GRWIDTH = (int) (GRHEIGHT * 1.777777777778); // this sets the size of the grid to fit
 								// the screen
 
 	private GraphicsConsole gc;
@@ -65,9 +64,7 @@ public class AnimationMain extends Rectangle {
 	private static Image hoseImg; // "Water Hose POV.png"
 	private static Image hoseFlipped; // "Water Hose POV flipped.png"
 
-	private Rectangle CrossHair = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 10, GRHEIGHT / 10); // this is the
-																											// crosshair
-																											// to aim
+	private Rectangle CrossHair;																			// to aim
 																											// with
 	private Rectangle ReloadButton = new Rectangle((GRWIDTH / 20) - (GRWIDTH / 50), GRHEIGHT - (GRWIDTH / 10),
 			GRHEIGHT / 10, GRHEIGHT / 10); // this button reloads the gun
@@ -172,7 +169,10 @@ public class AnimationMain extends Rectangle {
 		grenadeLauncher = new Gun(50, 170, 5, 12000, 5, grenadeLauncherImg, grenadeLauncherFlipped);
 		hose = new Gun(2, 500, 1000, 20000, 5, hoseImg, hoseFlipped);
 		
-		equippedGun = hose;
+		equippedGun = AR15;
+		
+		
+		CrossHair = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 10, GRHEIGHT / 10);
 		
 		gc.enableMouseMotion();
 		gc.enableMouse(); // enables motion and click for the mouse

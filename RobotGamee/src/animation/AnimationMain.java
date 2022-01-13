@@ -41,30 +41,30 @@ public class AnimationMain extends Rectangle {
 	// pictures
 	
 	
-	private Image backGround = Toolkit.getDefaultToolkit()
-			.getImage(gc.getClass().getClassLoader().getResource("bakground.jpg"));
-	private Image forcefield = Toolkit.getDefaultToolkit()
-			.getImage(gc.getClass().getClassLoader().getResource("ForceField.png"));
-	private Image bullet = Toolkit.getDefaultToolkit()
-			.getImage(gc.getClass().getClassLoader().getResource("bullet cartoon.png"));
-	private Image crosshair = Toolkit.getDefaultToolkit()
-			.getImage(gc.getClass().getClassLoader().getResource("crosshair.png"));
-	private Image reloadButton = Toolkit.getDefaultToolkit()
-			.getImage(gc.getClass().getClassLoader().getResource("reload button.png"));
-	private Image bulletBottom = Toolkit.getDefaultToolkit()
-			.getImage(gc.getClass().getClassLoader().getResource("Bullet Bottom.png"));
-	private Image gunshotFire = Toolkit.getDefaultToolkit()
-			.getImage(gc.getClass().getClassLoader().getResource("gunshot fire.png"));
+	private Image backGround;
+	//= ("bakground.jpg"));
+    private Image forcefield;
+    //= ("ForceField.png"));
+    private Image bullet;
+    //= ("bullet cartoon.png"));
+    private Image crosshair;
+   // = ("crosshair.png"));
+    private Image reloadButton;
+    //= ("reload button.png"));
+    private Image bulletBottom;
+    //= ("Bullet Bottom.png"));
+    private Image gunshotFire;
+    //= ("gunshot fire.png"));
 
-	// robot pictures
-	private Image robo = Toolkit.getDefaultToolkit()
-			.getImage(gc.getClass().getClassLoader().getResource("Thomas face.png"));
+    // robot pictures
+    private Image robo;
+    //= ("Thomas face.png"));
 
-	// gun pictures
-	private static Image pistolImg = Toolkit.getDefaultToolkit()
-			.getImage(gc.getClass().getClassLoader().getResource("Pistol POV.png"));
-	private static Image pistolFlipped = Toolkit.getDefaultToolkit()
-			.getImage(gc.getClass().getClassLoader().getResource("Pistol POV flipped.png"));
+    // gun pictures
+    private static Image pistolImg;
+    //=("Pistol POV.png"));
+    private static Image pistolFlipped;
+    ///= ("Pistol POV flipped.png"));
 	
 	private static Image AR15Img = Toolkit.getDefaultToolkit()
 			.getImage(gc.getClass().getClassLoader().getResource("AR15 POV.png"));
@@ -156,8 +156,7 @@ public class AnimationMain extends Rectangle {
 
 	private void initiate() throws IOException {
 		
-		File background = new File("bakground.png");
-		backGround = ImageIO.read(background);
+		backGround = ImageIO.read(new File("bakground.png"));
 		
 		gc.enableMouseMotion();
 		gc.enableMouse(); // enables motion and click for the mouse

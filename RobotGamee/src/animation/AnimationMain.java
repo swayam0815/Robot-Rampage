@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -16,7 +17,7 @@ import hsa2.GraphicsConsole;
 public class AnimationMain extends Rectangle {
 
 	public static void main(String[] args) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-		new AnimationMain();
+	new AnimationMain();
 	}
 
 	/***** Global Variables ******/
@@ -24,9 +25,9 @@ public class AnimationMain extends Rectangle {
 																					// size
 	private static int GRHEIGHT = (int) GRsize.getHeight() - 70; // (int)GRsize.getHeight() - 70
 	private static int GRWIDTH = (int) (GRHEIGHT * 1.777777777778); // this sets the size of the grid to fit the screen
-																	// size
+	
 	private static GraphicsConsole gc = new GraphicsConsole(GRWIDTH, GRHEIGHT);
-
+	
 	// sound effects
 	private static Clip gunshotSound;
 	private static Clip dryFire;
@@ -38,6 +39,8 @@ public class AnimationMain extends Rectangle {
 	private static AudioInputStream shellFallEffect;
 
 	// pictures
+	
+	
 	private Image backGround = Toolkit.getDefaultToolkit()
 			.getImage(gc.getClass().getClassLoader().getResource("bakground.jpg"));
 	private Image forcefield = Toolkit.getDefaultToolkit()
@@ -62,6 +65,7 @@ public class AnimationMain extends Rectangle {
 			.getImage(gc.getClass().getClassLoader().getResource("Pistol POV.png"));
 	private static Image pistolFlipped = Toolkit.getDefaultToolkit()
 			.getImage(gc.getClass().getClassLoader().getResource("Pistol POV flipped.png"));
+	
 	private static Image AR15Img = Toolkit.getDefaultToolkit()
 			.getImage(gc.getClass().getClassLoader().getResource("AR15 POV.png"));
 	private static Image AR15Flipped = Toolkit.getDefaultToolkit()
@@ -130,7 +134,11 @@ public class AnimationMain extends Rectangle {
 	private ArrayList<Rectangle> destroyedEnemies = new ArrayList<Rectangle>();
 	private static boolean newWave = true;
 
-	private AnimationMain() throws LineUnavailableException, IOException, UnsupportedAudioFileException {
+	public AnimationMain() throws LineUnavailableException, IOException, UnsupportedAudioFileException {
+		/*
+		 * gc = x; this.GRWIDTH = GRWIDTH; this.GRHEIGHT = GRHEIGHT;
+		 */
+		
 		initiate();
 		
 		while (gc.getKeyCode() != 'Q') {
@@ -146,7 +154,11 @@ public class AnimationMain extends Rectangle {
 		}
 	}
 
-	private void initiate() {
+	private void initiate() throws IOException {
+		
+		File background = new File("bakground.png");
+		backGround = ImageIO.read(background);
+		
 		gc.enableMouseMotion();
 		gc.enableMouse(); // enables motion and click for the mouse
 		gc.setFont(new Font("Georgia", Font.PLAIN, 50)); //
@@ -174,9 +186,7 @@ public class AnimationMain extends Rectangle {
 		if (moveX < -(GRWIDTH + (GRWIDTH / 11)))
 			moveX = -(GRWIDTH + (GRWIDTH / 11));
 		
-		//(gc.getMouseClick() > 0
-		// firing the gun
-		if ((gc.getMouseButton(0)) && bulletsLeft > 0) {
+		if ((gc.getMouseClick() > 0 || gc.isKeyDown(32)) && bulletsLeft > 0) {
 			bullets.add(new Rectangle(CrossHair.x + 15, CrossHair.y + 15, bulletSize, bulletSize));
 			bulletsLeft--;
 		}

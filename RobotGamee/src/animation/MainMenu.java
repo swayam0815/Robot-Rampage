@@ -27,7 +27,7 @@ public class MainMenu {
 	private static Rectangle CrossHair = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 10, GRHEIGHT / 10); // to
 																													// aim
 	private static Image crosshair;
-
+	private static Image bkg;
 	public static void main(String[] args) throws LineUnavailableException, IOException, UnsupportedAudioFileException {
 		gc.enableMouseMotion();
 		gc.enableMouse(); // enables motion and click for the mouse
@@ -36,7 +36,9 @@ public class MainMenu {
 
 	public MainMenu() throws IOException {
 		crosshair = ImageIO.read(new File("crosshair.png"));
-	
+		
+		bkg = ImageIO.read(new File("ROBOT.png"));
+		
 		
 		while (true) {
 			mechanics();
@@ -54,6 +56,8 @@ public class MainMenu {
 	private void drawGraphics() {
 		synchronized (gc) {
 			gc.clear();
+			gc.drawImage(bkg, 0, 0, GRWIDTH, GRHEIGHT);
+			gc.drawRect(new Rectangle(GRWIDTH / 2, GRHEIGHT / 4 + 100, 500, 109));
 			gc.drawImage(crosshair, CrossHair.x, CrossHair.y, CrossHair.width, CrossHair.height);
 		}
 	}

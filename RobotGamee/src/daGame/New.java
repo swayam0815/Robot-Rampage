@@ -11,9 +11,9 @@ public class New {
 
 	/***** Global Variables ******/
 	private Dimension GRsize = Toolkit.getDefaultToolkit().getScreenSize(); // creates a variable to get screen size
-	private int GRHEIGHT = (int) GRsize.getHeight() - 70; // (int)GRsize.getHeight() - 70
-	private int GRWIDTH = (int) (GRHEIGHT * 1.777777777778); // this sets the size of the grid to fit the screen size
-	private GraphicsConsole gc = new GraphicsConsole(GRWIDTH, GRHEIGHT);
+	private static int GRHEIGHT = (int) GRsize.getHeight() - 70; // (int)GRsize.getHeight() - 70
+	private static int GRWIDTH = (int) (GRHEIGHT * 1.777777777778); // this sets the size of the grid to fit the screen size
+	private static GraphicsConsole gc = new GraphicsConsole(GRWIDTH, GRHEIGHT);
 
 	ArrayList<Rectangle> bullets = new ArrayList<Rectangle>();
 	ArrayList<Rectangle> hit = new ArrayList<Rectangle>();
@@ -26,7 +26,7 @@ public class New {
 	private static Color enemgyC = Color.RED;
 
 	public static void main(String[] args) {
-		new New();
+		new AnimationMain(gc, GRHEIGHT, GRWIDTH);
 	}
 
 	public New() {

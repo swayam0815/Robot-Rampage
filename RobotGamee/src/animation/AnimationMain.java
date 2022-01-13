@@ -16,16 +16,16 @@ import hsa2.GraphicsConsole;
 public class AnimationMain extends Rectangle {
 
 	public static void main(String[] args) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-		new AnimationMain();
+	//	new AnimationMain();
 	}
 
 	/***** Global Variables ******/
 	private static Dimension GRsize = Toolkit.getDefaultToolkit().getScreenSize(); // creates a variable to get screen
 																					// size
-	private static int GRHEIGHT = (int) GRsize.getHeight() - 70; // (int)GRsize.getHeight() - 70
-	private static int GRWIDTH = (int) (GRHEIGHT * 1.777777777778); // this sets the size of the grid to fit the screen
+	private static int GRHEIGHT; // (int)GRsize.getHeight() - 70
+	private static int GRWIDTH; // this sets the size of the grid to fit the screen
 																	// size
-	private static GraphicsConsole gc = new GraphicsConsole(GRWIDTH, GRHEIGHT);
+	private static GraphicsConsole gc;
 
 	// sound effects
 	private static Clip gunshotSound;
@@ -130,7 +130,12 @@ public class AnimationMain extends Rectangle {
 	private ArrayList<Rectangle> destroyedEnemies = new ArrayList<Rectangle>();
 	private static boolean newWave = true;
 
-	private AnimationMain() throws LineUnavailableException, IOException, UnsupportedAudioFileException {
+	public AnimationMain(GraphicsConsole x, int GRWIDTH, int GRHEIGHT) throws LineUnavailableException, IOException, UnsupportedAudioFileException {
+		gc = x;
+		this.GRWIDTH = GRWIDTH;
+		this.GRHEIGHT = GRHEIGHT;
+		
+		
 		initiate();
 
 		while (gc.getKeyCode() != 'Q') {

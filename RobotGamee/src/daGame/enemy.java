@@ -29,7 +29,9 @@ public class enemy {
 	
 	public static void main(String[] args) {
 		New j = new New();
-		int x = 100;
+		ArrayList<Integer> x = new ArrayList<Integer>();
+		x.add(100);
+		x.add(150);
 		j.shoot(x);
 		System.out.println(x);
 	}

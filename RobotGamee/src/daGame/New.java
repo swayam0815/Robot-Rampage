@@ -73,8 +73,8 @@ public class New {
 		size = y / 4;
 
 	}
-	public static void shoot (int x) {
-		x--;
+	public void shoot (ArrayList<Integer> x) {
+		x.add(50);
 	}
 
 	public void drawGraphics() {

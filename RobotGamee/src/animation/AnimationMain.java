@@ -94,14 +94,14 @@ public class AnimationMain extends Rectangle {
 
 	// gun object for player guns
 	// damage, reload time, bullet #, price, fire rate, pic, picFlipped
-	private static Gun pistol = new Gun(10, 100, 7, 0, 2, pistolImg, pistolFlipped);
-	private static Gun AR15 = new Gun(6, 200, 30, 1500, 1, AR15Img, AR15Flipped);
-	private static Gun sniper = new Gun(30, 250, 10, 4000, 5, sniperImg, sniperFlipped);
-//	private static Gun minigun = new Gun(3, 8, 400, 8500, 5);
-	private static Gun grenadeLauncher = new Gun(50, 170, 5, 12000, 5, grenadeLauncherImg, grenadeLauncherFlipped);
-	private static Gun hose = new Gun(2, 500, 1000, 20000, 5, hoseImg, hoseFlipped);
+	private static Gun pistol;
+	private static Gun AR15;
+	private static Gun sniper;
+//	private static Gun minigun;
+	private static Gun grenadeLauncher;
+	private static Gun hose;
 
-	private static Gun equippedGun = hose; // the gun being held by the player
+	private static Gun equippedGun;	// the gun being held by the player
 	private Rectangle player = new Rectangle(0, 0, (int) (GRHEIGHT / 2 * 1.777777777777778), GRHEIGHT / 2);
 
 	// THE ENEMIES
@@ -158,16 +158,16 @@ public class AnimationMain extends Rectangle {
 		hoseImg = ImageIO.read(new File("Water Hose POV.png"));
 		hoseFlipped = ImageIO.read(new File("Water Hose POV flipped.png"));
 
-//		//gun objects
-//		// damage, reload time, bullet #, price, fire rate, pic, picFlipped
-//		pistol = new Gun(10, 100, 7, 0, 2, pistolImg, pistolFlipped);
-//		AR15 = new Gun(6, 200, 30, 1500, 1, AR15Img, AR15Flipped);
-//		sniper = new Gun(30, 250, 10, 4000, 5, sniperImg, sniperFlipped);
-////		minigun = new Gun(3, 8, 400, 8500, 5);
-//		grenadeLauncher = new Gun(50, 170, 5, 12000, 5, grenadeLauncherImg, grenadeLauncherFlipped);
-//		hose = new Gun(2, 500, 1000, 20000, 5, hoseImg, hoseFlipped);
+		//gun objects
+		// damage, reload time, bullet #, price, fire rate, pic, picFlipped
+		pistol = new Gun(10, 100, 7, 0, 2, pistolImg, pistolFlipped);
+		AR15 = new Gun(6, 200, 30, 1500, 1, AR15Img, AR15Flipped);
+		sniper = new Gun(30, 250, 10, 4000, 5, sniperImg, sniperFlipped);
+//		minigun = new Gun(3, 8, 400, 8500, 5);
+		grenadeLauncher = new Gun(50, 170, 5, 12000, 5, grenadeLauncherImg, grenadeLauncherFlipped);
+		hose = new Gun(2, 500, 1000, 20000, 5, hoseImg, hoseFlipped);
 		
-
+		equippedGun = hose;
 		
 		gc.enableMouseMotion();
 		gc.enableMouse(); // enables motion and click for the mouse

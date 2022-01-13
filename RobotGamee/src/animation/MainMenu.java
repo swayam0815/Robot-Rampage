@@ -41,6 +41,7 @@ public class MainMenu {
 		while (true) {
 			mechanics();
 			drawGraphics();
+			gc.sleep(1);
 		}
 	}
 

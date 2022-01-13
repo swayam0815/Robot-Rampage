@@ -1,8 +1,10 @@
 package animation;
 
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
@@ -17,7 +19,7 @@ public class NEW {
 	private static int GRWIDTH = (int) (GRHEIGHT * 1.777777777778); // this sets the size of the grid to fit the screen
 																	// size
 	private static GraphicsConsole gc;
-
+	private static Image image;
 	
 	private int x = 0;
 	private int y = 0;
@@ -28,15 +30,18 @@ public class NEW {
 	// new AnimationMain(gc, GRHEIGHT, GRWIDTH); 
 		}
 
-	public NEW(GraphicsConsole gc) {
+	public NEW(GraphicsConsole gc) throws IOException {
 
 		this.gc = gc;
 		gc.enableMouseMotion();
 		gc.enableMouse(); // enables motion and click for the mouse
 
+		File sourceimage = new File("bullet cartoon.png");
+		image = ImageIO.read(sourceimage);
+		
 		while (gc.getKeyCode() != 'Q') {
 
-			mechanics();
+//			mechanics();
 
 			drawGraphics();
 
@@ -68,9 +73,11 @@ public class NEW {
 		synchronized (gc) {
 			gc.setBackgroundColor(Color.BLACK);
 			gc.setColor(Color.RED);
-			for(int i = 50; i < GRWIDTH; i ++) {
-				gc.drawRect(i, i, i, i);
-			}
+			
+			gc.drawRect(x,x,x,x);
+			gc.sleep(10);
+			x++;
+			gc.drawImage(image, GRWIDTH / 2, GRHEIGHT / 2);
 		}
 
 	}

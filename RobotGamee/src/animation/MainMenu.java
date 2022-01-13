@@ -29,13 +29,13 @@ public class MainMenu {
 	private static Image crosshair;
 
 	public static void main(String[] args) throws LineUnavailableException, IOException, UnsupportedAudioFileException {
+		gc.enableMouseMotion();
+		gc.enableMouse(); // enables motion and click for the mouse
 		new MainMenu();
 	}
 
 	public MainMenu() throws IOException {
 		crosshair = ImageIO.read(new File("crosshair.png"));
-		gc.enableMouseMotion();
-		gc.enableMouse(); // enables motion and click for the mouse
 	
 		
 		while (true) {
@@ -52,12 +52,7 @@ public class MainMenu {
 
 	private void drawGraphics() {
 		synchronized (gc) {
-			gc.clear();
-			gc.sleep(10);
-			gc.setColor(playColor);
-			gc.fillRect(playButton);
 			gc.drawImage(crosshair, CrossHair.x, CrossHair.y, CrossHair.width, CrossHair.height);
-
 		}
 	}
 

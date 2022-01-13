@@ -11,7 +11,6 @@ public class Gun {
 	private int fireRate;
 	private Image pic;
 	private Image picFlipped;
-	private int bulletsLeft;
 	
 	public static void main(String[] args) {
 	}
@@ -24,7 +23,6 @@ public class Gun {
 		this.fireRate = fireRate;
 		this.pic = pic;
 		this.picFlipped = picFlipped;
-		bulletsLeft = magazineSize;
 		
 	}
 

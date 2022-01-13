@@ -176,9 +176,9 @@ public class AnimationMain extends Rectangle {
 		if (moveX < -(GRWIDTH + (GRWIDTH / 11)))
 			moveX = -(GRWIDTH + (GRWIDTH / 11));
 		
-		
+		//(gc.getMouseClick() > 0 || gc.isKeyDown(32)
 		// firing the gun
-		if ((gc.getMouseClick() > 0 || gc.isKeyDown(32)) && bulletsLeft > 0) {
+		if ((gc.getMouseButton(0)) && bulletsLeft > 0) {
 			bullets.add(new Rectangle(CrossHair.x + 15, CrossHair.y + 15, bulletSize, bulletSize));
 			bulletsLeft--;
 		}

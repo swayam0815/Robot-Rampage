@@ -1850,12 +1850,7 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 //		this.setLocationRelativeTo(null); //centre the window in the display
 		this.pack();
 		this.setVisible(true);
-	}
-	
-	public void addPanel(JPanel panel) {
-		this.addPanel(panel);
-	}
-	
+	}	
 	public void drawRect(Rectangle rect) {
 		// TODO Auto-generated method stub
 		canvas.drawRect(rect.x, rect.y, rect.width, rect.height);

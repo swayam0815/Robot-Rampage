@@ -132,7 +132,7 @@ public class AnimationMain extends Rectangle {
 
 	private AnimationMain() throws LineUnavailableException, IOException, UnsupportedAudioFileException {
 		initiate();
-
+		
 		while (gc.getKeyCode() != 'Q') {
 
 			mechanics();

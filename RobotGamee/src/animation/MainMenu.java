@@ -52,6 +52,7 @@ public class MainMenu {
 
 	private void drawGraphics() {
 		synchronized (gc) {
+			gc.clear();
 			gc.drawImage(crosshair, CrossHair.x, CrossHair.y, CrossHair.width, CrossHair.height);
 		}
 	}

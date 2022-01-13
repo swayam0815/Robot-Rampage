@@ -26,6 +26,7 @@ public class New {
 	private static Color enemgyC = Color.RED;
 
 	public static void main(String[] args) {
+		new New();
 	}
 
 	public New() {

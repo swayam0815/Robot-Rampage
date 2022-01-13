@@ -54,8 +54,6 @@ public class AnimationMain extends Rectangle {
 			.getImage(gc.getClass().getClassLoader().getResource("gunshot fire.png"));
 
 	// robot pictures
-	// private Image robo =
-	// Toolkit.getDefaultToolkit().getImage(gc.getClass().getClassLoader().getResource("enemy.png"));
 	private Image robo = Toolkit.getDefaultToolkit()
 			.getImage(gc.getClass().getClassLoader().getResource("Thomas face.png"));
 
@@ -95,7 +93,7 @@ public class AnimationMain extends Rectangle {
 	private boolean shotFired; // checks if the player has shot the gun
 	private int fireCounter; // counter for the fire out of the gun
 	private int moveX = 0; // the amount of movement for the player
-	private static int forceStrength = 100; // health of the forcefield protecting the player
+	private static int forceStrength = 200; // health of the forcefield protecting the player
 
 	private static boolean autoReload = true; // code for purchasing to be added later
 
@@ -112,7 +110,7 @@ public class AnimationMain extends Rectangle {
 	private int bulletSpeed = 0;
 
 	// gun object for player guns
-	// damage, reload time, bullet #, price, fire rate
+	// damage, reload time, bullet #, price, fire rate, pic, picFlipped
 	private static Gun pistol = new Gun(10, 100, 7, 0, 2, pistolImg, pistolFlipped);
 	private static Gun AR15 = new Gun(6, 200, 30, 1500, 1, AR15Img, AR15Flipped);
 	private static Gun sniper = new Gun(30, 250, 10, 4000, 5, sniperImg, sniperFlipped);
@@ -176,7 +174,11 @@ public class AnimationMain extends Rectangle {
 		if (moveX < -(GRWIDTH + (GRWIDTH / 11)))
 			moveX = -(GRWIDTH + (GRWIDTH / 11));
 		
+<<<<<<< HEAD
 		
+=======
+		//(gc.getMouseClick() > 0
+>>>>>>> branch 'master' of https://github.com/swayam0815/game.git
 		// firing the gun
 		if ((gc.getMouseClick() > 0 || gc.isKeyDown(32)) && bulletsLeft > 0) {
 			bullets.add(new Rectangle(CrossHair.x + 15, CrossHair.y + 15, bulletSize, bulletSize));

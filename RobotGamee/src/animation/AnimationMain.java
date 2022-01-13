@@ -17,7 +17,7 @@ import hsa2.GraphicsConsole;
 public class AnimationMain extends Rectangle {
 
 	public static void main(String[] args) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-	new AnimationMain();
+		new AnimationMain();
 	}
 
 	/***** Global Variables ******/
@@ -25,9 +25,9 @@ public class AnimationMain extends Rectangle {
 																					// size
 	private static int GRHEIGHT = (int) GRsize.getHeight() - 70; // (int)GRsize.getHeight() - 70
 	private static int GRWIDTH = (int) (GRHEIGHT * 1.777777777778); // this sets the size of the grid to fit the screen
-	
+
 	private static GraphicsConsole gc = new GraphicsConsole(GRWIDTH, GRHEIGHT);
-	
+
 	// sound effects
 	private static Clip gunshotSound;
 	private static Clip dryFire;
@@ -39,33 +39,31 @@ public class AnimationMain extends Rectangle {
 	private static AudioInputStream shellFallEffect;
 
 	// pictures
-	
-	
 	private Image backGround;
-	//= ("bakground.jpg"));
-    private Image forcefield;
-    //= ("ForceField.png"));
-    private Image bullet;
-    //= ("bullet cartoon.png"));
-    private Image crosshair;
-   // = ("crosshair.png"));
-    private Image reloadButton;
-    //= ("reload button.png"));
-    private Image bulletBottom;
-    //= ("Bullet Bottom.png"));
-    private Image gunshotFire;
-    //= ("gunshot fire.png"));
+	// = ("bakground.jpg"));
+	private Image forcefield;
+	// = ("ForceField.png"));
+	private Image bullet;
+	// = ("bullet cartoon.png"));
+	private Image crosshair;
+	// = ("crosshair.png"));
+	private Image reloadButton;
+	// = ("reload button.png"));
+	private Image bulletBottom;
+	// = ("Bullet Bottom.png"));
+	private Image gunshotFire;
+	// = ("gunshot fire.png"));
 
-    // robot pictures
-    private Image robo;
-    //= ("Thomas face.png"));
+	// robot pictures
+	private Image robo;
+	// = ("Thomas face.png"));
 
-    // gun pictures
-    private static Image pistolImg;
-    //=("Pistol POV.png"));
-    private static Image pistolFlipped;
-    ///= ("Pistol POV flipped.png"));
-	
+	// gun pictures
+	private static Image pistolImg;
+	// =("Pistol POV.png"));
+	private static Image pistolFlipped;
+	/// = ("Pistol POV flipped.png"));
+
 	private static Image AR15Img = Toolkit.getDefaultToolkit()
 			.getImage(gc.getClass().getClassLoader().getResource("AR15 POV.png"));
 	private static Image AR15Flipped = Toolkit.getDefaultToolkit()
@@ -138,7 +136,7 @@ public class AnimationMain extends Rectangle {
 		/*
 		 * gc = x; this.GRWIDTH = GRWIDTH; this.GRHEIGHT = GRHEIGHT;
 		 */
-		
+
 		initiate();
 
 		while (gc.getKeyCode() != 'Q') {
@@ -155,9 +153,23 @@ public class AnimationMain extends Rectangle {
 	}
 
 	private void initiate() throws IOException {
-		
+
 		backGround = ImageIO.read(new File("bakground.png"));
-		
+
+		forcefield = ImageIO.read(new File(("ForceField.png")));
+		bullet = ImageIO.read(new File(("bullet cartoon.png")));
+		crosshair = ImageIO.read(new File("crosshair.png"));
+		reloadButton = ImageIO.read(new File("reload button.png"));
+		bulletBottom = ImageIO.read(new File("Bullet Bottom.png"));
+		gunshotFire = ImageIO.read(new File("gunshot fire.png"));
+
+		// robot pictures
+		robo = ImageIO.read(new File("Thomas face.png"));
+
+		// gun pictures
+		pistolImg = ImageIO.read(new File("Pistol POV.png"));
+		pistolFlipped = ImageIO.read(new File("Pistol POV flipped.png"));
+
 		gc.enableMouseMotion();
 		gc.enableMouse(); // enables motion and click for the mouse
 		gc.setFont(new Font("Georgia", Font.PLAIN, 50)); //
@@ -184,7 +196,7 @@ public class AnimationMain extends Rectangle {
 			moveX = 0;
 		if (moveX < -(GRWIDTH + (GRWIDTH / 11)))
 			moveX = -(GRWIDTH + (GRWIDTH / 11));
-		
+
 		if ((gc.getMouseClick() > 0 || gc.isKeyDown(32)) && bulletsLeft > 0) {
 			bullets.add(new Rectangle(CrossHair.x + 15, CrossHair.y + 15, bulletSize, bulletSize));
 			bulletsLeft--;
@@ -203,8 +215,6 @@ public class AnimationMain extends Rectangle {
 			gunCocking.open(gunCockingEffect);
 			gunCocking.start();
 		}
-
-
 
 		// the crosshair moves to the position of mouse
 		CrossHair.x = gc.getMouseX() - (CrossHair.width / 2);
@@ -305,9 +315,9 @@ public class AnimationMain extends Rectangle {
 
 					if (rect.intersects(enem)) {
 
-					if (rect.intersects(enem))
+						if (rect.intersects(enem))
 //(rect.x <= enem.x + (size / 5) || rect.x >= enem.x) && (rect.y <= enem.y + (size / 5) || rect.y >= enem.y)
-						destroyedEnemies.add(enem);
+							destroyedEnemies.add(enem);
 						hit.add(rect);
 					}
 
@@ -387,4 +397,3 @@ public class AnimationMain extends Rectangle {
 	}
 
 }
-

@@ -81,24 +81,24 @@ public class MainMenu {
 
 		if (cursor.intersects(startBTN)) {
 			start = ImageIO.read(new File("lightStart.png"));
-			if (cursor.intersects(startBTN) && gc.getMouseClick() > 0) {
+			if (cursor.intersects(startBTN) && gc.getMouseButton(0)) {
 				new AnimationMain(gc);
 			}
 		} else
 			start = ImageIO.read(new File("darkStart.png"));
-
-		if (cursor.intersects(quitBTN)) {
-			quit = ImageIO.read(new File("lightQuit.png"));
-			if (cursor.intersects(quitBTN) && gc.getMouseClick() > 0)
-				gc.close();
-		} else
-			quit = ImageIO.read(new File("darkQuit.png"));
 
 		if (cursor.intersects(creditsBTN))
 			credits = ImageIO.read(new File("lightCredits.png"));
 		else
 			credits = ImageIO.read(new File("darkCredits.png"));
 
+		if (cursor.intersects(quitBTN)) {
+			quit = ImageIO.read(new File("lightQuit.png"));
+			if (cursor.intersects(quitBTN) && gc.getMouseButton(0))
+				gc.close();
+		} else
+			quit = ImageIO.read(new File("darkQuit.png"));
+		
 	}
 
 	private void drawGraphics() {
@@ -112,9 +112,9 @@ public class MainMenu {
 			gc.drawImage(credits, creditsBTN.x, creditsBTN.y, creditsBTN.width, creditsBTN.height);
 			
 			if (gc.getMouseButton(0))
-				gc.drawImage(cursorClicked, cursor.x, cursor.y - cursor.width * 2, cursor.width * 10, cursor.height * 10);
+				gc.drawImage(cursorClicked, cursor.x, cursor.y - cursor.width * 2, cursor.width * 15, cursor.height * 15);
 			else
-				gc.drawImage(cursorImg, cursor.x, cursor.y - cursor.width * 2, cursor.width * 10, cursor.height * 10);
+				gc.drawImage(cursorImg, cursor.x, cursor.y - cursor.width * 2, cursor.width * 15, cursor.height * 15);
 		}
 	}
 

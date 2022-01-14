@@ -28,12 +28,14 @@ public class MainMenu {
 																												// aim
 	private static Image cursorImg;
 	private static Image bkg;
-
-	private static Rectangle startBTN = new Rectangle(556, 316, 298, 90);
-	private static Rectangle quitBTN = new Rectangle(556, 437, 298, 90);
-
-	private static Rectangle creditsBTN = new Rectangle(556, 560, 298, 90);
-
+	
+	//1411 width
+	//794 height
+	private static Rectangle startBTN = new Rectangle	(GRWIDTH / 141 * 57, GRHEIGHT / 79 * 32, GRWIDTH / 141 * 30, GRHEIGHT / 79 * 9);
+	private static Rectangle quitBTN = new Rectangle	(GRWIDTH / 141 * 57, GRHEIGHT / 79 * 44, GRWIDTH / 141 * 30, GRHEIGHT / 79 * 9);
+	private static Rectangle creditsBTN = new Rectangle	(GRWIDTH / 141 * 57, GRHEIGHT / 79 * 56, GRWIDTH / 141 * 30, GRHEIGHT / 79 * 9);
+	//556, (316 - 437 - 560), 298, 90
+	
 	private static Image start;
 	private static Image quit;
 	private static Image credits;
@@ -107,10 +109,9 @@ public class MainMenu {
 			gc.drawImage(bkg, 0, 0, GRWIDTH, GRHEIGHT);
 
 //			gc.drawRect(new Rectangle(GRWIDTH / 2, GRHEIGHT / 4 + 100, 500, 109));
-			gc.setColor(Color.WHITE);
-			gc.drawImage(start, 556, 316, 298, 90);
-			gc.drawImage(quit, 556, 437, 298, 90);
-			gc.drawImage(credits, 556, 560, 298, 90);
+			gc.drawImage(start, startBTN.x, startBTN.y, startBTN.width, startBTN.height);
+			gc.drawImage(quit, quitBTN.x, quitBTN.y, quitBTN.width, quitBTN.height);
+			gc.drawImage(credits, creditsBTN.x, creditsBTN.y, creditsBTN.width, creditsBTN.height);
 			gc.drawImage(cursorImg, cursor.x, cursor.y, cursor.width * 10, cursor.height * 10);
 
 		}

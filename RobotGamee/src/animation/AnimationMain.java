@@ -113,13 +113,11 @@ public class AnimationMain extends Rectangle {
 	private ArrayList<Rectangle> destroyedEnemies = new ArrayList<Rectangle>();
 	private static boolean newWave = true;
 
-	public AnimationMain(GraphicsConsole x, int GRWIDTH, int GRHEIGHT)
+	public AnimationMain(GraphicsConsole x)
 			throws LineUnavailableException, IOException, UnsupportedAudioFileException {
 
 		gc = x;
-		this.GRWIDTH = GRWIDTH;
-		this.GRHEIGHT = GRHEIGHT;
-
+	
 		initiate();
 
 		while (gc.getKeyCode() != 'Q') {

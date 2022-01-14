@@ -25,7 +25,7 @@ public class MainMenu {
 	private static Rectangle playstartBTN = new Rectangle(GRWIDTH / 2, GRHEIGHT / 4, 500, 500);
 	private static Color playColor = Color.RED;
 	private static Rectangle cursor = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 100, GRHEIGHT / 100); // to
-																													// aim
+																												// aim
 	private static Image cursorImg;
 	private static Image bkg;
 
@@ -40,17 +40,16 @@ public class MainMenu {
 	private static boolean running = true;
 
 	public static void main(String[] args) throws LineUnavailableException, IOException, UnsupportedAudioFileException {
-
 		new MainMenu();
 
 	}
-		
+
 	public MainMenu() throws IOException, LineUnavailableException, UnsupportedAudioFileException {
 		gc.enableMouseMotion();
 		gc.enableMouse(); // enables motion and click for the
 
 		cursorImg = ImageIO.read(new File("crosshair.png"));
-		bkg = ImageIO.read(new File("ROBOT.png"));
+		bkg = ImageIO.read(new File("blankMAINMENU.png"));
 		start = ImageIO.read(new File("darkStart.png"));
 		quit = ImageIO.read(new File("darkQuit.png"));
 		credits = ImageIO.read(new File("darkCredits.png"));
@@ -83,16 +82,16 @@ public class MainMenu {
 		if (cursor.intersects(startBTN)) {
 			start = ImageIO.read(new File("lightStart.png"));
 			if (cursor.intersects(startBTN) && gc.getMouseClick() > 0) {
-				System.out.println("working");
-				running = false;
-				}
+				new AnimationMain(gc);
 			}
-		else
+		} else
 			start = ImageIO.read(new File("darkStart.png"));
 
-		if (cursor.intersects(quitBTN))
+		if (cursor.intersects(quitBTN)) {
 			quit = ImageIO.read(new File("lightQuit.png"));
-		else
+			if (cursor.intersects(quitBTN) && gc.getMouseClick() > 0)
+				gc.close();
+		} else
 			quit = ImageIO.read(new File("darkQuit.png"));
 
 		if (cursor.intersects(creditsBTN))

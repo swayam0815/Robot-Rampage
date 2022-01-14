@@ -83,7 +83,8 @@ public class MainMenu {
 		if (CrossHair.intersects(startBTN))
 			start = ImageIO.read(new File("lightStart.png"));
 		else if (CrossHair.intersects(startBTN) && gc.getMouseClick() > 0) {
-			System.out.println("working");}
+			System.out.println("working");
+			running = false;}
 		else
 			start = ImageIO.read(new File("darkStart.png"));
 

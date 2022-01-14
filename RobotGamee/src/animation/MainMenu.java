@@ -27,8 +27,6 @@ public class MainMenu {
 	private static Image cursorImg;
 	private static Image bkg;
 	
-	//1411 width
-	//794 height
 	private static Rectangle startBTN = new Rectangle	(GRWIDTH / 141 * 57, GRHEIGHT / 79 * 32, GRWIDTH / 141 * 30, GRHEIGHT / 79 * 9);
 	private static Rectangle quitBTN = new Rectangle	(GRWIDTH / 141 * 57, GRHEIGHT / 79 * 44, GRWIDTH / 141 * 30, GRHEIGHT / 79 * 9);
 	private static Rectangle creditsBTN = new Rectangle	(GRWIDTH / 141 * 57, GRHEIGHT / 79 * 56, GRWIDTH / 141 * 30, GRHEIGHT / 79 * 9);

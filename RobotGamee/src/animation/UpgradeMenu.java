@@ -9,6 +9,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import java.awt.Image;
+import java.awt.Rectangle;
 
 import hsa2.GraphicsConsole;
 
@@ -25,6 +26,9 @@ public class UpgradeMenu {
 	
 	private static GraphicsConsole gc = new GraphicsConsole(GRWIDTH, GRHEIGHT);
 	
+	
+	private static Rectangle cursor = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 100, GRHEIGHT / 100); // to
+
 	//pictures
 	private Image background;
 	private Image buyImg;
@@ -32,6 +36,8 @@ public class UpgradeMenu {
 	private Image equippedImg;
 	private Image pgUpImg;
 	private Image pgDownImg;
+	private static Image cursorImg;
+
 	
 	//gun pictures
 	private Image pistolImg;
@@ -56,7 +62,11 @@ public class UpgradeMenu {
 	}
 	
 	public void setValues() throws IOException {
+		gc.enableMouseMotion();
+		gc.enableMouse(); // enables motion and click for the mouse
 		
+		cursorImg = ImageIO.read(new File("crosshair.png"));
+
 		//pictures
 		background = ImageIO.read(new File("Upgrade menu.jpg"));
 		buyImg = ImageIO.read(new File("Buy Button.png"));
@@ -78,6 +88,11 @@ public class UpgradeMenu {
 		
 	}
 	
+	private void mechanics() {
+		cursor.x = gc.getMouseX() - (cursor.width / 2);
+		cursor.y = gc.getMouseY() - (cursor.height / 2);
+
+	}
 	
 	public void drawGraphics() throws IOException {
 		synchronized (gc) {
@@ -91,7 +106,8 @@ public class UpgradeMenu {
 			gc.drawImage(currentGun, GRWIDTH / 7, GRHEIGHT / 10, 
 					(int)(gunSize * 1.777777777778), gunSize);
 			
-			
+			gc.drawImage(cursorImg, cursor.x, cursor.y, cursor.width * 10, cursor.height * 10);
+
 			
 		}
 

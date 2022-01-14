@@ -24,9 +24,9 @@ public class MainMenu {
 
 	private static Rectangle playButton = new Rectangle(GRWIDTH / 2, GRHEIGHT / 4, 500, 500);
 	private static Color playColor = Color.RED;
-	private static Rectangle CrossHair = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 10, GRHEIGHT / 10); // to
+	private static Rectangle cursor = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 100, GRHEIGHT / 100); // to
 																													// aim
-	private static Image crosshair;
+	private static Image cursorImg;
 	private static Image bkg;
 	public static void main(String[] args) throws LineUnavailableException, IOException, UnsupportedAudioFileException {
 		gc.enableMouseMotion();
@@ -35,7 +35,7 @@ public class MainMenu {
 	}
 
 	public MainMenu() throws IOException {
-		crosshair = ImageIO.read(new File("crosshair.png"));
+		cursorImg = ImageIO.read(new File("crosshair.png"));
 		
 		bkg = ImageIO.read(new File("ROBOT.png"));
 		
@@ -48,8 +48,8 @@ public class MainMenu {
 	}
 
 	private void mechanics() {
-		CrossHair.x = gc.getMouseX() - (CrossHair.width / 2);
-		CrossHair.y = gc.getMouseY() - (CrossHair.height / 2);
+		cursor.x = gc.getMouseX() - (cursor.width / 2);
+		cursor.y = gc.getMouseY() - (cursor.height / 2);
 
 	}
 
@@ -57,8 +57,8 @@ public class MainMenu {
 		synchronized (gc) {
 			gc.clear();
 			gc.drawImage(bkg, 0, 0, GRWIDTH, GRHEIGHT);
-			gc.drawRect(new Rectangle(GRWIDTH / 2, GRHEIGHT / 4 + 100, 500, 109));
-			gc.drawImage(crosshair, CrossHair.x, CrossHair.y, CrossHair.width, CrossHair.height);
+//			gc.drawRect(new Rectangle(GRWIDTH / 2, GRHEIGHT / 4 + 100, 500, 109));
+			gc.drawImage(cursorImg, cursor.x, cursor.y, cursor.width * 10, cursor.height * 10);
 		}
 	}
 

@@ -37,7 +37,7 @@ public class UpgradeMenu {
 	private Image pgUpImg;
 	private Image pgDownImg;
 	private static Image cursorImg;
-
+	private static Image cursorClicked;
 	
 	//gun pictures
 	private Image pistolImg;
@@ -56,6 +56,7 @@ public class UpgradeMenu {
 		setValues();
 		
 		while (gc.getKeyCode() != 'Q') {
+			mechanics();
 			drawGraphics();
 			gc.sleep(1);
 		}
@@ -65,8 +66,6 @@ public class UpgradeMenu {
 		gc.enableMouseMotion();
 		gc.enableMouse(); // enables motion and click for the mouse
 		
-		cursorImg = ImageIO.read(new File("crosshair.png"));
-
 		//pictures
 		background = ImageIO.read(new File("Upgrade menu.jpg"));
 		buyImg = ImageIO.read(new File("Buy Button.png"));
@@ -74,7 +73,9 @@ public class UpgradeMenu {
 		equippedImg = ImageIO.read(new File("Equipped Button.png"));
 		pgUpImg = ImageIO.read(new File("pg up arrow.png"));
 		pgDownImg = ImageIO.read(new File("pg down arrow.png"));
-		
+		cursorImg = ImageIO.read(new File("cursor.png"));
+		cursorClicked = ImageIO.read(new File("cursor clicked.png"));
+
 		//gun pictures
 		pistolImg = ImageIO.read(new File("Pistol side view.png"));
 		AR15Img = ImageIO.read(new File("AR15 side view.png"));
@@ -106,7 +107,11 @@ public class UpgradeMenu {
 			gc.drawImage(currentGun, GRWIDTH / 7, GRHEIGHT / 10, 
 					(int)(gunSize * 1.777777777778), gunSize);
 			
-			gc.drawImage(cursorImg, cursor.x, cursor.y, cursor.width * 10, cursor.height * 10);
+			
+			if (gc.getMouseButton(0))
+				gc.drawImage(cursorClicked, cursor.x, cursor.y - cursor.width * 2, cursor.width * 15, cursor.height * 15);
+			else
+				gc.drawImage(cursorImg, cursor.x, cursor.y - cursor.width * 2, cursor.width * 15, cursor.height * 15);
 
 			
 		}

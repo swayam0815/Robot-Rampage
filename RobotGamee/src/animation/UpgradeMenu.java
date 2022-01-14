@@ -107,7 +107,14 @@ public class UpgradeMenu {
 			gc.drawImage(currentGun, GRWIDTH / 7, GRHEIGHT / 10, 
 					(int)(gunSize * 1.777777777778), gunSize);
 			
+			//buy/equip/equipped button
+			gc.drawImage(buyImg, 100, 500, GRWIDTH / 5, GRHEIGHT / 5);
 			
+			//pg up & pg down
+			gc.drawImage(pgUpImg, 0 + cursor.width, 0 + cursor.width, GRHEIGHT / 8, GRHEIGHT / 8);
+			gc.drawImage(pgDownImg, 0 + cursor.width, GRHEIGHT - GRHEIGHT / 8 - cursor.width, GRHEIGHT / 8, GRHEIGHT / 8);
+			
+			//cursor
 			if (gc.getMouseButton(0))
 				gc.drawImage(cursorClicked, cursor.x, cursor.y - cursor.width * 2, cursor.width * 15, cursor.height * 15);
 			else

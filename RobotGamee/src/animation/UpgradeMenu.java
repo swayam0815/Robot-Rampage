@@ -26,9 +26,12 @@ public class UpgradeMenu {
 	
 	private static GraphicsConsole gc = new GraphicsConsole(GRWIDTH, GRHEIGHT);
 	
-	
+	//rectangles
 	private static Rectangle cursor = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 100, GRHEIGHT / 100); // to
-
+	private static Rectangle pgDown;
+	private static Rectangle pgUp;
+	private static Rectangle buyBTN;
+	
 	//pictures
 	private Image background;
 	private Image buyImg;

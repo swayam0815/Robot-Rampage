@@ -22,8 +22,6 @@ public class MainMenu {
 
 	private static GraphicsConsole gc = new GraphicsConsole(GRWIDTH, GRHEIGHT);
 
-	private static Rectangle playstartBTN = new Rectangle(GRWIDTH / 2, GRHEIGHT / 4, 500, 500);
-	private static Color playColor = Color.RED;
 	private static Rectangle cursor = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 100, GRHEIGHT / 100); // to
 																												// aim
 	private static Image cursorImg;

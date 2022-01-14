@@ -25,6 +25,7 @@ public class MainMenu {
 	private static Rectangle cursor = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 100, GRHEIGHT / 100); // to
 																												// aim
 	private static Image cursorImg;
+	private static Image cursorClicked;
 	private static Image bkg;
 	
 	private static Rectangle startBTN = new Rectangle	(GRWIDTH / 141 * 57, GRHEIGHT / 79 * 34, GRWIDTH / 141 * 30, GRHEIGHT / 79 * 9);
@@ -46,7 +47,8 @@ public class MainMenu {
 		gc.enableMouseMotion();
 		gc.enableMouse(); // enables motion and click for the
 
-		cursorImg = ImageIO.read(new File("crosshair.png"));
+		cursorImg = ImageIO.read(new File("cursor.png"));
+		cursorClicked = ImageIO.read(new File("cursor clicked.png"));
 		bkg = ImageIO.read(new File("blankMAINMENU.png"));
 		start = ImageIO.read(new File("darkStart.png"));
 		quit = ImageIO.read(new File("darkQuit.png"));
@@ -108,8 +110,11 @@ public class MainMenu {
 			gc.drawImage(start, startBTN.x, startBTN.y, startBTN.width, startBTN.height);
 			gc.drawImage(quit, quitBTN.x, quitBTN.y, quitBTN.width, quitBTN.height);
 			gc.drawImage(credits, creditsBTN.x, creditsBTN.y, creditsBTN.width, creditsBTN.height);
-			gc.drawImage(cursorImg, cursor.x, cursor.y, cursor.width * 10, cursor.height * 10);
-
+			
+			if (gc.getMouseButton(0))
+				gc.drawImage(cursorClicked, cursor.x, cursor.y - cursor.width * 2, cursor.width * 10, cursor.height * 10);
+			else
+				gc.drawImage(cursorImg, cursor.x, cursor.y - cursor.width * 2, cursor.width * 10, cursor.height * 10);
 		}
 	}
 

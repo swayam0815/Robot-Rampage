@@ -55,14 +55,22 @@ public class AnimationMain extends Rectangle {
 	// gun pictures
 	private static Image pistolImg; // "Pistol POV.png"
 	private static Image pistolFlipped; // "Pistol POV flipped.png"
+	private static Image pistolSide; // "Pistol POV flipped.png"
 	private static Image AR15Img; // "AR15 POV.png"
 	private static Image AR15Flipped; // "AR15 POV flipped.png"
+	private static Image AR15Side; // "AR15 POV flipped.png"
 	private static Image sniperImg; // "Sniper POV.png"
 	private static Image sniperFlipped; // "Sniper POV flipped.png"
+	private static Image sniperSide; // "Sniper POV flipped.png"
+	private static Image minigunImg; // "Sniper POV.png"
+	private static Image minigunFlipped; // "Sniper POV flipped.png"
+	private static Image minigunSide; // "Sniper POV flipped.png"
 	private static Image grenadeLauncherImg; // "Grenade Launcher POV.png"
 	private static Image grenadeLauncherFlipped;// "Grenade Launcher POV flipped.png"
+	private static Image grenadeLauncherSide;// "Grenade Launcher POV flipped.png"
 	private static Image hoseImg; // "Water Hose POV.png"
 	private static Image hoseFlipped; // "Water Hose POV flipped.png"
+	private static Image hoseSide; // "Water Hose POV flipped.png"
 
 	private Rectangle CrossHair;																			// to aim
 																											// with
@@ -149,23 +157,30 @@ public class AnimationMain extends Rectangle {
 		// gun pictures
 		pistolImg = ImageIO.read(new File("Pistol POV.png"));
 		pistolFlipped = ImageIO.read(new File("Pistol POV flipped.png"));
+		pistolSide = ImageIO.read(new File("Pistol side view.png"));
 		AR15Img = ImageIO.read(new File("AR15 POV.png"));
 		AR15Flipped = ImageIO.read(new File("AR15 POV flipped.png"));
+		AR15Side = ImageIO.read(new File("AR15 side view.png"));
 		sniperImg = ImageIO.read(new File("Sniper POV.png"));
 		sniperFlipped = ImageIO.read(new File("Sniper POV flipped.png"));
+		sniperSide = ImageIO.read(new File("Sniper side view.png"));
 		grenadeLauncherImg = ImageIO.read(new File("Grenade Launcher POV.png"));
 		grenadeLauncherFlipped = ImageIO.read(new File("Grenade Launcher POV flipped.png"));
+		grenadeLauncherSide = ImageIO.read(new File("GrenadeLauncher side view.png"));
 		hoseImg = ImageIO.read(new File("Water Hose POV.png"));
 		hoseFlipped = ImageIO.read(new File("Water Hose POV flipped.png"));
+		hoseSide = ImageIO.read(new File("WaterHose side view.png"));
 
+//		minigunSide = ImageIO.read(new File("Minigun side view.png"));
+		
 		//gun objects
 		// damage, reload time, bullet #, price, fire rate, pic, picFlipped
-		pistol = new Gun(10, 100, 7, 0, 2, pistolImg, pistolFlipped);
-		AR15 = new Gun(6, 200, 30, 1500, 1, AR15Img, AR15Flipped);
-		sniper = new Gun(30, 250, 10, 4000, 5, sniperImg, sniperFlipped);
-//		minigun = new Gun(3, 8, 400, 8500, 5);
-		grenadeLauncher = new Gun(50, 170, 5, 12000, 5, grenadeLauncherImg, grenadeLauncherFlipped);
-		hose = new Gun(2, 500, 1000, 20000, 5, hoseImg, hoseFlipped);
+		pistol = new Gun(10, 100, 7, 0, 2, pistolImg, pistolFlipped, pistolSide, true, true);
+		AR15 = new Gun(6, 200, 30, 1500, 1, AR15Img, AR15Flipped, AR15Side, false, false);
+		sniper = new Gun(30, 250, 10, 4000, 5, sniperImg, sniperFlipped, sniperSide, false, false);
+//		minigun = new Gun(3, 8, 400, 8500, 5, minigunImg, minigunFlipped, minigunSide, false, false);
+		grenadeLauncher = new Gun(50, 170, 5, 12000, 5, grenadeLauncherImg, grenadeLauncherFlipped, grenadeLauncherSide, false, false);
+		hose = new Gun(2, 500, 1000, 20000, 5, hoseImg, hoseFlipped, hoseSide, false, false);
 		
 		equippedGun = AR15;
 		

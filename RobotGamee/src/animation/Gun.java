@@ -11,11 +11,15 @@ public class Gun {
 	private int fireRate;
 	private Image pic;
 	private Image picFlipped;
+	private Image picSide;
+	private boolean isBought;
+	private boolean isEquipped;
 	
 	public static void main(String[] args) {
 	}
 	
-	public Gun(int damage, int reloadTime, int magazineSize, int price, int fireRate, Image pic, Image picFlipped) {
+	public Gun(int damage, int reloadTime, int magazineSize, int price, int fireRate, 
+			Image pic, Image picFlipped, Image picSide, boolean isBought, boolean isEquipped) {
 		this.damage = damage;
 		this.reloadTime = reloadTime;
 		this.magazineSize = magazineSize;
@@ -23,6 +27,9 @@ public class Gun {
 		this.fireRate = fireRate;
 		this.pic = pic;
 		this.picFlipped = picFlipped;
+		this.picSide = picSide;
+		this.isBought = isBought;
+		this.isEquipped = isEquipped;
 		
 	}
 
@@ -72,5 +79,25 @@ public class Gun {
 
 	public Image getPicFlipped() {
 		return picFlipped;
+	}
+	
+	public Image getPicSide() {
+		return picSide;
+	}
+	
+	public boolean getBought() {
+		return isBought;
+	}
+	
+	public void setBought(boolean isBought) {
+		this.isBought = isBought;
+	}
+	
+	public boolean getEquipped() {
+		return isEquipped;
+	}
+	
+	public void setEquipped(boolean isEquipped) {
+		this.isEquipped = isEquipped;
 	}
 }

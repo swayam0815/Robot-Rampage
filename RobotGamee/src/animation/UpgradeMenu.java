@@ -27,10 +27,13 @@ public class UpgradeMenu {
 	private static GraphicsConsole gc = new GraphicsConsole(GRWIDTH, GRHEIGHT);
 	
 	//rectangles
-	private static Rectangle cursor = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 100, GRHEIGHT / 100); // to
+	private static Rectangle cursor;
 	private static Rectangle pgDown;
 	private static Rectangle pgUp;
 	private static Rectangle buyBTN;
+	private static Rectangle equipBTN;
+	private static Rectangle equippedBTN;
+	
 	
 	//pictures
 	private Image background;
@@ -68,6 +71,14 @@ public class UpgradeMenu {
 	public void setValues() throws IOException {
 		gc.enableMouseMotion();
 		gc.enableMouse(); // enables motion and click for the mouse
+
+		//rectangles
+		cursor = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 100, GRHEIGHT / 100);
+		pgDown = new Rectangle(0 + cursor.width, GRHEIGHT - GRHEIGHT / 8 - cursor.width, GRHEIGHT / 8, GRHEIGHT / 8);
+		pgUp = new Rectangle(0 + cursor.width, 0 + cursor.width, GRHEIGHT / 8, GRHEIGHT / 8);
+		buyBTN = new Rectangle(GRHEIGHT / 4, (int)(GRWIDTH / 2.56666666667), GRWIDTH / 5, GRHEIGHT / 5);
+		equipBTN = new Rectangle(GRHEIGHT / 4, (int)(GRWIDTH / 2.56666666667), 0, 0);
+		equippedBTN = new Rectangle(GRHEIGHT / 4, (int)(GRWIDTH / 2.56666666667), 0, 0);
 		
 		//pictures
 		background = ImageIO.read(new File("Upgrade menu.jpg"));
@@ -111,11 +122,13 @@ public class UpgradeMenu {
 					(int)(gunSize * 1.777777777778), gunSize);
 			
 			//buy/equip/equipped button
-			gc.drawImage(buyImg, 100, 500, GRWIDTH / 5, GRHEIGHT / 5);
+			gc.drawImage(buyImg, buyBTN);
+			gc.drawImage(equipImg, equipBTN);
+			gc.drawImage(equippedImg, equippedBTN);
 			
 			//pg up & pg down
-			gc.drawImage(pgUpImg, 0 + cursor.width, 0 + cursor.width, GRHEIGHT / 8, GRHEIGHT / 8);
-			gc.drawImage(pgDownImg, 0 + cursor.width, GRHEIGHT - GRHEIGHT / 8 - cursor.width, GRHEIGHT / 8, GRHEIGHT / 8);
+			gc.drawImage(pgUpImg, pgUp);
+			gc.drawImage(pgDownImg, pgDown);
 			
 			//cursor
 			if (gc.getMouseButton(0))

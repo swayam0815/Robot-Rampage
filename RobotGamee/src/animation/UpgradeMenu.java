@@ -1,5 +1,6 @@
 package animation;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.File;
@@ -32,29 +33,68 @@ public class UpgradeMenu {
 	private Image pgUpImg;
 	private Image pgDownImg;
 	
+	//gun pictures
+	private Image pistolImg;
+	private Image AR15Img;
+	private Image sniperImg;
+	private Image minigunImg;
+	private Image grenadeLauncherImg;
+	private Image hoseImg;
+	
+	private Image currentGun;
+	
+	//variables
+	int gunSize;
+	
 	public UpgradeMenu() throws IOException {
 		setValues();
 		
-		while (true) {
+		while (gc.getKeyCode() != 'Q') {
 			drawGraphics();
 			gc.sleep(1);
 		}
 	}
 	
 	public void setValues() throws IOException {
+		
+		//pictures
 		background = ImageIO.read(new File("Upgrade menu.jpg"));
 		buyImg = ImageIO.read(new File("Buy Button.png"));
-//		equipImg
-//		equippedImg
-//		pgUpImg
-//		pgDownImg
+		equipImg = ImageIO.read(new File("Equip Button.png"));
+		equippedImg = ImageIO.read(new File("Equipped Button.png"));
+		pgUpImg = ImageIO.read(new File("pg up arrow.png"));
+		pgDownImg = ImageIO.read(new File("pg down arrow.png"));
+		
+		//gun pictures
+		pistolImg = ImageIO.read(new File("Pistol side view.png"));
+		AR15Img = ImageIO.read(new File("AR15 side view.png"));
+		sniperImg = ImageIO.read(new File("Sniper side view.png"));
+		minigunImg = ImageIO.read(new File("Minigun side view.png"));
+		grenadeLauncherImg = ImageIO.read(new File("GrenadeLauncher side view.png"));
+		hoseImg = ImageIO.read(new File("WaterHose side view.png"));
+		
+		currentGun = pistolImg;
+		gunSize = 350;
+		
 	}
 	
 	
 	public void drawGraphics() throws IOException {
-		gc.drawImage(background, 0, 0, GRWIDTH, GRHEIGHT);
-	}
+		synchronized (gc) {
+			gc.setBackgroundColor(Color.BLACK);
+			gc.clear();
+			
+			//background
+			gc.drawImage(background, 0, 0, GRWIDTH, GRHEIGHT);
+			
+			//the gun
+			gc.drawImage(currentGun, GRWIDTH / 7, GRHEIGHT / 10, 
+					(int)(gunSize * 1.777777777778), gunSize);
+			
+			
+			
+		}
 
-	
+	}
 	
 }

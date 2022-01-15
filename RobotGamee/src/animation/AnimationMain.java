@@ -152,7 +152,7 @@ public class AnimationMain extends Rectangle {
 		gunshotFire = ImageIO.read(new File("gunshot fire.png"));
 
 		// robot pictures
-		robo = ImageIO.read(new File("Thomas face.png"));
+		robo = ImageIO.read(new File("tinyRobot stand.png"));
 
 		// gun pictures
 		pistolImg = ImageIO.read(new File("Pistol POV.png"));

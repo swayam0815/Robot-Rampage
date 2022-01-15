@@ -17,6 +17,7 @@ import hsa2.GraphicsConsole;
 public class AnimationMain extends Rectangle {
 
 	public static void main(String[] args) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+	
 	}
 
 	/***** Global Variables ******/

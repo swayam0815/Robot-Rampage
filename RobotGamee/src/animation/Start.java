@@ -21,12 +21,18 @@ public class Start {
 
 	private static GraphicsConsole gc = new GraphicsConsole(GRWIDTH, GRHEIGHT);
 
+	//images that will show on screen
 	private static Image cursorImg;
 	private static Image cursorClicked;
 	private static Image bkg;
 	private static Image levels;
 	private static Image Upgrade;
-	private static boolean running = true;
+	
+	//images that will replace them
+	private static Image levelsDark;
+	private static Image UpgradeDark;
+	private static Image levelsLight;
+	private static Image UpgradeLight;
 
 	private static Rectangle levelsBTN = new Rectangle(GRWIDTH / 7, GRWIDTH / 11,
 			(int)(GRHEIGHT / 1.6), (int)(GRHEIGHT / 1.585365853658537));
@@ -39,44 +45,46 @@ public class Start {
 		new Start();
 	}
 
-	private Rectangle LevelBTN;
 
 	public Start() throws IOException, LineUnavailableException, UnsupportedAudioFileException {
 		gc.enableMouseMotion();
 		gc.enableMouse(); // enables motion and click for the
 
+		//images imported
 		cursorImg = ImageIO.read(new File("cursor.png"));
 		cursorClicked = ImageIO.read(new File("cursor clicked.png"));
 		bkg = ImageIO.read(new File("menu page 2.png"));
-		levels = ImageIO.read(new File("darkCampaign.png"));
-		Upgrade = ImageIO.read(new File("darkUpgrade.png"));
+		levelsDark = ImageIO.read(new File("darkCampaign.png"));
+		UpgradeDark = ImageIO.read(new File("darkUpgrade.png"));
+		levelsLight = ImageIO.read(new File("lightCampagin.png"));
+		UpgradeLight = ImageIO.read(new File("lightUpgrade.png"));
 
-		while (running) {
+		while (true) {
 			mechanics();
 			drawGraphics();
 			gc.sleep(1);
 		}
-		new AnimationMain(gc);
 	}
 
 	private void mechanics() throws IOException, LineUnavailableException, UnsupportedAudioFileException {
 		cursor.x = gc.getMouseX() - (cursor.width / 2);
 		cursor.y = gc.getMouseY() - (cursor.height / 2);
 
+		//buttons light up when hovered over
 		if (cursor.intersects(levelsBTN)) {
-			levels = ImageIO.read(new File("lightCampagin.png"));
+			levels = levelsLight;
 			if (gc.getMouseButton(0)) {
 				new AnimationMain(gc);
 			}
 		} else
-			levels = ImageIO.read(new File("darkCampaign.png"));
+			levels = levelsDark;
 
 		if (cursor.intersects(upgradeBTN)) {
-			Upgrade = ImageIO.read(new File("lightUpgrade.png"));
+			Upgrade = UpgradeLight;
 			if (gc.getMouseButton(0))
 				gc.close();
 		} else
-			Upgrade = ImageIO.read(new File("darkUpgrade.png"));
+			Upgrade = UpgradeDark;
 
 	}
 
@@ -88,18 +96,16 @@ public class Start {
 			gc.drawImage(bkg, 0, 0, GRWIDTH, GRHEIGHT);
 			
 			//campaign & upgrade button
-			gc.drawImage(levels, LevelBTN);
+			gc.drawImage(levels, levelsBTN);
 			gc.drawImage(Upgrade, upgradeBTN);
 			
 			//back button
 			
 			//cursor
 			if (gc.getMouseButton(0))
-				gc.drawImage(cursorClicked, cursor.x, cursor.y - cursor.width * 2, 
-						cursor.width * 15, cursor.height * 15);
+				gc.drawImage(cursorClicked, cursor.x, cursor.y - cursor.width * 2, cursor.width * 15, cursor.height * 15);
 			else
-				gc.drawImage(cursorImg, cursor.x, cursor.y - cursor.width * 2, 
-						cursor.width * 15, cursor.height * 15);
+				gc.drawImage(cursorImg, cursor.x, cursor.y - cursor.width * 2, cursor.width * 15, cursor.height * 15);
 		}
 	}
 

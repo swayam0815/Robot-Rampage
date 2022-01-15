@@ -22,21 +22,28 @@ public class MainMenu {
 
 	private static GraphicsConsole gc = new GraphicsConsole(GRWIDTH, GRHEIGHT);
 
-	private static Rectangle cursor = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 100, GRHEIGHT / 100); // to
-																												// aim
-	private static Image cursorImg;
-	private static Image cursorClicked;
-	private static Image bkg;
+	private static Rectangle cursor = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 100, GRHEIGHT / 100); // to aim
 	
 	private static Rectangle startBTN = new Rectangle	(GRWIDTH / 141 * 57, GRHEIGHT / 79 * 34, GRWIDTH / 141 * 30, GRHEIGHT / 79 * 9);
 	private static Rectangle quitBTN = new Rectangle	(GRWIDTH / 141 * 57, GRHEIGHT / 79 * 46, GRWIDTH / 141 * 30, GRHEIGHT / 79 * 9);
 	private static Rectangle creditsBTN = new Rectangle	(GRWIDTH / 141 * 57, GRHEIGHT / 79 * 58, GRWIDTH / 141 * 30, GRHEIGHT / 79 * 9);
 	//556, (316 - 437 - 560), 298, 90
 	
+	//the images that will show on screen
 	private static Image start;
 	private static Image quit;
 	private static Image credits;
-	private static boolean running = true;
+	private static Image cursorImg;
+	private static Image cursorClicked;
+	private static Image bkg;
+	
+	//the prepared images that will be replaced
+	private static Image startLight;
+	private static Image quitLight;
+	private static Image creditsLight;
+	private static Image startDark;
+	private static Image quitDark;
+	private static Image creditsDark;
 
 	public static void main(String[] args) throws LineUnavailableException, IOException, UnsupportedAudioFileException {
 		new MainMenu();
@@ -47,19 +54,22 @@ public class MainMenu {
 		gc.enableMouseMotion();
 		gc.enableMouse(); // enables motion and click for the
 
+		//images imported
 		cursorImg = ImageIO.read(new File("cursor.png"));
 		cursorClicked = ImageIO.read(new File("cursor clicked.png"));
 		bkg = ImageIO.read(new File("blankMAINMENU.png"));
-		start = ImageIO.read(new File("darkStart.png"));
-		quit = ImageIO.read(new File("darkQuit.png"));
-		credits = ImageIO.read(new File("darkCredits.png"));
+		startDark = ImageIO.read(new File("darkStart.png"));
+		quitDark = ImageIO.read(new File("darkQuit.png"));
+		creditsDark = ImageIO.read(new File("darkCredits.png"));
+		startLight = ImageIO.read(new File("lightStart.png"));
+		quitLight = ImageIO.read(new File("lightQuit.png"));
+		creditsLight = ImageIO.read(new File("lightCredits.png"));
 
-		while (running) {
+		while (true) {
 			mechanics();
 			drawGraphics();
 			gc.sleep(1);
 		}
-		new AnimationMain(gc);
 	}
 
 	private void mechanics() throws IOException, LineUnavailableException, UnsupportedAudioFileException {
@@ -78,39 +88,43 @@ public class MainMenu {
 //
 //		if (gc.isKeyDown(32))
 //			System.out.println(startBTN.x + " x val. \t" + startBTN.y + " y val.");
-
+		
+		//buttons light up when hovered over
 		if (cursor.intersects(startBTN)) {
-			start = ImageIO.read(new File("lightStart.png"));
+			start = startLight;
 			if (cursor.intersects(startBTN) && gc.getMouseButton(0)) {
 				new AnimationMain(gc);
 			}
 		} else
-			start = ImageIO.read(new File("darkStart.png"));
+			start = startDark;
 
 		if (cursor.intersects(creditsBTN))
-			credits = ImageIO.read(new File("lightCredits.png"));
+			credits = creditsLight;
 		else
-			credits = ImageIO.read(new File("darkCredits.png"));
+			credits = creditsDark;
 
 		if (cursor.intersects(quitBTN)) {
-			quit = ImageIO.read(new File("lightQuit.png"));
+			quit = quitLight;
 			if (cursor.intersects(quitBTN) && gc.getMouseButton(0))
 				gc.close();
 		} else
-			quit = ImageIO.read(new File("darkQuit.png"));
+			quit = quitDark;
 		
 	}
 
 	private void drawGraphics() {
 		synchronized (gc) {
 			gc.clear();
-			gc.drawImage(bkg, 0, 0, GRWIDTH, GRHEIGHT);
-
-//			gc.drawRect(new Rectangle(GRWIDTH / 2, GRHEIGHT / 4 + 100, 500, 109));
-			gc.drawImage(start, startBTN.x, startBTN.y, startBTN.width, startBTN.height);
-			gc.drawImage(quit, quitBTN.x, quitBTN.y, quitBTN.width, quitBTN.height);
-			gc.drawImage(credits, creditsBTN.x, creditsBTN.y, creditsBTN.width, creditsBTN.height);
 			
+			//background
+			gc.drawImage(bkg, 0, 0, GRWIDTH, GRHEIGHT);
+			
+			//start & quit & credits buttons
+			gc.drawImage(start, startBTN);
+			gc.drawImage(quit, quitBTN);
+			gc.drawImage(credits, creditsBTN);
+			
+			//cursor
 			if (gc.getMouseButton(0))
 				gc.drawImage(cursorClicked, cursor.x, cursor.y - cursor.width * 2, cursor.width * 15, cursor.height * 15);
 			else

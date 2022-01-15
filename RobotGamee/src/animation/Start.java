@@ -21,25 +21,25 @@ public class Start {
 
 	private static GraphicsConsole gc = new GraphicsConsole(GRWIDTH, GRHEIGHT);
 
-	private static Rectangle cursor = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 100, GRHEIGHT / 100); // to
-																												// aim
 	private static Image cursorImg;
 	private static Image cursorClicked;
 	private static Image bkg;
-
-	private static Rectangle levelsBTN = new Rectangle(220, 100, 480, 525);
-	private static Rectangle quitBTN = new Rectangle(GRWIDTH / 141 * 57, 100, GRWIDTH / 141 * 30,
-			GRHEIGHT / 79 * 9);
-	private static Rectangle creditsBTN = new Rectangle(GRWIDTH / 141 * 57, GRHEIGHT / 79 * 58, 480, 525);
-	// 556, (316 - 437 - 560), 298, 90
-
 	private static Image levels;
 	private static Image Upgrade;
 	private static boolean running = true;
 
+	private static Rectangle levelsBTN = new Rectangle(GRWIDTH / 7, GRWIDTH / 11,
+			(int)(GRHEIGHT / 1.6), (int)(GRHEIGHT / 1.585365853658537));
+	private static Rectangle upgradeBTN = new Rectangle((int)(GRWIDTH / 2), GRWIDTH / 11,
+			(int)(GRHEIGHT / 1.6), (int)(GRHEIGHT / 1.585365853658537));
+
+	private static Rectangle cursor = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 100, GRHEIGHT / 100); // to
+
 	public static void main(String[] args) throws LineUnavailableException, IOException, UnsupportedAudioFileException {
 		new Start();
 	}
+
+	private Rectangle LevelBTN;
 
 	public Start() throws IOException, LineUnavailableException, UnsupportedAudioFileException {
 		gc.enableMouseMotion();
@@ -63,30 +63,17 @@ public class Start {
 		cursor.x = gc.getMouseX() - (cursor.width / 2);
 		cursor.y = gc.getMouseY() - (cursor.height / 2);
 
-		if (gc.isKeyDown(37) || gc.isKeyDown(65))
-			creditsBTN.x -= 5;
-		if (gc.isKeyDown(39) || gc.isKeyDown(100) || gc.isKeyDown(68))
-			creditsBTN.x += 5;
-
-		if (gc.isKeyDown(87))
-			creditsBTN.y -= 5;
-		if (gc.isKeyDown(83))
-			creditsBTN.y += 5;
-
-		if (gc.isKeyDown(32))
-			System.out.println(levelsBTN.x + " x val. \t" + levelsBTN.y + " y val.");
-
 		if (cursor.intersects(levelsBTN)) {
 			levels = ImageIO.read(new File("lightCampagin.png"));
-			if (cursor.intersects(levelsBTN) && gc.getMouseButton(0)) {
+			if (gc.getMouseButton(0)) {
 				new AnimationMain(gc);
 			}
 		} else
 			levels = ImageIO.read(new File("darkCampaign.png"));
 
-		if (cursor.intersects(quitBTN)) {
+		if (cursor.intersects(upgradeBTN)) {
 			Upgrade = ImageIO.read(new File("lightUpgrade.png"));
-			if (cursor.intersects(quitBTN) && gc.getMouseButton(0))
+			if (gc.getMouseButton(0))
 				gc.close();
 		} else
 			Upgrade = ImageIO.read(new File("darkUpgrade.png"));
@@ -96,18 +83,23 @@ public class Start {
 	private void drawGraphics() {
 		synchronized (gc) {
 			gc.clear();
+			
+			//background
 			gc.drawImage(bkg, 0, 0, GRWIDTH, GRHEIGHT);
-			gc.drawRect(creditsBTN);
-			gc.drawImage(levels, 184, 100, 550, 550);
-			gc.drawImage(Upgrade, 220, 100, 550, 550);
-			// 184, 76
-			// gc.drawImage(Upgrade, quitBTN.x, quitBTN.y, quitBTN.width, quitBTN.height);
-
+			
+			//campaign & upgrade button
+			gc.drawImage(levels, LevelBTN);
+			gc.drawImage(Upgrade, upgradeBTN);
+			
+			//back button
+			
+			//cursor
 			if (gc.getMouseButton(0))
-				gc.drawImage(cursorClicked, cursor.x, cursor.y - cursor.width * 2, cursor.width * 15,
-						cursor.height * 15);
+				gc.drawImage(cursorClicked, cursor.x, cursor.y - cursor.width * 2, 
+						cursor.width * 15, cursor.height * 15);
 			else
-				gc.drawImage(cursorImg, cursor.x, cursor.y - cursor.width * 2, cursor.width * 15, cursor.height * 15);
+				gc.drawImage(cursorImg, cursor.x, cursor.y - cursor.width * 2, 
+						cursor.width * 15, cursor.height * 15);
 		}
 	}
 

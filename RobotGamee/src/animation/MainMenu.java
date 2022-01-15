@@ -66,18 +66,18 @@ public class MainMenu {
 		cursor.x = gc.getMouseX() - (cursor.width / 2);
 		cursor.y = gc.getMouseY() - (cursor.height / 2);
 
-		if (gc.isKeyDown(37) || gc.isKeyDown(65))
-			startBTN.x -= 1;
-		if (gc.isKeyDown(39) || gc.isKeyDown(100) || gc.isKeyDown(68))
-			startBTN.x += 1;
-
-		if (gc.isKeyDown(87))
-			startBTN.y -= 1;
-		if (gc.isKeyDown(83))
-			startBTN.y += 1;
-
-		if (gc.isKeyDown(32))
-			System.out.println(startBTN.x + " x val. \t" + startBTN.y + " y val.");
+//		if (gc.isKeyDown(37) || gc.isKeyDown(65))
+//			startBTN.x -= 1;
+//		if (gc.isKeyDown(39) || gc.isKeyDown(100) || gc.isKeyDown(68))
+//			startBTN.x += 1;
+//
+//		if (gc.isKeyDown(87))
+//			startBTN.y -= 1;
+//		if (gc.isKeyDown(83))
+//			startBTN.y += 1;
+//
+//		if (gc.isKeyDown(32))
+//			System.out.println(startBTN.x + " x val. \t" + startBTN.y + " y val.");
 
 		if (cursor.intersects(startBTN)) {
 			start = ImageIO.read(new File("lightStart.png"));

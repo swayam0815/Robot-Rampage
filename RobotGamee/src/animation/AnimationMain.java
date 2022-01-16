@@ -124,6 +124,8 @@ public class AnimationMain extends Rectangle {
 	// condition to see if can switch gun
 	private static boolean canSwitch = true;
 	
+	private static int counterGun = 0;
+	
 	public AnimationMain(GraphicsConsole x)
 			throws LineUnavailableException, IOException, UnsupportedAudioFileException {
 
@@ -214,9 +216,11 @@ public class AnimationMain extends Rectangle {
 		
 		if(gc.isKeyDown(69)) {
 			
-			if(gunNum + 1 < guns.length && canSwitch) {
+		
+			if(gunNum + 1 < guns.length) {
 				gunNum++;
 				equippedGun = guns[gunNum];
+				counterGun = 0;
 			}
 			else
 				gunNum = 0;

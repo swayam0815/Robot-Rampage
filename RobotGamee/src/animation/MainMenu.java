@@ -25,6 +25,8 @@ public class MainMenu {
 	private static Rectangle quitBTN = new Rectangle	(GRWIDTH / 141 * 57, GRHEIGHT / 79 * 46, GRWIDTH / 141 * 30, GRHEIGHT / 79 * 9);
 	private static Rectangle creditsBTN = new Rectangle	(GRWIDTH / 141 * 57, GRHEIGHT / 79 * 58, GRWIDTH / 141 * 30, GRHEIGHT / 79 * 9);
 	//556, (316 - 437 - 560), 298, 90
+	private static Rectangle backBTN = new Rectangle(GRWIDTH / 54, (int)(GRHEIGHT / 1.09), GRWIDTH / 8, GRHEIGHT / 14);
+
 	
 	//the images that will show on screen
 	private static Image start;
@@ -112,6 +114,11 @@ public class MainMenu {
 		} else
 			quit = quitDark;
 		
+		if (cursor.intersects(backBTN))
+			back = backLight;
+		else
+			back = backDark;
+		
 	}
 
 	private void drawGraphics() {
@@ -126,6 +133,9 @@ public class MainMenu {
 			gc.drawImage(quit, quitBTN);
 			gc.drawImage(credits, creditsBTN);
 			
+			//back button
+			gc.drawImage(back, backBTN);
+
 			//cursor
 			if (gc.getMouseButton(0))
 				gc.drawImage(cursorClicked, cursor.x, cursor.y - cursor.width * 2, cursor.width * 15, cursor.height * 15);

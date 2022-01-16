@@ -27,14 +27,13 @@ public class UpgradeMenu {
 	private static GraphicsConsole gc = new GraphicsConsole(GRWIDTH, GRHEIGHT);
 	
 	//rectangles
-	private static Rectangle cursor;
-	private static Rectangle pgDown;
-	private static Rectangle pgUp;
-	private static Rectangle buyBTN;
-	private static Rectangle equipBTN;
-	private static Rectangle equippedBTN;
-	private static Rectangle backBTN;
-
+	private static Rectangle cursor = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 100, GRHEIGHT / 100);
+	private static Rectangle pgDown = new Rectangle((int)(GRWIDTH / 1.29), (int)(GRHEIGHT / 1.31), GRWIDTH / 11, GRWIDTH / 11);
+	private static Rectangle pgUp = new Rectangle((int)(GRWIDTH / 1.29), GRHEIGHT / 13, GRWIDTH / 11, GRWIDTH / 11);
+	private static Rectangle buyBTN = new Rectangle(GRWIDTH / 5, (int)(GRWIDTH / 2.6), (int)(GRWIDTH / 4.125), GRHEIGHT / 7);
+	private static Rectangle equipBTN = new Rectangle(GRWIDTH / 5, (int)(GRWIDTH / 2.6), 0 ,0);
+	private static Rectangle equippedBTN = new Rectangle(GRWIDTH / 5, (int)(GRWIDTH / 2.6), 0, 0);
+	private static Rectangle backBTN = new Rectangle(GRWIDTH / 54, (int)(GRHEIGHT / 1.09), GRWIDTH / 8, GRHEIGHT / 14);
 
 	//pictures that will show on screen
 	private Image background;
@@ -89,18 +88,8 @@ public class UpgradeMenu {
 		gc.enableMouseMotion();
 		gc.enableMouse(); // enables motion and click for the mouse
 
-		//rectangles
-		cursor = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 100, GRHEIGHT / 100);
-		
-		pgDown = new Rectangle((int)(GRWIDTH / 1.29), (int)(GRHEIGHT / 1.31), GRWIDTH / 11, GRWIDTH / 11);
-		pgUp = new Rectangle((int)(GRWIDTH / 1.29), GRHEIGHT / 13, GRWIDTH / 11, GRWIDTH / 11);
-		buyBTN = new Rectangle(GRWIDTH / 5, (int)(GRWIDTH / 2.6), (int)(GRWIDTH / 4.125), GRHEIGHT / 7);
-		equipBTN = new Rectangle(GRWIDTH / 5, (int)(GRWIDTH / 2.6), 0 ,0);
-		equippedBTN = new Rectangle(GRWIDTH / 5, (int)(GRWIDTH / 2.6), 0, 0);
-		backBTN = new Rectangle(GRWIDTH / 54, (int)(GRHEIGHT / 1.09), GRWIDTH / 8, GRHEIGHT / 14);
-
 		//pictures
-		background = ImageIO.read(new File("upgradeMenu.png"));
+		background = ImageIO.read(new File("UpgradesMenu.jpg"));
 		buyLight = ImageIO.read(new File("lightBuy.png"));
 		buyDark = ImageIO.read(new File("buy button.png"));
 		equipLight = ImageIO.read(new File("lightEquip.png"));

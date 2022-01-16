@@ -37,10 +37,9 @@ public class Start {
 	private static Image backLight;
 	private static Image backDark;
 
-	private static Rectangle levelsBTN = new Rectangle(GRWIDTH / 7, GRWIDTH / 11,
-			(int)(GRHEIGHT / 1.6), (int)(GRHEIGHT / 1.585365853658537));
-	private static Rectangle upgradeBTN = new Rectangle((int)(GRWIDTH / 2), GRWIDTH / 11,
-			(int)(GRHEIGHT / 1.6), (int)(GRHEIGHT / 1.585365853658537));
+	private static Rectangle levelsBTN = new Rectangle(GRWIDTH / 7, GRWIDTH / 11, (int)(GRHEIGHT / 1.6), (int)(GRHEIGHT / 1.585365853658537));
+	private static Rectangle upgradeBTN = new Rectangle((int)(GRWIDTH / 2), GRWIDTH / 11, (int)(GRHEIGHT / 1.6), (int)(GRHEIGHT / 1.585365853658537));
+	private static Rectangle backBTN = new Rectangle(GRWIDTH / 54, (int)(GRHEIGHT / 1.09), GRWIDTH / 8, GRHEIGHT / 14);
 
 	private static Rectangle cursor = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 100, GRHEIGHT / 100); // to
 
@@ -90,6 +89,11 @@ public class Start {
 				gc.close();
 		} else
 			Upgrade = UpgradeDark;
+		
+		if (cursor.intersects(backBTN))
+			back = backLight;
+		else
+			back = backDark;
 
 	}
 
@@ -105,6 +109,7 @@ public class Start {
 			gc.drawImage(Upgrade, upgradeBTN);
 			
 			//back button
+			gc.drawImage(back, backBTN);
 			
 			//cursor
 			if (gc.getMouseButton(0))

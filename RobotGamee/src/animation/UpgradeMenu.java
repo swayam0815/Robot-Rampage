@@ -30,9 +30,9 @@ public class UpgradeMenu {
 	private static Rectangle cursor = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 100, GRHEIGHT / 100);
 	private static Rectangle pgDown = new Rectangle((int)(GRWIDTH / 1.29), (int)(GRHEIGHT / 1.31), GRWIDTH / 11, GRWIDTH / 11);
 	private static Rectangle pgUp = new Rectangle((int)(GRWIDTH / 1.29), GRHEIGHT / 13, GRWIDTH / 11, GRWIDTH / 11);
+	private static Rectangle equippedBTN = new Rectangle(GRWIDTH / 5, (int)(GRWIDTH / 2.6),(int)(GRWIDTH / 4.125), GRHEIGHT / 7);
 	private static Rectangle buyBTN = new Rectangle(GRWIDTH / 5, (int)(GRWIDTH / 2.6), (int)(GRWIDTH / 4.125), GRHEIGHT / 7);
 	private static Rectangle equipBTN = new Rectangle(GRWIDTH / 5, (int)(GRWIDTH / 2.6), 0 ,0);
-	private static Rectangle equippedBTN = new Rectangle(GRWIDTH / 5, (int)(GRWIDTH / 2.6), 0, 0);
 	private static Rectangle backBTN = new Rectangle(GRWIDTH / 54, (int)(GRHEIGHT / 1.09), GRWIDTH / 8, GRHEIGHT / 14);
 
 	//pictures that will show on screen
@@ -43,9 +43,10 @@ public class UpgradeMenu {
 	private Image pgUpImg;
 	private Image pgDownImg;
 	private Image back;
-	private static Image cursorImg;
-	private static Image cursorClicked;
-	
+	private Image cursorImg;
+	private Image cursorClicked;
+	private Image locked;
+
 	//pictures that will replace them
 	private Image buyLight;
 	private Image buyDark;
@@ -72,7 +73,8 @@ public class UpgradeMenu {
 	private Image currentGun;
 	
 	//variables
-	int gunSize;
+	int gunSize = (int)(GRHEIGHT / 3.61111111111111);
+	int gunNum = 0;	//represents the gun currently being shown
 	
 	public UpgradeMenu() throws IOException {
 		setValues();
@@ -101,6 +103,7 @@ public class UpgradeMenu {
 		pgDownDark = ImageIO.read(new File("downArrow.png"));
 		backLight = ImageIO.read(new File("lightBack.png"));
 		backDark = ImageIO.read(new File("darkBack.png"));
+		locked = ImageIO.read(new File("Locked Gun.png"));
 		cursorImg = ImageIO.read(new File("cursor.png"));
 		cursorClicked = ImageIO.read(new File("cursor clicked.png"));
 
@@ -113,7 +116,6 @@ public class UpgradeMenu {
 		hoseImg = ImageIO.read(new File("WaterHose side view.png"));
 		
 		currentGun = pistolImg;
-		gunSize = 350;
 		
 	}
 	
@@ -164,13 +166,17 @@ public class UpgradeMenu {
 			gc.drawImage(background, 0, 0, GRWIDTH, GRHEIGHT);
 			
 			//the gun
-//			gc.drawImage(currentGun, GRWIDTH / 7, GRHEIGHT / 10, 
-//					(int)(gunSize * 1.777777777778), gunSize);
+			gc.drawImage(currentGun, (int)(GRWIDTH / 5.5), (int)(GRHEIGHT / 3.170731707317073), 
+					(int)(gunSize * 1.777777777778), gunSize);
 			
 			//buy/equip/equipped button
+			gc.drawImage(equippedImg, equippedBTN);
 			gc.drawImage(buyImg, buyBTN);
 			gc.drawImage(equipImg, equipBTN);
-			gc.drawImage(equippedImg, equippedBTN);
+			
+			//lock on guns
+			gc.drawImage(locked, (int)(GRWIDTH / 5.5), (int)(GRHEIGHT / 3.170731707317073), 
+					(int)(gunSize * 1.777777777778), gunSize);
 			
 			//pg up & pg down
 			gc.drawImage(pgUpImg, pgUp);

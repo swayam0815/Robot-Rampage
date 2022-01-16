@@ -27,12 +27,15 @@ public class Start {
 	private static Image bkg;
 	private static Image levels;
 	private static Image Upgrade;
+	private static Image back;
 	
 	//images that will replace them
 	private static Image levelsDark;
 	private static Image UpgradeDark;
 	private static Image levelsLight;
 	private static Image UpgradeLight;
+	private static Image backLight;
+	private static Image backDark;
 
 	private static Rectangle levelsBTN = new Rectangle(GRWIDTH / 7, GRWIDTH / 11,
 			(int)(GRHEIGHT / 1.6), (int)(GRHEIGHT / 1.585365853658537));
@@ -58,6 +61,8 @@ public class Start {
 		UpgradeDark = ImageIO.read(new File("darkUpgrade.png"));
 		levelsLight = ImageIO.read(new File("lightCampagin.png"));
 		UpgradeLight = ImageIO.read(new File("lightUpgrade.png"));
+		backLight = ImageIO.read(new File("lightBack.png"));
+		backDark = ImageIO.read(new File("darkBack.png"));
 
 		while (true) {
 			mechanics();

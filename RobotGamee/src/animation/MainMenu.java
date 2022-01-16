@@ -1,9 +1,6 @@
 package animation;
 
 import java.awt.*;
-import java.awt.Dimension;
-import java.awt.Rectangle;
-import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
 
@@ -33,6 +30,7 @@ public class MainMenu {
 	private static Image start;
 	private static Image quit;
 	private static Image credits;
+	private static Image back;
 	private static Image cursorImg;
 	private static Image cursorClicked;
 	private static Image bkg;
@@ -44,6 +42,8 @@ public class MainMenu {
 	private static Image startDark;
 	private static Image quitDark;
 	private static Image creditsDark;
+	private static Image backLight;
+	private static Image backDark;
 
 	public static void main(String[] args) throws LineUnavailableException, IOException, UnsupportedAudioFileException {
 		new AnimationMain(gc);
@@ -64,6 +64,8 @@ public class MainMenu {
 		startLight = ImageIO.read(new File("lightStart.png"));
 		quitLight = ImageIO.read(new File("lightQuit.png"));
 		creditsLight = ImageIO.read(new File("lightCredits.png"));
+		backLight = ImageIO.read(new File("lightBack.png"));
+		backDark = ImageIO.read(new File("darkBack.png"));
 
 		while (true) {
 			mechanics();

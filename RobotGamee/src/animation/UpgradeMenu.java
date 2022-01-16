@@ -33,8 +33,9 @@ public class UpgradeMenu {
 	private static Rectangle buyBTN;
 	private static Rectangle equipBTN;
 	private static Rectangle equippedBTN;
-	
-	
+	private static Rectangle backBTN;
+
+
 	//pictures that will show on screen
 	private Image background;
 	private Image buyImg;
@@ -42,6 +43,7 @@ public class UpgradeMenu {
 	private Image equippedImg;
 	private Image pgUpImg;
 	private Image pgDownImg;
+	private Image back;
 	private static Image cursorImg;
 	private static Image cursorClicked;
 	
@@ -56,6 +58,8 @@ public class UpgradeMenu {
 	private Image pgUpDark;
 	private Image pgDownLight;
 	private Image pgDownDark;
+	private Image backLight;
+	private Image backDark;
 	
 	
 	//gun pictures
@@ -87,17 +91,18 @@ public class UpgradeMenu {
 
 		//rectangles
 		cursor = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 100, GRHEIGHT / 100);
-		pgDown = new Rectangle(0 + cursor.width, GRHEIGHT - GRHEIGHT / 8 - cursor.width, GRHEIGHT / 8, GRHEIGHT / 8);
-		pgUp = new Rectangle(0 + cursor.width, 0 + cursor.width, GRHEIGHT / 8, GRHEIGHT / 8);
-		buyBTN = new Rectangle(GRHEIGHT / 4, (int)(GRWIDTH / 2.56666666667), GRWIDTH / 5, GRHEIGHT / 5);
-		equipBTN = new Rectangle(GRHEIGHT / 4, (int)(GRWIDTH / 2.56666666667), 0, 0);
-		equippedBTN = new Rectangle(GRHEIGHT / 4, (int)(GRWIDTH / 2.56666666667), 0, 0);
 		
+		pgDown = new Rectangle((int)(GRWIDTH / 1.29), (int)(GRHEIGHT / 1.31), GRWIDTH / 11, GRWIDTH / 11);
+		pgUp = new Rectangle((int)(GRWIDTH / 1.29), GRHEIGHT / 13, GRWIDTH / 11, GRWIDTH / 11);
+		buyBTN = new Rectangle(GRWIDTH / 5, (int)(GRWIDTH / 2.6), (int)(GRWIDTH / 4.125), GRHEIGHT / 7);
+		equipBTN = new Rectangle(GRWIDTH / 5, (int)(GRWIDTH / 2.6), 0 ,0);
+		equippedBTN = new Rectangle(GRWIDTH / 5, (int)(GRWIDTH / 2.6), 0, 0);
+		backBTN = new Rectangle(GRWIDTH / 54, (int)(GRHEIGHT / 1.09), GRWIDTH / 8, GRHEIGHT / 14);
+
 		//pictures
 		background = ImageIO.read(new File("upgradeMenu.png"));
-		
 		buyLight = ImageIO.read(new File("lightBuy.png"));
-		buyDark = ImageIO.read(new File("darkBuy.png"));
+		buyDark = ImageIO.read(new File("buy button.png"));
 		equipLight = ImageIO.read(new File("lightEquip.png"));
 		equipDark = ImageIO.read(new File("darkEquip.png"));
 		equippedImg = ImageIO.read(new File("equipped.png"));
@@ -105,7 +110,8 @@ public class UpgradeMenu {
 		pgUpDark = ImageIO.read(new File("upArrow.png"));
 		pgDownLight = ImageIO.read(new File("lightDown.png"));
 		pgDownDark = ImageIO.read(new File("downArrow.png"));
-		
+		backLight = ImageIO.read(new File("lightBack.png"));
+		backDark = ImageIO.read(new File("darkBack.png"));
 		cursorImg = ImageIO.read(new File("cursor.png"));
 		cursorClicked = ImageIO.read(new File("cursor clicked.png"));
 
@@ -142,13 +148,21 @@ public class UpgradeMenu {
 
 				if (cursor.intersects(pgDown))
 					pgDownImg = pgDownLight;
+				//gunNum--;
 				else
 					pgDownImg = pgDownDark;
 				
 				if (cursor.intersects(pgUp))
 					pgUpImg = pgUpLight;
+				//gunNum++;
+				//currentGun = pistolImg (gunNum == 1), AR15Img (gunNum == 2), ...
 				else
 					pgUpImg = pgUpDark;
+				
+				if (cursor.intersects(backBTN))
+					back = backLight;
+				else
+					back = backDark;
 
 	}
 	
@@ -174,7 +188,7 @@ public class UpgradeMenu {
 			gc.drawImage(pgDownImg, pgDown);
 			
 			//back button
-			
+			gc.drawImage(back, backBTN);
 			
 			//cursor
 			if (gc.getMouseButton(0))

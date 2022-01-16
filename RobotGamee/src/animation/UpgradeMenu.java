@@ -157,7 +157,7 @@ public class UpgradeMenu {
 				else
 					back = backDark;
 				
-				
+				gc.getMouseClick();	//this fixes the glitch for scrolling
 				switch(gunNum) {
 				
 				case 0:

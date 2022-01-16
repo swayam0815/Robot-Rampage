@@ -46,7 +46,7 @@ public class MainMenu {
 	private static Image creditsDark;
 
 	public static void main(String[] args) throws LineUnavailableException, IOException, UnsupportedAudioFileException {
-		new MainMenu();
+		new AnimationMain(gc);
 
 	}
 

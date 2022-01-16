@@ -52,26 +52,6 @@ public class AnimationMain extends Rectangle {
 	// robot pictures
 	private Image robo; // "Thomas face.png"
 
-	// gun pictures
-	private static Image pistolImg; // "Pistol POV.png"
-	private static Image pistolFlipped; // "Pistol POV flipped.png"
-	private static Image pistolSide; // "Pistol POV flipped.png"
-	private static Image AR15Img; // "AR15 POV.png"
-	private static Image AR15Flipped; // "AR15 POV flipped.png"
-	private static Image AR15Side; // "AR15 POV flipped.png"
-	private static Image sniperImg; // "Sniper POV.png"
-	private static Image sniperFlipped; // "Sniper POV flipped.png"
-	private static Image sniperSide; // "Sniper POV flipped.png"
-	private static Image minigunImg; // "Sniper POV.png"
-	private static Image minigunFlipped; // "Sniper POV flipped.png"
-	private static Image minigunSide; // "Sniper POV flipped.png"
-	private static Image grenadeLauncherImg; // "Grenade Launcher POV.png"
-	private static Image grenadeLauncherFlipped;// "Grenade Launcher POV flipped.png"
-	private static Image grenadeLauncherSide;// "Grenade Launcher POV flipped.png"
-	private static Image hoseImg; // "Water Hose POV.png"
-	private static Image hoseFlipped; // "Water Hose POV flipped.png"
-	private static Image hoseSide; // "Water Hose POV flipped.png"
-
 	private Rectangle CrossHair;																			// to aim
 																											// with
 	private Rectangle ReloadButton = new Rectangle((GRWIDTH / 20) - (GRWIDTH / 50), GRHEIGHT - (GRWIDTH / 10),
@@ -126,11 +106,11 @@ public class AnimationMain extends Rectangle {
 	
 	private static int counterGun = 0;
 	
-	public AnimationMain(GraphicsConsole x)
+	public AnimationMain(GraphicsConsole x, Gun gun)
 			throws LineUnavailableException, IOException, UnsupportedAudioFileException {
 
 		gc = x;
-	
+		equippedGun = gun;
 		initiate();
 
 		while (gc.getKeyCode() != 'Q') {
@@ -158,41 +138,6 @@ public class AnimationMain extends Rectangle {
 
 		// robot pictures
 		robo = ImageIO.read(new File("tinyRobot stand.png"));
-
-		// gun pictures
-		pistolImg = ImageIO.read(new File("Pistol POV.png"));
-		pistolFlipped = ImageIO.read(new File("Pistol POV flipped.png"));
-		pistolSide = ImageIO.read(new File("Pistol side view.png"));
-		AR15Img = ImageIO.read(new File("AR15 POV.png"));
-		AR15Flipped = ImageIO.read(new File("AR15 POV flipped.png"));
-		AR15Side = ImageIO.read(new File("AR15 side view.png"));
-		sniperImg = ImageIO.read(new File("Sniper POV.png"));
-		sniperFlipped = ImageIO.read(new File("Sniper POV flipped.png"));
-		sniperSide = ImageIO.read(new File("Sniper side view.png"));
-		grenadeLauncherImg = ImageIO.read(new File("Grenade Launcher POV.png"));
-		grenadeLauncherFlipped = ImageIO.read(new File("Grenade Launcher POV flipped.png"));
-		grenadeLauncherSide = ImageIO.read(new File("GrenadeLauncher side view.png"));
-		hoseImg = ImageIO.read(new File("Water Hose POV.png"));
-		hoseFlipped = ImageIO.read(new File("Water Hose POV flipped.png"));
-		hoseSide = ImageIO.read(new File("WaterHose side view.png"));
-
-//		minigunSide = ImageIO.read(new File("Minigun side view.png"));
-		
-		//gun objects
-		// damage, reload time, bullet #, price, fire rate, pic, picFlipped
-		//pistol
-		guns[0] = new Gun(10, 100, 7, 0, 2, pistolImg, pistolFlipped, pistolSide, true, true);
-		//ar15
-		guns[1] = new Gun(6, 200, 30, 1500, 1, AR15Img, AR15Flipped, AR15Side, false, false);
-		//sniper
-		guns[2] = new Gun(30, 250, 10, 4000, 5, sniperImg, sniperFlipped, sniperSide, false, false);
-		//minigun
-		//		guns[] = new Gun(3, 8, 400, 8500, 5, minigunImg, minigunFlipped, minigunSide, false, false);
-		// shotgun/grenade launcher
-		guns[3] = new Gun(50, 170, 5, 12000, 5, grenadeLauncherImg, grenadeLauncherFlipped, grenadeLauncherSide, false, false);
-		guns[4] = new Gun(2, 500, 1000, 20000, 5, hoseImg, hoseFlipped, hoseSide, false, false);
-		
-		equippedGun = guns[0];
 		
 		
 		CrossHair = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 10, GRHEIGHT / 10);

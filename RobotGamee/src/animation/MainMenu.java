@@ -19,16 +19,24 @@ public class MainMenu {
 
 	private static GraphicsConsole gc = new GraphicsConsole(GRWIDTH, GRHEIGHT);
 
-	private static Rectangle cursor = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 100, GRHEIGHT / 100); // to aim
-	
-	private static Rectangle startBTN = new Rectangle	(GRWIDTH / 141 * 57, GRHEIGHT / 79 * 34, GRWIDTH / 141 * 30, GRHEIGHT / 79 * 9);
-	private static Rectangle quitBTN = new Rectangle	(GRWIDTH / 141 * 57, GRHEIGHT / 79 * 46, GRWIDTH / 141 * 30, GRHEIGHT / 79 * 9);
-	private static Rectangle creditsBTN = new Rectangle	(GRWIDTH / 141 * 57, GRHEIGHT / 79 * 58, GRWIDTH / 141 * 30, GRHEIGHT / 79 * 9);
-	//556, (316 - 437 - 560), 298, 90
-	private static Rectangle backBTN = new Rectangle(GRWIDTH / 54, (int)(GRHEIGHT / 1.09), GRWIDTH / 8, GRHEIGHT / 14);
+	private static Rectangle cursor = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 100, GRHEIGHT / 100); // to
+																												// aim
 
-	
-	//the images that will show on screen
+	private static Rectangle startBTN = new Rectangle(GRWIDTH / 141 * 57, GRHEIGHT / 79 * 34, GRWIDTH / 141 * 30,
+			GRHEIGHT / 79 * 9);
+	private static Rectangle quitBTN = new Rectangle(GRWIDTH / 141 * 57, GRHEIGHT / 79 * 46, GRWIDTH / 141 * 30,
+			GRHEIGHT / 79 * 9);
+	private static Rectangle creditsBTN = new Rectangle(GRWIDTH / 141 * 57, GRHEIGHT / 79 * 58, GRWIDTH / 141 * 30,
+			GRHEIGHT / 79 * 9);
+	// 556, (316 - 437 - 560), 298, 90
+	private static Rectangle backBTN = new Rectangle(GRWIDTH / 54, (int) (GRHEIGHT / 1.09), GRWIDTH / 8, GRHEIGHT / 14);
+
+	private static Image pistolImg; // "Pistol POV.png"
+	private static Image pistolFlipped; // "Pistol POV flipped.png"
+	private static Image pistolSide; // "Pistol POV flipped.png"
+	private static Gun gun;
+
+	// the images that will show on screen
 	private static Image start;
 	private static Image quit;
 	private static Image credits;
@@ -36,8 +44,8 @@ public class MainMenu {
 	private static Image cursorImg;
 	private static Image cursorClicked;
 	private static Image bkg;
-	
-	//the prepared images that will be replaced
+
+	// the prepared images that will be replaced
 	private static Image startLight;
 	private static Image quitLight;
 	private static Image creditsLight;
@@ -48,15 +56,19 @@ public class MainMenu {
 	private static Image backDark;
 
 	public static void main(String[] args) throws LineUnavailableException, IOException, UnsupportedAudioFileException {
-		new AnimationMain(gc);
-
+		new MainMenu(gc);
 	}
 
-	public MainMenu() throws IOException, LineUnavailableException, UnsupportedAudioFileException {
+	public MainMenu(GraphicsConsole gc) throws IOException, LineUnavailableException, UnsupportedAudioFileException {
+		this.gc = gc;
+		initialize();
+	}
+
+	private void initialize() throws IOException, LineUnavailableException, UnsupportedAudioFileException {
 		gc.enableMouseMotion();
 		gc.enableMouse(); // enables motion and click for the
 
-		//images imported
+		// images imported
 		cursorImg = ImageIO.read(new File("cursor.png"));
 		cursorClicked = ImageIO.read(new File("cursor clicked.png"));
 		bkg = ImageIO.read(new File("blankMAINMENU.png"));
@@ -69,11 +81,19 @@ public class MainMenu {
 		backLight = ImageIO.read(new File("lightBack.png"));
 		backDark = ImageIO.read(new File("darkBack.png"));
 
+		pistolImg = ImageIO.read(new File("Pistol POV.png"));
+		pistolFlipped = ImageIO.read(new File("Pistol POV flipped.png"));
+		pistolSide = ImageIO.read(new File("Pistol side view.png"));
+
+		// pistol
+		gun = new Gun(10, 100, 7, 0, 2, pistolImg, pistolFlipped, pistolSide, true, true);
+
 		while (true) {
 			mechanics();
 			drawGraphics();
 			gc.sleep(1);
 		}
+
 	}
 
 	private void mechanics() throws IOException, LineUnavailableException, UnsupportedAudioFileException {
@@ -92,12 +112,12 @@ public class MainMenu {
 //
 //		if (gc.isKeyDown(32))
 //			System.out.println(startBTN.x + " x val. \t" + startBTN.y + " y val.");
-		
-		//buttons light up when hovered over
+
+		// buttons light up when hovered over
 		if (cursor.intersects(startBTN)) {
 			start = startLight;
 			if (gc.getMouseButton(0)) {
-				new AnimationMain(gc);
+				new Start(gc);
 			}
 		} else
 			start = startDark;
@@ -113,32 +133,33 @@ public class MainMenu {
 				gc.close();
 		} else
 			quit = quitDark;
-		
+
 		if (cursor.intersects(backBTN))
 			back = backLight;
 		else
 			back = backDark;
-		
+
 	}
 
 	private void drawGraphics() {
 		synchronized (gc) {
 			gc.clear();
-			
-			//background
+
+			// background
 			gc.drawImage(bkg, 0, 0, GRWIDTH, GRHEIGHT);
-			
-			//start & quit & credits buttons
+
+			// start & quit & credits buttons
 			gc.drawImage(start, startBTN);
 			gc.drawImage(quit, quitBTN);
 			gc.drawImage(credits, creditsBTN);
-			
-			//back button
+
+			// back button
 			gc.drawImage(back, backBTN);
 
-			//cursor
+			// cursor
 			if (gc.getMouseButton(0))
-				gc.drawImage(cursorClicked, cursor.x, cursor.y - cursor.width * 2, cursor.width * 15, cursor.height * 15);
+				gc.drawImage(cursorClicked, cursor.x, cursor.y - cursor.width * 2, cursor.width * 15,
+						cursor.height * 15);
 			else
 				gc.drawImage(cursorImg, cursor.x, cursor.y - cursor.width * 2, cursor.width * 15, cursor.height * 15);
 		}

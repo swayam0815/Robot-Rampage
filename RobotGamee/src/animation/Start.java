@@ -19,17 +19,18 @@ public class Start {
 	private static int GRHEIGHT = (int) GRsize.getHeight() - 70; // (int)GRsize.getHeight() - 70
 	private static int GRWIDTH = (int) (GRHEIGHT * 1.777777777778); // this sets the size of the grid to fit the screen
 
-	private static GraphicsConsole gc = new GraphicsConsole(GRWIDTH, GRHEIGHT);
+	private static GraphicsConsole gc;
+	// = new GraphicsConsole(GRWIDTH, GRHEIGHT);
 
-	//images that will show on screen
+	// images that will show on screen
 	private static Image cursorImg;
 	private static Image cursorClicked;
 	private static Image bkg;
 	private static Image levels;
 	private static Image Upgrade;
 	private static Image back;
-	
-	//images that will replace them
+
+	// images that will replace them
 	private static Image levelsDark;
 	private static Image UpgradeDark;
 	private static Image levelsLight;
@@ -37,22 +38,28 @@ public class Start {
 	private static Image backLight;
 	private static Image backDark;
 
-	private static Rectangle levelsBTN = new Rectangle(GRWIDTH / 7, GRWIDTH / 11, (int)(GRHEIGHT / 1.6), (int)(GRHEIGHT / 1.585365853658537));
-	private static Rectangle upgradeBTN = new Rectangle((int)(GRWIDTH / 2), GRWIDTH / 11, (int)(GRHEIGHT / 1.6), (int)(GRHEIGHT / 1.585365853658537));
-	private static Rectangle backBTN = new Rectangle(GRWIDTH / 54, (int)(GRHEIGHT / 1.09), GRWIDTH / 8, GRHEIGHT / 14);
+	private static Rectangle levelsBTN = new Rectangle(GRWIDTH / 7, GRWIDTH / 11, (int) (GRHEIGHT / 1.6),
+			(int) (GRHEIGHT / 1.585365853658537));
+	private static Rectangle upgradeBTN = new Rectangle((int) (GRWIDTH / 2), GRWIDTH / 11, (int) (GRHEIGHT / 1.6),
+			(int) (GRHEIGHT / 1.585365853658537));
+	private static Rectangle backBTN = new Rectangle(GRWIDTH / 54, (int) (GRHEIGHT / 1.09), GRWIDTH / 8, GRHEIGHT / 14);
 
 	private static Rectangle cursor = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 100, GRHEIGHT / 100); // to
 
+	private static Image pistolImg; // "Pistol POV.png"
+	private static Image pistolFlipped; // "Pistol POV flipped.png"
+	private static Image pistolSide; // "Pistol POV flipped.png"
+	private static Gun gun;
+
 	public static void main(String[] args) throws LineUnavailableException, IOException, UnsupportedAudioFileException {
-		new Start();
 	}
 
-
-	public Start() throws IOException, LineUnavailableException, UnsupportedAudioFileException {
+	public Start(GraphicsConsole gc) throws IOException, LineUnavailableException, UnsupportedAudioFileException {
+		this.gc = gc;
 		gc.enableMouseMotion();
 		gc.enableMouse(); // enables motion and click for the
 
-		//images imported
+		// images imported
 		cursorImg = ImageIO.read(new File("cursor.png"));
 		cursorClicked = ImageIO.read(new File("cursor clicked.png"));
 		bkg = ImageIO.read(new File("menu page 2.png"));
@@ -62,6 +69,13 @@ public class Start {
 		UpgradeLight = ImageIO.read(new File("lightUpgrade.png"));
 		backLight = ImageIO.read(new File("lightBack.png"));
 		backDark = ImageIO.read(new File("darkBack.png"));
+
+		pistolImg = ImageIO.read(new File("Pistol POV.png"));
+		pistolFlipped = ImageIO.read(new File("Pistol POV flipped.png"));
+		pistolSide = ImageIO.read(new File("Pistol side view.png"));
+
+		// pistol
+		gun = new Gun(10, 100, 7, 0, 2, pistolImg, pistolFlipped, pistolSide, true, true);
 
 		while (true) {
 			mechanics();
@@ -74,11 +88,11 @@ public class Start {
 		cursor.x = gc.getMouseX() - (cursor.width / 2);
 		cursor.y = gc.getMouseY() - (cursor.height / 2);
 
-		//buttons light up when hovered over
+		// buttons light up when hovered over
 		if (cursor.intersects(levelsBTN)) {
 			levels = levelsLight;
 			if (gc.getMouseButton(0)) {
-				new AnimationMain(gc);
+				new AnimationMain(gc, gun);
 			}
 		} else
 			levels = levelsDark;
@@ -86,13 +100,15 @@ public class Start {
 		if (cursor.intersects(upgradeBTN)) {
 			Upgrade = UpgradeLight;
 			if (gc.getMouseButton(0))
-				gc.close();
+				new UpgradeMenu(gc);
 		} else
 			Upgrade = UpgradeDark;
-		
-		if (cursor.intersects(backBTN))
+
+		if (cursor.intersects(backBTN)) {
 			back = backLight;
-		else
+			if (cursor.intersects(backBTN) && gc.getMouseClick() > 0)
+				new MainMenu(gc);
+		} else
 			back = backDark;
 
 	}
@@ -100,20 +116,21 @@ public class Start {
 	private void drawGraphics() {
 		synchronized (gc) {
 			gc.clear();
-			
-			//background
+
+			// background
 			gc.drawImage(bkg, 0, 0, GRWIDTH, GRHEIGHT);
-			
-			//campaign & upgrade button
+
+			// campaign & upgrade button
 			gc.drawImage(levels, levelsBTN);
 			gc.drawImage(Upgrade, upgradeBTN);
-			
-			//back button
+
+			// back button
 			gc.drawImage(back, backBTN);
-			
-			//cursor
+
+			// cursor
 			if (gc.getMouseButton(0))
-				gc.drawImage(cursorClicked, cursor.x, cursor.y - cursor.width * 2, cursor.width * 15, cursor.height * 15);
+				gc.drawImage(cursorClicked, cursor.x, cursor.y - cursor.width * 2, cursor.width * 15,
+						cursor.height * 15);
 			else
 				gc.drawImage(cursorImg, cursor.x, cursor.y - cursor.width * 2, cursor.width * 15, cursor.height * 15);
 		}

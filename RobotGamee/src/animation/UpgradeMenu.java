@@ -35,7 +35,7 @@ public class UpgradeMenu {
 	private static Rectangle equippedBTN;
 	
 	
-	//pictures
+	//pictures that will show on screen
 	private Image background;
 	private Image buyImg;
 	private Image equipImg;
@@ -44,6 +44,19 @@ public class UpgradeMenu {
 	private Image pgDownImg;
 	private static Image cursorImg;
 	private static Image cursorClicked;
+	
+	//pictures that will replace them
+	private Image buyLight;
+	private Image buyDark;
+	private Image equipLight;
+	private Image equipDark;
+	private Image equippedLight;
+	private Image equippedDark;
+	private Image pgUpLight;
+	private Image pgUpDark;
+	private Image pgDownLight;
+	private Image pgDownDark;
+	
 	
 	//gun pictures
 	private Image pistolImg;
@@ -81,12 +94,18 @@ public class UpgradeMenu {
 		equippedBTN = new Rectangle(GRHEIGHT / 4, (int)(GRWIDTH / 2.56666666667), 0, 0);
 		
 		//pictures
-		background = ImageIO.read(new File("Upgrade menu.jpg"));
-		buyImg = ImageIO.read(new File("Buy Button.png"));
-		equipImg = ImageIO.read(new File("Equip Button.png"));
-		equippedImg = ImageIO.read(new File("Equipped Button.png"));
-		pgUpImg = ImageIO.read(new File("pg up arrow.png"));
-		pgDownImg = ImageIO.read(new File("pg down arrow.png"));
+		background = ImageIO.read(new File("upgradeMenu.png"));
+		
+		buyLight = ImageIO.read(new File("lightBuy.png"));
+		buyDark = ImageIO.read(new File("darkBuy.png"));
+		equipLight = ImageIO.read(new File("lightEquip.png"));
+		equipDark = ImageIO.read(new File("darkEquip.png"));
+		equippedImg = ImageIO.read(new File("equipped.png"));
+		pgUpLight = ImageIO.read(new File("upLight.png"));
+		pgUpDark = ImageIO.read(new File("upArrow.png"));
+		pgDownLight = ImageIO.read(new File("lightDown.png"));
+		pgDownDark = ImageIO.read(new File("downArrow.png"));
+		
 		cursorImg = ImageIO.read(new File("cursor.png"));
 		cursorClicked = ImageIO.read(new File("cursor clicked.png"));
 
@@ -107,6 +126,30 @@ public class UpgradeMenu {
 		cursor.x = gc.getMouseX() - (cursor.width / 2);
 		cursor.y = gc.getMouseY() - (cursor.height / 2);
 
+		//buttons light up when hovered over
+				if (cursor.intersects(buyBTN)) {
+					buyImg = buyLight;
+//					if (cursor.intersects(buyBTN) && gc.getMouseButton(0)) {
+//						new AnimationMain(gc);
+//					}
+				} else
+					buyImg = buyDark;
+
+				if (cursor.intersects(equipBTN))
+					equipImg = equipLight;
+				else
+					equipImg = equipDark;
+
+				if (cursor.intersects(pgDown))
+					pgDownImg = pgDownLight;
+				else
+					pgDownImg = pgDownDark;
+				
+				if (cursor.intersects(pgUp))
+					pgUpImg = pgUpLight;
+				else
+					pgUpImg = pgUpDark;
+
 	}
 	
 	public void drawGraphics() throws IOException {
@@ -118,8 +161,8 @@ public class UpgradeMenu {
 			gc.drawImage(background, 0, 0, GRWIDTH, GRHEIGHT);
 			
 			//the gun
-			gc.drawImage(currentGun, GRWIDTH / 7, GRHEIGHT / 10, 
-					(int)(gunSize * 1.777777777778), gunSize);
+//			gc.drawImage(currentGun, GRWIDTH / 7, GRHEIGHT / 10, 
+//					(int)(gunSize * 1.777777777778), gunSize);
 			
 			//buy/equip/equipped button
 			gc.drawImage(buyImg, buyBTN);
@@ -129,6 +172,9 @@ public class UpgradeMenu {
 			//pg up & pg down
 			gc.drawImage(pgUpImg, pgUp);
 			gc.drawImage(pgDownImg, pgDown);
+			
+			//back button
+			
 			
 			//cursor
 			if (gc.getMouseButton(0))

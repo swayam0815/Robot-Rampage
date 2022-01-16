@@ -114,9 +114,7 @@ public class UpgradeMenu {
 		minigunImg = ImageIO.read(new File("Minigun side view.png"));
 		grenadeLauncherImg = ImageIO.read(new File("GrenadeLauncher side view.png"));
 		hoseImg = ImageIO.read(new File("WaterHose side view.png"));
-		
-		currentGun = pistolImg;
-		
+				
 	}
 	
 	private void mechanics() {
@@ -126,7 +124,7 @@ public class UpgradeMenu {
 		//buttons light up when hovered over
 				if (cursor.intersects(buyBTN)) {
 					buyImg = buyLight;
-//					if (cursor.intersects(buyBTN) && gc.getMouseButton(0)) {
+//					if (gc.getMouseButton(0)) {
 //						new AnimationMain(gc);
 //					}
 				} else
@@ -137,15 +135,19 @@ public class UpgradeMenu {
 				else
 					equipImg = equipDark;
 
-				if (cursor.intersects(pgDown))
+				if (cursor.intersects(pgDown)) {
 					pgDownImg = pgDownLight;
-				//gunNum--;
+					if (gc.getMouseClick() > 0)
+						gunNum--;
+				}
 				else
 					pgDownImg = pgDownDark;
 				
-				if (cursor.intersects(pgUp))
+				if (cursor.intersects(pgUp)) {
 					pgUpImg = pgUpLight;
-				//gunNum++;
+					if (gc.getMouseClick() > 0) 
+						gunNum++;
+				}
 				//currentGun = pistolImg (gunNum == 1), AR15Img (gunNum == 2), ...
 				else
 					pgUpImg = pgUpDark;
@@ -154,6 +156,40 @@ public class UpgradeMenu {
 					back = backLight;
 				else
 					back = backDark;
+				
+				
+				switch(gunNum) {
+				
+				case 0:
+					currentGun = pistolImg;
+					break;
+				
+				case 1:
+					currentGun = AR15Img;
+					break;
+
+				case 2:
+					currentGun = sniperImg;
+					break;
+
+				case 3:
+					currentGun = minigunImg;
+					break;
+
+				case 4:
+					currentGun = grenadeLauncherImg;
+					break;
+
+				case 5:
+					currentGun = hoseImg;
+					break;
+
+				default:
+					if (gunNum > 5)
+						gunNum = 5;
+					else
+						gunNum = 0;
+				}
 
 	}
 	

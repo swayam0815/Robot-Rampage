@@ -96,7 +96,7 @@ public class MainMenu {
 		//buttons light up when hovered over
 		if (cursor.intersects(startBTN)) {
 			start = startLight;
-			if (cursor.intersects(startBTN) && gc.getMouseButton(0)) {
+			if (gc.getMouseButton(0)) {
 				new AnimationMain(gc);
 			}
 		} else
@@ -109,7 +109,7 @@ public class MainMenu {
 
 		if (cursor.intersects(quitBTN)) {
 			quit = quitLight;
-			if (cursor.intersects(quitBTN) && gc.getMouseButton(0))
+			if (gc.getMouseButton(0))
 				gc.close();
 		} else
 			quit = quitDark;

@@ -91,7 +91,7 @@ public class Start {
 		// buttons light up when hovered over
 		if (cursor.intersects(levelsBTN)) {
 			levels = levelsLight;
-			if (gc.getMouseButton(0)) {
+			if (gc.getMouseClick() > 0) {
 				new AnimationMain(gc, gun);
 			}
 		} else
@@ -99,18 +99,19 @@ public class Start {
 
 		if (cursor.intersects(upgradeBTN)) {
 			Upgrade = UpgradeLight;
-			if (gc.getMouseButton(0))
+			if (gc.getMouseClick() > 0)
 				new UpgradeMenu(gc);
 		} else
 			Upgrade = UpgradeDark;
 
 		if (cursor.intersects(backBTN)) {
 			back = backLight;
-			if (cursor.intersects(backBTN) && gc.getMouseClick() > 0)
+			if (gc.getMouseClick() > 0)
 				new MainMenu(gc);
 		} else
 			back = backDark;
-
+		
+		gc.getMouseClick();
 	}
 
 	private void drawGraphics() {

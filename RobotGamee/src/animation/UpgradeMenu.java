@@ -88,7 +88,7 @@ public class UpgradeMenu {
 
 	private static Gun[] guns = new Gun[5];
 
-	private Image currentGun;
+	private Gun currentGun;
 
 	// variables
 	int gunSize = (int) (GRHEIGHT / 3.61111111111111);
@@ -135,7 +135,6 @@ public class UpgradeMenu {
 		cursorClicked = ImageIO.read(new File("cursor clicked.png"));
 
 		// gun pictures
-		// gun pictures
 		pistolImg = ImageIO.read(new File("Pistol POV.png"));
 		pistolFlipped = ImageIO.read(new File("Pistol POV flipped.png"));
 		pistolSide = ImageIO.read(new File("Pistol side view.png"));
@@ -171,22 +170,46 @@ public class UpgradeMenu {
 		guns[4] = new Gun(2, 500, 1000, 20000, 5, hoseImg, hoseFlipped, hoseSide, false, false);
 
 	}
+	
+	private void showButton(Rectangle button) {
+		button.width = (int) (GRWIDTH / 4.125);
+		button.height = GRHEIGHT / 7;
+		button.x = GRWIDTH / 5;
+		button.y = (int) (GRWIDTH / 2.6);
+	}
+	
+	private void hideButton(Rectangle button) {
+		button.width = button.height = 0;
+		button.x = button.y = -GRHEIGHT;
+	}
 
 	private void mechanics() throws IOException, LineUnavailableException, UnsupportedAudioFileException {
 		cursor.x = gc.getMouseX() - (cursor.width / 2);
 		cursor.y = gc.getMouseY() - (cursor.height / 2);
 
+		//represents the gun currently selected
+		currentGun = guns[gunNum];
+
 		// buttons light up when hovered over
 		if (cursor.intersects(buyBTN)) {
 			buyImg = buyLight;
-//					if (gc.getMouseButton(0)) {
-//						new AnimationMain(gc);
-//					}
-		} else
+			if (gc.getMouseClick() > 0)
+				currentGun.setBought(true);
+		}
+		else
 			buyImg = buyDark;
 
-		if (cursor.intersects(equipBTN))
+		if (cursor.intersects(equipBTN)) {
 			equipImg = equipLight;
+			
+			gc.getMouseClick();
+			
+			if (gc.getMouseClick() > 0)
+				for (int i = 0; i < guns.length; i++) {
+					guns[i].setEquipped(false);
+				}
+				currentGun.setEquipped(true);
+		}
 		else
 			equipImg = equipDark;
 
@@ -212,40 +235,31 @@ public class UpgradeMenu {
 
 		if (cursor.intersects(backBTN)) {
 			back = backLight;
-			if (cursor.intersects(backBTN) && gc.getMouseClick() > 0)
+			if (gc.getMouseClick() > 0)
 				new Start(gc);
 		} else
 			back = backDark;
 
 		gc.getMouseClick(); // this fixes the glitch for scrolling
 
-		switch (gunNum) {
-
-		case 0:
-			currentGun = guns[0].getPicSide();
-			break;
-
-		case 1:
-			currentGun = guns[1].getPicSide();
-			break;
-
-		case 2:
-			currentGun = guns[2].getPicSide();
-			break;
-
-		case 3:
-			currentGun = guns[3].getPicSide();
-			break;
-
-		case 4:
-			currentGun = guns[4].getPicSide();
-			break;
-
-		case 5:
-			currentGun = guns[5].getPicSide();
-			break;
+		//choosing which button to show
+		if (!currentGun.getBought()) {
+			showButton(buyBTN);
 		}
+		else {
+			if (currentGun.getEquipped()) {
+				hideButton(buyBTN);
+				hideButton(equipBTN);
+			}
+			else {
+				hideButton(buyBTN);
+				showButton(equipBTN);
+			}
 
+		}
+		
+		
+	
 	}
 
 	public void drawGraphics() throws IOException {
@@ -257,7 +271,7 @@ public class UpgradeMenu {
 			gc.drawImage(background, 0, 0, GRWIDTH, GRHEIGHT);
 
 			// the gun
-			gc.drawImage(currentGun, (int) (GRWIDTH / 5.5), (int) (GRHEIGHT / 3.170731707317073),
+			gc.drawImage(currentGun.getPicSide(), (int) (GRWIDTH / 5.5), (int) (GRHEIGHT / 3.170731707317073),
 					(int) (gunSize * 1.777777777778), gunSize);
 
 			// buy/equip/equipped button

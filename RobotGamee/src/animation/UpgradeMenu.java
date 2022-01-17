@@ -12,6 +12,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.Font;
 
 import hsa2.GraphicsConsole;
 
@@ -51,6 +52,7 @@ public class UpgradeMenu {
 	private Image cursorImg;
 	private Image cursorClicked;
 	private Image locked;
+	private Image roboPartsImg;
 
 	// pictures that will replace them
 	private Image buyLight;
@@ -91,8 +93,11 @@ public class UpgradeMenu {
 	private Gun currentGun;
 
 	// variables
-	int gunSize = (int) (GRHEIGHT / 3.61111111111111);
-	int gunNum = 0; // represents the gun currently being shown
+	int gunSize = (int)(GRHEIGHT / 3.61111111111111);	//the size of the gun picture
+	int gunNum = 0;		// represents the gun currently being shown
+	int money = 30000;	//amount of money the player has
+	
+	Font moneyLeftFont = new Font("Serif", Font.PLAIN, GRWIDTH / 20);	//font for money at the top
 
 	public UpgradeMenu(GraphicsConsole gc) throws IOException, LineUnavailableException, UnsupportedAudioFileException {
 		this.gc = gc;
@@ -102,6 +107,8 @@ public class UpgradeMenu {
 	public void init() throws IOException, LineUnavailableException, UnsupportedAudioFileException {
 		Image loading = ImageIO.read(new File("loading.png"));
 		gc.setBackgroundColor(loading, GRWIDTH, GRHEIGHT);
+
+		gc.setFont(moneyLeftFont);
 
 		setValues();
 
@@ -131,6 +138,7 @@ public class UpgradeMenu {
 		backLight = ImageIO.read(new File("lightBack.png"));
 		backDark = ImageIO.read(new File("darkBack.png"));
 		locked = ImageIO.read(new File("Locked Gun.png"));
+		roboPartsImg = ImageIO.read(new File("Robot parts.png"));
 		cursorImg = ImageIO.read(new File("cursor.png"));
 		cursorClicked = ImageIO.read(new File("cursor clicked.png"));
 
@@ -193,8 +201,10 @@ public class UpgradeMenu {
 		// buttons light up when hovered over
 		if (cursor.intersects(buyBTN)) {
 			buyImg = buyLight;
-			if (gc.getMouseClick() > 0)
+			if (gc.getMouseClick() > 0 && money > currentGun.getPrice()) {
+				money -= currentGun.getPrice();
 				currentGun.setBought(true);
+			}
 		}
 		else
 			buyImg = buyDark;
@@ -290,6 +300,11 @@ public class UpgradeMenu {
 			// back button
 			gc.drawImage(back, backBTN);
 
+			//money left for player
+			gc.drawImage(roboPartsImg, GRWIDTH / 20, 0, GRWIDTH / 14, GRWIDTH / 14);
+			gc.setColor(Color.RED);
+			gc.drawString("" + money, GRWIDTH / 8, GRHEIGHT / 10);
+			
 			// cursor
 			if (gc.getMouseButton(0))
 				gc.drawImage(cursorClicked, cursor.x, cursor.y - cursor.width * 2, cursor.width * 15,

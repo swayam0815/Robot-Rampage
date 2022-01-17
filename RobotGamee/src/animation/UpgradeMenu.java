@@ -279,6 +279,7 @@ public class UpgradeMenu {
 			gc.drawImage(equipImg, equipBTN);
 
 			// lock on guns
+			if (!currentGun.getBought())
 			gc.drawImage(locked, (int) (GRWIDTH / 5.5), (int) (GRHEIGHT / 3.170731707317073),
 					(int) (gunSize * 1.777777777778), gunSize);
 

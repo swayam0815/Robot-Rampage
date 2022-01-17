@@ -162,7 +162,7 @@ public class UpgradeMenu {
 		// sniper
 		guns[2] = new Gun(30, 250, 10, 4000, 5, sniperImg, sniperFlipped, sniperSide, false, false);
 		// minigun
-		// guns[] = new Gun(3, 8, 400, 8500, 5, minigunImg, minigunFlipped, minigunSide,
+		// guns[3] = new Gun(3, 8, 400, 8500, 5, minigunImg, minigunFlipped, minigunSide,
 		// false, false);
 		// shotgun/grenade launcher
 		guns[3] = new Gun(50, 170, 5, 12000, 5, grenadeLauncherImg, grenadeLauncherFlipped, grenadeLauncherSide, false,
@@ -189,7 +189,7 @@ public class UpgradeMenu {
 
 		//represents the gun currently selected
 		currentGun = guns[gunNum];
-
+		
 		// buttons light up when hovered over
 		if (cursor.intersects(buyBTN)) {
 			buyImg = buyLight;
@@ -201,14 +201,12 @@ public class UpgradeMenu {
 
 		if (cursor.intersects(equipBTN)) {
 			equipImg = equipLight;
-			
-			gc.getMouseClick();
-			
-			if (gc.getMouseClick() > 0)
+			if (gc.getMouseClick() > 0) {
 				for (int i = 0; i < guns.length; i++) {
 					guns[i].setEquipped(false);
 				}
 				currentGun.setEquipped(true);
+				}
 		}
 		else
 			equipImg = equipDark;
@@ -245,6 +243,7 @@ public class UpgradeMenu {
 		//choosing which button to show
 		if (!currentGun.getBought()) {
 			showButton(buyBTN);
+			hideButton(equipBTN);
 		}
 		else {
 			if (currentGun.getEquipped()) {

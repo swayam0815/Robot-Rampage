@@ -59,7 +59,11 @@ public class UpgradeMenu {
 	private Image cursorClicked;
 	private Image locked;
 	private Image roboPartsImg;
-
+	private Image damageImg;
+	private Image magazineSizeImg;
+	private Image reloadSpeedImg;
+	private Image fireRateImg;
+	
 	// pictures that will replace them
 	private Image buyLight;
 	private Image buyDark;
@@ -148,6 +152,12 @@ public class UpgradeMenu {
 		magazineDark = ImageIO.read(new File("dark add button.png"));
 		locked = ImageIO.read(new File("Locked Gun.png"));
 		roboPartsImg = ImageIO.read(new File("Robot parts.png"));
+		damageImg = ImageIO.read(new File("damage.png"));
+		magazineSizeImg = ImageIO.read(new File("magazine size.png"));
+		reloadSpeedImg = ImageIO.read(new File("reload speed.png"));
+		fireRateImg = ImageIO.read(new File("fire rate.png"));
+
+		
 		cursorImg = ImageIO.read(new File("cursor.png"));
 		cursorClicked = ImageIO.read(new File("cursor clicked.png"));
 
@@ -327,7 +337,10 @@ public class UpgradeMenu {
 			gc.drawImage(magazineImg, magazineBTN);
 			
 			//names for attributes
-			gc.drawString("Damage", 600, 300);
+			gc.drawImage(damageImg, GRWIDTH / 2, 175, GRWIDTH / 10, GRWIDTH / 9);
+			gc.drawImage(magazineSizeImg, GRWIDTH / 2, 225, GRWIDTH / 10, GRWIDTH / 9);
+			gc.drawImage(reloadSpeedImg, GRWIDTH / 2, 275, GRWIDTH / 10, GRWIDTH / 9);
+			gc.drawImage(fireRateImg, GRWIDTH / 2, GRHEIGHT / 2, GRWIDTH / 10, GRWIDTH / 9);
 			
 			//rectangles for attributes
 			gc.setStroke(GRHEIGHT / 100);

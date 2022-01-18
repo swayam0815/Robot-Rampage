@@ -41,6 +41,11 @@ public class UpgradeMenu {
 	private static Rectangle equipBTN = new Rectangle(GRWIDTH / 5, (int) (GRWIDTH / 2.6), 0, 0);
 	private static Rectangle backBTN = new Rectangle(GRWIDTH / 54, (int) (GRHEIGHT / 1.09), GRWIDTH / 8, GRHEIGHT / 14);
 
+	private static Rectangle magazineBTN = new Rectangle(0, 0, 40, 40);
+	private static Rectangle damageBTN = new Rectangle(0, 0, 40, 40);
+	private static Rectangle fireRateBTN = new Rectangle(0, 0, 40, 40);
+	private static Rectangle reloadTimeBTN = new Rectangle(0, 0, 40, 40);
+	
 	// pictures that will show on screen
 	private Image background;
 	private Image buyImg;
@@ -49,6 +54,7 @@ public class UpgradeMenu {
 	private Image pgUpImg;
 	private Image pgDownImg;
 	private Image back;
+	private Image magazineImg;
 	private Image cursorImg;
 	private Image cursorClicked;
 	private Image locked;
@@ -59,14 +65,14 @@ public class UpgradeMenu {
 	private Image buyDark;
 	private Image equipLight;
 	private Image equipDark;
-	private Image equippedLight;
-	private Image equippedDark;
 	private Image pgUpLight;
 	private Image pgUpDark;
 	private Image pgDownLight;
 	private Image pgDownDark;
 	private Image backLight;
 	private Image backDark;
+	private Image magazineLight;
+	private Image magazineDark;
 
 	// gun pictures
 	private static Image pistolImg; // "Pistol POV.png"
@@ -98,6 +104,7 @@ public class UpgradeMenu {
 	int money = 30000;	//amount of money the player has
 	
 	Font moneyLeftFont = new Font("Serif", Font.PLAIN, GRWIDTH / 20);	//font for money at the top
+	Font attributesFont = new Font("Serif", Font.BOLD, GRWIDTH / 40);	//font for money at the top
 
 	public UpgradeMenu(GraphicsConsole gc) throws IOException, LineUnavailableException, UnsupportedAudioFileException {
 		this.gc = gc;
@@ -137,6 +144,8 @@ public class UpgradeMenu {
 		pgDownDark = ImageIO.read(new File("downArrow.png"));
 		backLight = ImageIO.read(new File("lightBack.png"));
 		backDark = ImageIO.read(new File("darkBack.png"));
+		magazineLight = ImageIO.read(new File("light add button.png"));
+		magazineDark = ImageIO.read(new File("dark add button.png"));
 		locked = ImageIO.read(new File("Locked Gun.png"));
 		roboPartsImg = ImageIO.read(new File("Robot parts.png"));
 		cursorImg = ImageIO.read(new File("cursor.png"));
@@ -247,10 +256,19 @@ public class UpgradeMenu {
 				new Start(gc);
 		} else
 			back = backDark;
+		
+		
+		//add buttons
+		if (cursor.intersects(magazineBTN)) {
+			magazineImg = magazineLight;
+//			if (gc.getMouseClick() > 0)
+				
+		} else
+			magazineImg = magazineDark;
 
 		gc.getMouseClick(); // this fixes the glitch for scrolling
 
-		//choosing which button to show
+		//choosing which button to show for equip & ...
 		if (!currentGun.getBought()) {
 			showButton(buyBTN);
 			hideButton(equipBTN);
@@ -304,6 +322,17 @@ public class UpgradeMenu {
 			gc.drawImage(roboPartsImg, GRWIDTH / 20, 0, GRWIDTH / 14, GRWIDTH / 14);
 			gc.setColor(Color.RED);
 			gc.drawString("" + money, GRWIDTH / 8, GRHEIGHT / 10);
+			
+			//add buttons (magazine, damage, ...)
+			gc.drawImage(magazineImg, magazineBTN);
+			
+			//names for attributes
+			gc.drawString("Damage", 600, 300);
+			
+			//rectangles for attributes
+			gc.setColor(Color.BLACK);
+			gc.setStroke(GRHEIGHT / 100);
+			gc.drawRect(700, 300, 50, 20);
 			
 			// cursor
 			if (gc.getMouseButton(0))

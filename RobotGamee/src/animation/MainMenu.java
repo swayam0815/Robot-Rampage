@@ -28,8 +28,6 @@ public class MainMenu {
 			GRHEIGHT / 79 * 9);
 	private static Rectangle creditsBTN = new Rectangle(GRWIDTH / 141 * 57, GRHEIGHT / 79 * 58, GRWIDTH / 141 * 30,
 			GRHEIGHT / 79 * 9);
-	// 556, (316 - 437 - 560), 298, 90
-	private static Rectangle backBTN = new Rectangle(GRWIDTH / 54, (int) (GRHEIGHT / 1.09), GRWIDTH / 8, GRHEIGHT / 14);
 
 	private static Image pistolImg; // "Pistol POV.png"
 	private static Image pistolFlipped; // "Pistol POV flipped.png"
@@ -40,7 +38,6 @@ public class MainMenu {
 	private static Image start;
 	private static Image quit;
 	private static Image credits;
-	private static Image back;
 	private static Image cursorImg;
 	private static Image cursorClicked;
 	private static Image bkg;
@@ -134,11 +131,6 @@ public class MainMenu {
 		} else
 			quit = quitDark;
 
-		if (cursor.intersects(backBTN))
-			back = backLight;
-		else
-			back = backDark;
-
 	}
 
 	private void drawGraphics() {
@@ -152,9 +144,6 @@ public class MainMenu {
 			gc.drawImage(start, startBTN);
 			gc.drawImage(quit, quitBTN);
 			gc.drawImage(credits, creditsBTN);
-
-			// back button
-			gc.drawImage(back, backBTN);
 
 			// cursor
 			if (gc.getMouseButton(0))

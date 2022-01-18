@@ -88,7 +88,7 @@ public class UpgradeMenu {
 
 	private static Gun[] guns = new Gun[5];
 
-	private Image currentGun;
+	private static Image currentGun;
 
 	// variables
 	int gunSize = (int) (GRHEIGHT / 3.61111111111111);
@@ -248,6 +248,11 @@ public class UpgradeMenu {
 
 	}
 
+	/*
+	 * public static Gun getGun() { return currentGun; }
+	 */
+	
+	
 	public void drawGraphics() throws IOException {
 		synchronized (gc) {
 			gc.setBackgroundColor(Color.BLACK);

@@ -330,9 +330,13 @@ public class UpgradeMenu {
 			gc.drawString("Damage", 600, 300);
 			
 			//rectangles for attributes
-			gc.setColor(Color.BLACK);
 			gc.setStroke(GRHEIGHT / 100);
-			gc.drawRect(700, 300, 50, 20);
+			for (int i = 0; i < 5; i++) {
+				gc.setColor(Color.RED);
+				gc.fillRect(700 + (i * 50), 300, 50, 20);
+				gc.setColor(Color.BLACK);
+				gc.drawRect(700 + (i * 50), 300, 50, 20);
+			}
 			
 			// cursor
 			if (gc.getMouseButton(0))

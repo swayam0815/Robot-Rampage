@@ -342,7 +342,7 @@ public class AnimationMain extends Rectangle {
 
 			// reloading process
 			if (reloading) {
-				gc.setColor(Color.DARK_GRAY);
+				gc.setColor(Color.RED);
 				gc.fillArc(ReloadButton.x - (ReloadButton.width / 6), ReloadButton.y - (ReloadButton.width / 6),
 						ReloadButton.width * 8 / 6, ReloadButton.width * 8 / 6, 0, reload);
 				reload += (int) (GRHEIGHT / equippedGun.getReloadTime());

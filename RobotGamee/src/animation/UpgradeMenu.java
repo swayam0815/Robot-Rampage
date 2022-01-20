@@ -346,9 +346,9 @@ public class UpgradeMenu {
 			gc.setStroke(GRHEIGHT / 100);
 			for (int i = 0; i < 5; i++) {
 				gc.setColor(Color.RED);
-				gc.fillRect(700 + (i * 50), 300, 50, 20);
+				gc.fillRect(700 + (i * 50), GRHEIGHT / 2, 50, 20);
 				gc.setColor(Color.BLACK);
-				gc.drawRect(700 + (i * 50), 300, 50, 20);
+				gc.drawRect(700 + (i * 50), GRHEIGHT / 2, 50, 20);
 			}
 			
 			// cursor

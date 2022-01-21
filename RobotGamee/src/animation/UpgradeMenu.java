@@ -41,10 +41,10 @@ public class UpgradeMenu {
 	private static Rectangle equipBTN = new Rectangle(GRWIDTH / 5, (int) (GRWIDTH / 2.6), 0, 0);
 	private static Rectangle backBTN = new Rectangle(GRWIDTH / 54, (int) (GRHEIGHT / 1.09), GRWIDTH / 8, GRHEIGHT / 14);
 
-	private static Rectangle magazineBTN = new Rectangle(0, 0, 40, 40);
-	private static Rectangle damageBTN = new Rectangle(0, 0, 40, 40);
-	private static Rectangle fireRateBTN = new Rectangle(0, 0, 40, 40);
-	private static Rectangle reloadTimeBTN = new Rectangle(0, 0, 40, 40);
+	private static Rectangle damageBTN = new Rectangle((int)(GRHEIGHT / 0.91), 100, 40, 40);
+	private static Rectangle magazineBTN = new Rectangle((int)(GRHEIGHT / 0.91), 200, 40, 40);
+	private static Rectangle reloadTimeBTN = new Rectangle((int)(GRHEIGHT / 0.91), 300, 40, 40);
+	private static Rectangle fireRateBTN = new Rectangle((int)(GRHEIGHT / 0.91), 400, 40, 40);
 	
 	// pictures that will show on screen
 	private Image background;
@@ -54,14 +54,17 @@ public class UpgradeMenu {
 	private Image pgUpImg;
 	private Image pgDownImg;
 	private Image back;
-	private Image magazineImg;
 	private Image cursorImg;
 	private Image cursorClicked;
 	private Image locked;
 	private Image roboPartsImg;
+	private Image damageNameImg;
+	private Image magazineNameImg;
+	private Image reloadTimeNameImg;
+	private Image fireRateNameImg;
 	private Image damageImg;
-	private Image magazineSizeImg;
-	private Image reloadSpeedImg;
+	private Image magazineImg;
+	private Image reloadTimeImg;
 	private Image fireRateImg;
 	
 	// pictures that will replace them
@@ -75,8 +78,8 @@ public class UpgradeMenu {
 	private Image pgDownDark;
 	private Image backLight;
 	private Image backDark;
-	private Image magazineLight;
-	private Image magazineDark;
+	private Image addLight;
+	private Image addDark;
 
 	// gun pictures
 	private static Image pistolImg; // "Pistol POV.png"
@@ -152,14 +155,14 @@ public class UpgradeMenu {
 		pgDownDark = ImageIO.read(new File("downArrow.png"));
 		backLight = ImageIO.read(new File("lightBack.png"));
 		backDark = ImageIO.read(new File("darkBack.png"));
-		magazineLight = ImageIO.read(new File("light add button.png"));
-		magazineDark = ImageIO.read(new File("dark add button.png"));
+		addLight = ImageIO.read(new File("light add button.png"));
+		addDark = ImageIO.read(new File("dark add button.png"));
 		locked = ImageIO.read(new File("Locked Gun.png"));
 		roboPartsImg = ImageIO.read(new File("Robot parts.png"));
-		damageImg = ImageIO.read(new File("damage.png"));
-		magazineSizeImg = ImageIO.read(new File("magazine size.png"));
-		reloadSpeedImg = ImageIO.read(new File("reload speed.png"));
-		fireRateImg = ImageIO.read(new File("fire rate.png"));
+		damageNameImg = ImageIO.read(new File("damage.png"));
+		magazineNameImg = ImageIO.read(new File("magazine size.png"));
+		reloadTimeNameImg = ImageIO.read(new File("reload speed.png"));
+		fireRateNameImg = ImageIO.read(new File("fire rate.png"));
 
 		
 		cursorImg = ImageIO.read(new File("cursor.png"));
@@ -274,11 +277,36 @@ public class UpgradeMenu {
 		
 		//add buttons
 		if (cursor.intersects(magazineBTN)) {
-			magazineImg = magazineLight;
+			magazineImg = addLight;
 //			if (gc.getMouseClick() > 0)
+			System.out.println("Magazine");
 				
 		} else
-			magazineImg = magazineDark;
+			magazineImg = addDark;
+
+		if (cursor.intersects(damageBTN)) {
+			damageImg = addLight;
+//			if (gc.getMouseClick() > 0)
+			System.out.println("Damage");
+				
+		} else
+			damageImg = addDark;
+
+		if (cursor.intersects(fireRateBTN)) {
+			fireRateImg = addLight;
+//			if (gc.getMouseClick() > 0)
+			System.out.println("Fire Rate");
+				
+		} else
+			fireRateImg = addDark;
+
+		if (cursor.intersects(reloadTimeBTN)) {
+			reloadTimeImg = addLight;
+//			if (gc.getMouseClick() > 0)
+			System.out.println("Reload Time");
+				
+		} else
+			reloadTimeImg = addDark;
 
 		gc.getMouseClick(); // this fixes the glitch for scrolling
 
@@ -343,21 +371,24 @@ public class UpgradeMenu {
 			gc.drawString("" + money, GRWIDTH / 8, GRHEIGHT / 10);
 			
 			//add buttons (magazine, damage, ...)
+			gc.drawImage(damageImg, damageBTN);
 			gc.drawImage(magazineImg, magazineBTN);
+			gc.drawImage(reloadTimeImg, reloadTimeBTN);
+			gc.drawImage(fireRateImg, fireRateBTN);
 			
 			//names for attributes
-			gc.drawImage(damageImg, GRWIDTH / 2, 175, GRWIDTH / 10, GRWIDTH / 9);
-			gc.drawImage(magazineSizeImg, GRWIDTH / 2, 225, GRWIDTH / 10, GRWIDTH / 9);
-			gc.drawImage(reloadSpeedImg, GRWIDTH / 2, 275, GRWIDTH / 10, GRWIDTH / 9);
-			gc.drawImage(fireRateImg, GRWIDTH / 2, GRHEIGHT / 2, GRWIDTH / 10, GRWIDTH / 9);
+			gc.drawImage(damageNameImg, GRWIDTH / 2, 175, GRWIDTH / 10, GRWIDTH / 9);
+			gc.drawImage(magazineNameImg, GRWIDTH / 2, 225, GRWIDTH / 10, GRWIDTH / 9);
+			gc.drawImage(reloadTimeNameImg, GRWIDTH / 2, 275, GRWIDTH / 10, GRWIDTH / 9);
+			gc.drawImage(fireRateNameImg, GRWIDTH / 2, GRHEIGHT / 2, GRWIDTH / 10, GRWIDTH / 9);
 			
 			//rectangles for attributes
 			gc.setStroke(GRHEIGHT / 100);
 			for (int i = 0; i < 5; i++) {
 				gc.setColor(Color.RED);
-				gc.fillRect(700 + (i * 50), 300, 50, 20);
+				gc.fillRect((int)(GRHEIGHT / 0.91) + (i * 50), GRHEIGHT / 2, GRWIDTH / 23, GRWIDTH / 50);
 				gc.setColor(Color.BLACK);
-				gc.drawRect(700 + (i * 50), 300, 50, 20);
+				gc.drawRect((int)(GRHEIGHT / 0.91) + (i * 50), GRHEIGHT / 2, GRWIDTH / 23, GRWIDTH / 50);
 			}
 			
 			// cursor

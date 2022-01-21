@@ -1872,8 +1872,8 @@ public class GraphicsConsole extends JFrame implements MouseListener, MouseMotio
 		// TODO Auto-generated method stub
 		canvas.drawImage(img, rect.x, rect.y, rect.width, rect.height);	
 	}
-	public void setBackgroundColor(Image loading) {
-		canvas.drawImage(loading, 0, 0, getWidth(), getHeight());
+	public void setBackgroundColor(Image loading, int grwidth, int grheight) {
+		canvas.drawImage(loading, 0, 0, grwidth, grheight);
 		
 	}
 }

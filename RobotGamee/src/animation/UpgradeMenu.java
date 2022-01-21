@@ -12,6 +12,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.Font;
 
 import hsa2.GraphicsConsole;
 
@@ -40,6 +41,11 @@ public class UpgradeMenu {
 	private static Rectangle equipBTN = new Rectangle(GRWIDTH / 5, (int) (GRWIDTH / 2.6), 0, 0);
 	private static Rectangle backBTN = new Rectangle(GRWIDTH / 54, (int) (GRHEIGHT / 1.09), GRWIDTH / 8, GRHEIGHT / 14);
 
+	private static Rectangle magazineBTN = new Rectangle(0, 0, 40, 40);
+	private static Rectangle damageBTN = new Rectangle(0, 0, 40, 40);
+	private static Rectangle fireRateBTN = new Rectangle(0, 0, 40, 40);
+	private static Rectangle reloadTimeBTN = new Rectangle(0, 0, 40, 40);
+	
 	// pictures that will show on screen
 	private Image background;
 	private Image buyImg;
@@ -48,23 +54,29 @@ public class UpgradeMenu {
 	private Image pgUpImg;
 	private Image pgDownImg;
 	private Image back;
+	private Image magazineImg;
 	private Image cursorImg;
 	private Image cursorClicked;
 	private Image locked;
-
+	private Image roboPartsImg;
+	private Image damageImg;
+	private Image magazineSizeImg;
+	private Image reloadSpeedImg;
+	private Image fireRateImg;
+	
 	// pictures that will replace them
 	private Image buyLight;
 	private Image buyDark;
 	private Image equipLight;
 	private Image equipDark;
-	private Image equippedLight;
-	private Image equippedDark;
 	private Image pgUpLight;
 	private Image pgUpDark;
 	private Image pgDownLight;
 	private Image pgDownDark;
 	private Image backLight;
 	private Image backDark;
+	private Image magazineLight;
+	private Image magazineDark;
 
 	// gun pictures
 	private static Image pistolImg; // "Pistol POV.png"
@@ -88,11 +100,19 @@ public class UpgradeMenu {
 
 	private static Gun[] guns = new Gun[5];
 
+<<<<<<< HEAD
 	private static Image currentGun;
+=======
+	private Gun currentGun;
+>>>>>>> branch 'master' of https://github.com/swayam0815/game.git
 
 	// variables
-	int gunSize = (int) (GRHEIGHT / 3.61111111111111);
-	int gunNum = 0; // represents the gun currently being shown
+	int gunSize = (int)(GRHEIGHT / 3.61111111111111);	//the size of the gun picture
+	int gunNum = 0;		// represents the gun currently being shown
+	int money = 30000;	//amount of money the player has
+	
+	Font moneyLeftFont = new Font("Serif", Font.PLAIN, GRWIDTH / 20);	//font for money at the top
+	Font attributesFont = new Font("Serif", Font.BOLD, GRWIDTH / 40);	//font for money at the top
 
 	public UpgradeMenu(GraphicsConsole gc) throws IOException, LineUnavailableException, UnsupportedAudioFileException {
 		this.gc = gc;
@@ -101,7 +121,9 @@ public class UpgradeMenu {
 	
 	public void init() throws IOException, LineUnavailableException, UnsupportedAudioFileException {
 		Image loading = ImageIO.read(new File("loading.png"));
-		gc.setBackgroundColor(loading);
+		gc.setBackgroundColor(loading, GRWIDTH, GRHEIGHT);
+
+		gc.setFont(moneyLeftFont);
 
 		setValues();
 
@@ -130,11 +152,19 @@ public class UpgradeMenu {
 		pgDownDark = ImageIO.read(new File("downArrow.png"));
 		backLight = ImageIO.read(new File("lightBack.png"));
 		backDark = ImageIO.read(new File("darkBack.png"));
+		magazineLight = ImageIO.read(new File("light add button.png"));
+		magazineDark = ImageIO.read(new File("dark add button.png"));
 		locked = ImageIO.read(new File("Locked Gun.png"));
+		roboPartsImg = ImageIO.read(new File("Robot parts.png"));
+		damageImg = ImageIO.read(new File("damage.png"));
+		magazineSizeImg = ImageIO.read(new File("magazine size.png"));
+		reloadSpeedImg = ImageIO.read(new File("reload speed.png"));
+		fireRateImg = ImageIO.read(new File("fire rate.png"));
+
+		
 		cursorImg = ImageIO.read(new File("cursor.png"));
 		cursorClicked = ImageIO.read(new File("cursor clicked.png"));
 
-		// gun pictures
 		// gun pictures
 		pistolImg = ImageIO.read(new File("Pistol POV.png"));
 		pistolFlipped = ImageIO.read(new File("Pistol POV flipped.png"));
@@ -163,7 +193,7 @@ public class UpgradeMenu {
 		// sniper
 		guns[2] = new Gun(30, 250, 10, 4000, 5, sniperImg, sniperFlipped, sniperSide, false, false);
 		// minigun
-		// guns[] = new Gun(3, 8, 400, 8500, 5, minigunImg, minigunFlipped, minigunSide,
+		// guns[3] = new Gun(3, 8, 400, 8500, 5, minigunImg, minigunFlipped, minigunSide,
 		// false, false);
 		// shotgun/grenade launcher
 		guns[3] = new Gun(50, 170, 5, 12000, 5, grenadeLauncherImg, grenadeLauncherFlipped, grenadeLauncherSide, false,
@@ -171,22 +201,46 @@ public class UpgradeMenu {
 		guns[4] = new Gun(2, 500, 1000, 20000, 5, hoseImg, hoseFlipped, hoseSide, false, false);
 
 	}
+	
+	private void showButton(Rectangle button) {
+		button.width = (int) (GRWIDTH / 4.125);
+		button.height = GRHEIGHT / 7;
+		button.x = GRWIDTH / 5;
+		button.y = (int) (GRWIDTH / 2.6);
+	}
+	
+	private void hideButton(Rectangle button) {
+		button.width = button.height = 0;
+		button.x = button.y = -GRHEIGHT;
+	}
 
 	private void mechanics() throws IOException, LineUnavailableException, UnsupportedAudioFileException {
 		cursor.x = gc.getMouseX() - (cursor.width / 2);
 		cursor.y = gc.getMouseY() - (cursor.height / 2);
 
+		//represents the gun currently selected
+		currentGun = guns[gunNum];
+		
 		// buttons light up when hovered over
 		if (cursor.intersects(buyBTN)) {
 			buyImg = buyLight;
-//					if (gc.getMouseButton(0)) {
-//						new AnimationMain(gc);
-//					}
-		} else
+			if (gc.getMouseClick() > 0 && money > currentGun.getPrice()) {
+				money -= currentGun.getPrice();
+				currentGun.setBought(true);
+			}
+		}
+		else
 			buyImg = buyDark;
 
-		if (cursor.intersects(equipBTN))
+		if (cursor.intersects(equipBTN)) {
 			equipImg = equipLight;
+			if (gc.getMouseClick() > 0) {
+				for (int i = 0; i < guns.length; i++) {
+					guns[i].setEquipped(false);
+				}
+				currentGun.setEquipped(true);
+				}
+		}
 		else
 			equipImg = equipDark;
 
@@ -212,40 +266,41 @@ public class UpgradeMenu {
 
 		if (cursor.intersects(backBTN)) {
 			back = backLight;
-			if (cursor.intersects(backBTN) && gc.getMouseClick() > 0)
+			if (gc.getMouseClick() > 0)
 				new Start(gc);
 		} else
 			back = backDark;
+		
+		
+		//add buttons
+		if (cursor.intersects(magazineBTN)) {
+			magazineImg = magazineLight;
+//			if (gc.getMouseClick() > 0)
+				
+		} else
+			magazineImg = magazineDark;
 
 		gc.getMouseClick(); // this fixes the glitch for scrolling
 
-		switch (gunNum) {
-
-		case 0:
-			currentGun = guns[0].getPicSide();
-			break;
-
-		case 1:
-			currentGun = guns[1].getPicSide();
-			break;
-
-		case 2:
-			currentGun = guns[2].getPicSide();
-			break;
-
-		case 3:
-			currentGun = guns[3].getPicSide();
-			break;
-
-		case 4:
-			currentGun = guns[4].getPicSide();
-			break;
-
-		case 5:
-			currentGun = guns[5].getPicSide();
-			break;
+		//choosing which button to show for equip & ...
+		if (!currentGun.getBought()) {
+			showButton(buyBTN);
+			hideButton(equipBTN);
 		}
+		else {
+			if (currentGun.getEquipped()) {
+				hideButton(buyBTN);
+				hideButton(equipBTN);
+			}
+			else {
+				hideButton(buyBTN);
+				showButton(equipBTN);
+			}
 
+		}
+		
+		
+	
 	}
 
 	/*
@@ -262,7 +317,7 @@ public class UpgradeMenu {
 			gc.drawImage(background, 0, 0, GRWIDTH, GRHEIGHT);
 
 			// the gun
-			gc.drawImage(currentGun, (int) (GRWIDTH / 5.5), (int) (GRHEIGHT / 3.170731707317073),
+			gc.drawImage(currentGun.getPicSide(), (int) (GRWIDTH / 5.5), (int) (GRHEIGHT / 3.170731707317073),
 					(int) (gunSize * 1.777777777778), gunSize);
 
 			// buy/equip/equipped button
@@ -271,6 +326,7 @@ public class UpgradeMenu {
 			gc.drawImage(equipImg, equipBTN);
 
 			// lock on guns
+			if (!currentGun.getBought())
 			gc.drawImage(locked, (int) (GRWIDTH / 5.5), (int) (GRHEIGHT / 3.170731707317073),
 					(int) (gunSize * 1.777777777778), gunSize);
 
@@ -281,6 +337,29 @@ public class UpgradeMenu {
 			// back button
 			gc.drawImage(back, backBTN);
 
+			//money left for player
+			gc.drawImage(roboPartsImg, GRWIDTH / 20, 0, GRWIDTH / 14, GRWIDTH / 14);
+			gc.setColor(Color.RED);
+			gc.drawString("" + money, GRWIDTH / 8, GRHEIGHT / 10);
+			
+			//add buttons (magazine, damage, ...)
+			gc.drawImage(magazineImg, magazineBTN);
+			
+			//names for attributes
+			gc.drawImage(damageImg, GRWIDTH / 2, 175, GRWIDTH / 10, GRWIDTH / 9);
+			gc.drawImage(magazineSizeImg, GRWIDTH / 2, 225, GRWIDTH / 10, GRWIDTH / 9);
+			gc.drawImage(reloadSpeedImg, GRWIDTH / 2, 275, GRWIDTH / 10, GRWIDTH / 9);
+			gc.drawImage(fireRateImg, GRWIDTH / 2, GRHEIGHT / 2, GRWIDTH / 10, GRWIDTH / 9);
+			
+			//rectangles for attributes
+			gc.setStroke(GRHEIGHT / 100);
+			for (int i = 0; i < 5; i++) {
+				gc.setColor(Color.RED);
+				gc.fillRect(700 + (i * 50), 300, 50, 20);
+				gc.setColor(Color.BLACK);
+				gc.drawRect(700 + (i * 50), 300, 50, 20);
+			}
+			
 			// cursor
 			if (gc.getMouseButton(0))
 				gc.drawImage(cursorClicked, cursor.x, cursor.y - cursor.width * 2, cursor.width * 15,

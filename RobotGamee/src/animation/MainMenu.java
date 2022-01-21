@@ -49,8 +49,6 @@ public class MainMenu {
 	private static Image startDark;
 	private static Image quitDark;
 	private static Image creditsDark;
-	private static Image backLight;
-	private static Image backDark;
 
 	public static void main(String[] args) throws LineUnavailableException, IOException, UnsupportedAudioFileException {
 		new MainMenu(gc);
@@ -75,8 +73,6 @@ public class MainMenu {
 		startLight = ImageIO.read(new File("lightStart.png"));
 		quitLight = ImageIO.read(new File("lightQuit.png"));
 		creditsLight = ImageIO.read(new File("lightCredits.png"));
-		backLight = ImageIO.read(new File("lightBack.png"));
-		backDark = ImageIO.read(new File("darkBack.png"));
 
 		pistolImg = ImageIO.read(new File("Pistol POV.png"));
 		pistolFlipped = ImageIO.read(new File("Pistol POV flipped.png"));
@@ -96,24 +92,11 @@ public class MainMenu {
 	private void mechanics() throws IOException, LineUnavailableException, UnsupportedAudioFileException {
 		cursor.x = gc.getMouseX() - (cursor.width / 2);
 		cursor.y = gc.getMouseY() - (cursor.height / 2);
-
-//		if (gc.isKeyDown(37) || gc.isKeyDown(65))
-//			startBTN.x -= 1;
-//		if (gc.isKeyDown(39) || gc.isKeyDown(100) || gc.isKeyDown(68))
-//			startBTN.x += 1;
-//
-//		if (gc.isKeyDown(87))
-//			startBTN.y -= 1;
-//		if (gc.isKeyDown(83))
-//			startBTN.y += 1;
-//
-//		if (gc.isKeyDown(32))
-//			System.out.println(startBTN.x + " x val. \t" + startBTN.y + " y val.");
-
+		
 		// buttons light up when hovered over
 		if (cursor.intersects(startBTN)) {
 			start = startLight;
-			if (gc.getMouseButton(0)) {
+			if (gc.getMouseClick() > 0) {
 				new Start(gc);
 			}
 		} else
@@ -126,11 +109,13 @@ public class MainMenu {
 
 		if (cursor.intersects(quitBTN)) {
 			quit = quitLight;
-			if (gc.getMouseButton(0))
+			if (gc.getMouseClick() > 0)
 				gc.close();
 		} else
 			quit = quitDark;
 
+		gc.getMouseClick();
+		
 	}
 
 	private void drawGraphics() {

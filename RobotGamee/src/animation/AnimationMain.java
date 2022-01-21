@@ -106,11 +106,11 @@ public class AnimationMain extends Rectangle {
 	
 	private static int counterGun = 0;
 	
-	public AnimationMain(GraphicsConsole x, Gun gun)
+	public AnimationMain(GraphicsConsole x)
 			throws LineUnavailableException, IOException, UnsupportedAudioFileException {
 
 		gc = x;
-		equippedGun = gun;
+		equippedGun = UpgradeMenu.getGun();
 		initiate();
 
 		while (gc.getKeyCode() != 'Q') {

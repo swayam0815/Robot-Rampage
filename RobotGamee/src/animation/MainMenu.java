@@ -16,7 +16,8 @@ public class MainMenu {
 	// size
 	private static int GRHEIGHT = (int) GRsize.getHeight() - 70; // (int)GRsize.getHeight() - 70
 	private static int GRWIDTH = (int) (GRHEIGHT * 1.777777777778); // this sets the size of the grid to fit the screen
-
+	
+	// gc
 	private static GraphicsConsole gc = new GraphicsConsole(GRWIDTH, GRHEIGHT);
 
 	private static Rectangle cursor = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 100, GRHEIGHT / 100); // to
@@ -28,11 +29,6 @@ public class MainMenu {
 			GRHEIGHT / 79 * 9);
 	private static Rectangle creditsBTN = new Rectangle(GRWIDTH / 141 * 57, GRHEIGHT / 79 * 58, GRWIDTH / 141 * 30,
 			GRHEIGHT / 79 * 9);
-
-	private static Image pistolImg; // "Pistol POV.png"
-	private static Image pistolFlipped; // "Pistol POV flipped.png"
-	private static Image pistolSide; // "Pistol POV flipped.png"
-	private static Gun gun;
 
 	// the images that will show on screen
 	private static Image start;
@@ -73,13 +69,6 @@ public class MainMenu {
 		startLight = ImageIO.read(new File("lightStart.png"));
 		quitLight = ImageIO.read(new File("lightQuit.png"));
 		creditsLight = ImageIO.read(new File("lightCredits.png"));
-
-		pistolImg = ImageIO.read(new File("Pistol POV.png"));
-		pistolFlipped = ImageIO.read(new File("Pistol POV flipped.png"));
-		pistolSide = ImageIO.read(new File("Pistol side view.png"));
-
-		// pistol
-		gun = new Gun(10, 100, 7, 0, 2, pistolImg, pistolFlipped, pistolSide, true, true);
 
 		while (true) {
 			mechanics();

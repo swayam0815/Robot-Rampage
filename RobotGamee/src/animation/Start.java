@@ -46,11 +46,6 @@ public class Start {
 
 	private static Rectangle cursor = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 100, GRHEIGHT / 100); // to
 
-	private static Image pistolImg; // "Pistol POV.png"
-	private static Image pistolFlipped; // "Pistol POV flipped.png"
-	private static Image pistolSide; // "Pistol POV flipped.png"
-	private static Gun gun;
-
 	public static void main(String[] args) throws LineUnavailableException, IOException, UnsupportedAudioFileException {
 	}
 
@@ -70,13 +65,6 @@ public class Start {
 		backLight = ImageIO.read(new File("lightBack.png"));
 		backDark = ImageIO.read(new File("darkBack.png"));
 
-		pistolImg = ImageIO.read(new File("Pistol POV.png"));
-		pistolFlipped = ImageIO.read(new File("Pistol POV flipped.png"));
-		pistolSide = ImageIO.read(new File("Pistol side view.png"));
-
-		// pistol
-		gun = new Gun(10, 100, 7, 0, 2, pistolImg, pistolFlipped, pistolSide, true, true);
-
 		while (true) {
 			mechanics();
 			drawGraphics();
@@ -92,7 +80,7 @@ public class Start {
 		if (cursor.intersects(levelsBTN)) {
 			levels = levelsLight;
 			if (gc.getMouseClick() > 0) {
-				new AnimationMain(gc, gun);
+				new AnimationMain(gc);
 			}
 		} else
 			levels = levelsDark;

@@ -87,7 +87,8 @@ public class UpgradeMenu {
 	private static Image hoseFlipped; // "Water Hose POV flipped.png"
 	private static Image hoseSide; // "Water Hose POV flipped.png"
 	private static Gun[] guns = new Gun[5];
-	private static Gun currentGun;
+	private static Gun currentGun;		//the gun that will be shown on screen
+	private static Gun equippedGun;		//the gun that is equipped by the player
 	// variables
 	int gunSize = (int)(GRHEIGHT / 3.61111111111111);	//the size of the gun picture
 	int gunNum = 0;		// represents the gun currently being shown
@@ -113,7 +114,7 @@ public class UpgradeMenu {
 	}
 	
 	public static Gun getGun() {
-		return currentGun;
+		return equippedGun;
 	}
 	
 	
@@ -176,6 +177,8 @@ public class UpgradeMenu {
 		guns[3] = new Gun(50, 170, 5, 12000, 5, grenadeLauncherImg, grenadeLauncherFlipped, grenadeLauncherSide, false,
 				false);
 		guns[4] = new Gun(2, 500, 1000, 20000, 5, hoseImg, hoseFlipped, hoseSide, false, false);
+		
+		equippedGun = guns[0];
 	}
 	
 	private void showButton(Rectangle button) {
@@ -212,6 +215,7 @@ public class UpgradeMenu {
 					guns[i].setEquipped(false);
 				}
 				currentGun.setEquipped(true);
+				equippedGun = currentGun;
 				}
 		}
 		else

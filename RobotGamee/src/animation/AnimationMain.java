@@ -17,18 +17,17 @@ import hsa2.GraphicsConsole;
 public class AnimationMain extends Rectangle {
 
 	public static void main(String[] args) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+		new AnimationMain(gc);
 	}
 
 	/***** Global Variables ******/
 	private static Dimension GRsize = Toolkit.getDefaultToolkit().getScreenSize(); // creates a variable to get screen
 																					// size
-	private int GRHEIGHT = (int) GRsize.getHeight() - 70; // (int)GRsize.getHeight() - 70
-	private int GRWIDTH = (int) (GRHEIGHT * 1.777777777778); // this sets the size of the grid to fit
-								// the screen
+	private static int GRHEIGHT = (int) GRsize.getHeight() - 70; // (int)GRsize.getHeight() - 70
+	private static int GRWIDTH = (int) (GRHEIGHT * 1.777777777778); // this sets the size of the grid to fit
+	// the screen
 
-	private GraphicsConsole gc;
-	//
-		//	= new GraphicsConsole(GRWIDTH, GRHEIGHT);
+	private static GraphicsConsole gc = new GraphicsConsole(GRWIDTH, GRHEIGHT);
 
 	// sound effects
 	private static Clip gunshotSound;
@@ -52,8 +51,8 @@ public class AnimationMain extends Rectangle {
 	// robot pictures
 	private Image robo; // "Thomas face.png"
 
-	private Rectangle CrossHair;																			// to aim
-																											// with
+	private Rectangle CrossHair; // to aim
+									// with
 	private Rectangle ReloadButton = new Rectangle((GRWIDTH / 20) - (GRWIDTH / 50), GRHEIGHT - (GRWIDTH / 10),
 			GRHEIGHT / 10, GRHEIGHT / 10); // this button reloads the gun
 
@@ -87,43 +86,56 @@ public class AnimationMain extends Rectangle {
 	private Rectangle player = new Rectangle(0, 0, (int) (GRHEIGHT / 2 * 1.777777777777778), GRHEIGHT / 2);
 
 	// THE ENEMIES
-	private Rectangle enemy = new Rectangle(x, y, size, size);
 	private static boolean defeat = false;
 
 	private ArrayList<Rectangle> enemies = new ArrayList<Rectangle>();
 	private static int wave = 0;
 	private ArrayList<Rectangle> destroyedEnemies = new ArrayList<Rectangle>();
-	private static boolean newWave = true;
+	private static Image AR15Img; // "AR15 POV.png"
+	private static Image AR15Flipped; // "AR15 POV flipped.png"
+	private static Image AR15Side; // "AR15 POV flipped.png"
 
 	// value to go through guns array, see below
 	private static int gunNum = 0;
-	
+
 	// array of player guns
-	private static Gun [] guns = new Gun[5];
-	
-	// condition to see if can switch gun
-	private static boolean canSwitch = true;
-	
-	private static int counterGun = 0;
-	
+	private static Gun[] guns = new Gun[5];
+
+	private static boolean newWave = true;
+	private static boolean running = true;
 	public AnimationMain(GraphicsConsole x)
 			throws LineUnavailableException, IOException, UnsupportedAudioFileException {
-
+		running = true;
 		gc = x;
-		equippedGun = UpgradeMenu.getGun();
+		getimg();
+		equippedGun = new Gun(6, 1, 30, 1500, 1, AR15Img, AR15Flipped, AR15Side, false, false);
+
 		initiate();
 
-		while (gc.getKeyCode() != 'Q') {
+		while (gc.getKeyCode() != 'Q' && running == true) {
 
-			mechanics();
+			if (forceStrength > 0) {
+				mechanics();
 
-			if (!defeat)
-				enemyMechanics();
+				if (!defeat)
+					enemyMechanics();
 
-			drawGraphics();
+				drawGraphics();
 
-			gc.sleep(1);
+				gc.sleep(1);
+
+			} else {
+				running = false;}
 		}
+		new Start(gc);
+
+	}
+
+	private void getimg() throws IOException {
+		AR15Img = ImageIO.read(new File("AR15 POV.png"));
+		AR15Flipped = ImageIO.read(new File("AR15 POV flipped.png"));
+		AR15Side = ImageIO.read(new File("AR15 side view.png"));
+
 	}
 
 	private void initiate() throws IOException {
@@ -138,10 +150,9 @@ public class AnimationMain extends Rectangle {
 
 		// robot pictures
 		robo = ImageIO.read(new File("tinyRobot stand.png"));
-		
-		
+
 		CrossHair = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 10, GRHEIGHT / 10);
-		
+
 		gc.enableMouseMotion();
 		gc.enableMouse(); // enables motion and click for the mouse
 		gc.setFont(new Font("Georgia", Font.PLAIN, 50)); //
@@ -156,21 +167,13 @@ public class AnimationMain extends Rectangle {
 
 	}
 
+	private static int ranNum(int low, int high) {
+		return (int) Math.floor(Math.random() * high + low);
+	}
+
 	private void mechanics() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
 		// moving left and right
-		
-		if(gc.isKeyDown(69)) {
-			
-		
-			if(gunNum + 1 < guns.length) {
-				gunNum++;
-				equippedGun = guns[gunNum];
-				counterGun = 0;
-			}
-			else
-				gunNum = 0;
-		}
-		
+
 		if (gc.isKeyDown(37) || gc.isKeyDown(65))
 			moveX -= 10;
 		if (gc.isKeyDown(39) || gc.isKeyDown(100) || gc.isKeyDown(68))
@@ -184,8 +187,14 @@ public class AnimationMain extends Rectangle {
 
 		// shooting the gun
 		if ((gc.getMouseClick() > 0 || gc.isKeyDown(32)) && bulletsLeft > 0) {
-			bullets.add(new Rectangle(CrossHair.x + 15, CrossHair.y + 15, bulletSize, bulletSize));
-			bulletsLeft--;
+			int counter = 0;
+			for (int i = 0; i < ranNum(1, 5); i++) {
+				bullets.add(new Rectangle(CrossHair.x + ranNum(1, 100), CrossHair.y + ranNum(1, 100), bulletSize,
+						bulletSize));
+				counter++;
+			}
+
+			bulletsLeft -= counter;
 		}
 
 		// gun reloads with the 'R' key OR by hovering over button
@@ -210,16 +219,6 @@ public class AnimationMain extends Rectangle {
 		player.x = GRWIDTH - (GRHEIGHT / 2) + (CrossHair.x / 5) + 10;
 		player.y = GRHEIGHT - (GRHEIGHT / 2) + (CrossHair.y / 5) + 10;
 
-	}
-
-	/*
-	 * Method Name: ranNum Author: Swayam Sachdeva Creation Date: November 29, 2021
-	 * Modified Date: December 01 2021 Description: method to generate a random for
-	 * a specific range Parameters: int highestNum and int highestNum Return Value:
-	 * array Throws/Exceptions: NONE
-	 */
-	public static int ranNum(int max, int min) {
-		return (int) (Math.random() * (max - min + 1) + min);
 	}
 
 	public void enemyMechanics() {

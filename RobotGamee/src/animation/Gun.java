@@ -100,4 +100,7 @@ public class Gun {
 	public void setEquipped(boolean isEquipped) {
 		this.isEquipped = isEquipped;
 	}
+	
+	
+	
 }

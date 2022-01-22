@@ -87,7 +87,7 @@ public class UpgradeMenu {
 	private static Image hoseFlipped; // "Water Hose POV flipped.png"
 	private static Image hoseSide; // "Water Hose POV flipped.png"
 	private static Gun[] guns = new Gun[5];
-	private static Gun currentGun;
+	private static Gun currentGun = guns[0];
 	// variables
 	int gunSize = (int)(GRHEIGHT / 3.61111111111111);	//the size of the gun picture
 	int gunNum = 0;		// represents the gun currently being shown

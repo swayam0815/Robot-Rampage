@@ -140,7 +140,6 @@ public class AnimationMain extends Rectangle {
 		AR15Img = ImageIO.read(new File("AR15 POV.png"));
 		AR15Flipped = ImageIO.read(new File("AR15 POV flipped.png"));
 		AR15Side = ImageIO.read(new File("AR15 side view.png"));
-
 	}
 
 	private void initiate() throws IOException {

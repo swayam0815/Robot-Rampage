@@ -1,9 +1,10 @@
 package animation;
 
-import java.awt.Image;
+import java.util.ArrayList;
+import java.awt.*;
 
 public class Gun {
-	 
+
 	private int damage;
 	private int reloadTime;
 	private int magazineSize;
@@ -14,12 +15,12 @@ public class Gun {
 	private Image picSide;
 	private boolean isBought;
 	private boolean isEquipped;
-	
+
 	public static void main(String[] args) {
 	}
-	
-	public Gun(int damage, int reloadTime, int magazineSize, int price, int fireRate, 
-			Image pic, Image picFlipped, Image picSide, boolean isBought, boolean isEquipped) {
+
+	public Gun(int damage, int reloadTime, int magazineSize, int price, int fireRate, Image pic, Image picFlipped,
+			Image picSide, boolean isBought, boolean isEquipped) {
 		this.damage = damage;
 		this.reloadTime = reloadTime;
 		this.magazineSize = magazineSize;
@@ -30,7 +31,7 @@ public class Gun {
 		this.picSide = picSide;
 		this.isBought = isBought;
 		this.isEquipped = isEquipped;
-		
+
 	}
 
 	public int getDamage() {
@@ -80,27 +81,34 @@ public class Gun {
 	public Image getPicFlipped() {
 		return picFlipped;
 	}
-	
+
 	public Image getPicSide() {
 		return picSide;
 	}
-	
+
 	public boolean getBought() {
 		return isBought;
 	}
-	
+
 	public void setBought(boolean isBought) {
 		this.isBought = isBought;
 	}
-	
+
 	public boolean getEquipped() {
 		return isEquipped;
 	}
-	
+
 	public void setEquipped(boolean isEquipped) {
 		this.isEquipped = isEquipped;
 	}
-	
-	
-	
+
+	public static void shoot(Gun gun, ArrayList<Rectangle> bullets, int x, int y, int size) {
+		bullets.add(new Rectangle(x + 15, y + 15, size, size));
+
+	}
+
+	public static void j(int x) {
+		System.out.println(x);
+	}
+
 }

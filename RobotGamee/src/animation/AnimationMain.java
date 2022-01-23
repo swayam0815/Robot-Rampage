@@ -79,7 +79,7 @@ public class AnimationMain extends Rectangle {
 	// gun object for player guns
 	// damage, reload time, bullet #, price, fire rate, pic, picFlipped
 
-	private static Gun equippedGun; // the gun being held by the player
+	private static ShotGun equippedGun; // the gun being held by the player
 	private Rectangle player = new Rectangle(0, 0, (int) (GRHEIGHT / 2 * 1.777777777777778), GRHEIGHT / 2);
 
 	// THE ENEMIES
@@ -108,7 +108,7 @@ public class AnimationMain extends Rectangle {
 		gc = x;
 		getimg();
 		this.totalWaves = totalWaves;
-		equippedGun = new Gun(6, 500, 30, 1500, 1, AR15Img, AR15Flipped, AR15Side, false, false);
+		equippedGun = new ShotGun(6, 500, 30, 1500, 1, AR15Img, AR15Flipped, AR15Side, false, false);
 
 		initiate();
 
@@ -188,14 +188,12 @@ public class AnimationMain extends Rectangle {
 
 		// shooting the gun
 		if ((gc.getMouseClick() > 0 || gc.isKeyDown(32)) && bulletsLeft > 0) {
-			int counter = 0;
-			for (int i = 0; i < ranNum(1, 5); i++) {
-				bullets.add(new Rectangle(CrossHair.x + ranNum(1, 100), CrossHair.y + ranNum(1, 100), bulletSize,
-						bulletSize));
-				counter++;
-			}
+			int prev = bullets.size();
 
-			bulletsLeft -= counter;
+			Gun.shoot(equippedGun, bullets, CrossHair.x, CrossHair.y, bulletSize);
+
+			bulletsLeft -= bullets.size() - prev;
+			// -= counter;
 		}
 
 		// gun reloads with the 'R' key OR by hovering over button
@@ -308,18 +306,9 @@ public class AnimationMain extends Rectangle {
 					hit.add(rect);
 				for (Rectangle enem : enemies) {
 
-					// something for splash damage stuff
-					/*
-					 * if ((rect.x <= enem.x + (size / 5) || rect.x >= enem.x) && (rect.y <= enem.y
-					 * + (size / 5) || rect.y >= enem.y)
-					 * 
-					 * ) { destroyedEnemies.add(enem); hit.add(rect); }
-					 */
-
 					if (rect.intersects(enem)) {
 
 						if (rect.intersects(enem))
-//(rect.x <= enem.x + (size / 5) || rect.x >= enem.x) && (rect.y <= enem.y + (size / 5) || rect.y >= enem.y)
 							destroyedEnemies.add(enem);
 						hit.add(rect);
 					}

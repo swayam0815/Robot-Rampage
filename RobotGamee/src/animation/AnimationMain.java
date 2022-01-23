@@ -104,6 +104,10 @@ public class AnimationMain extends Rectangle {
 	private static int totalWaves;
 	
 	private static Gun [] guns = new Gun[5];
+	
+	
+	//delete later
+	private static int[] upgrades = {0, 0, 0, 0};
 
 	
 	public AnimationMain(GraphicsConsole x, int totalWaves)
@@ -112,7 +116,7 @@ public class AnimationMain extends Rectangle {
 		gc = x;
 		getimg();
 		this.totalWaves = totalWaves;
-		equippedGun = new Gun(6, 500, 30, 1500, 1, AR15Img, AR15Flipped, AR15Side, false, false, "shotgun");
+		equippedGun = new Gun(6, 500, 30, 1500, 1, AR15Img, AR15Flipped, AR15Side, false, false, "shotgun", upgrades);
 
 		initiate();
 

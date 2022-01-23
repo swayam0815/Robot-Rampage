@@ -98,6 +98,8 @@ public class UpgradeMenu {
 	int gunSize = (int) (GRHEIGHT / 3.61111111111111); // the size of the gun picture
 	int gunNum = 0; // represents the gun currently being shown
 	int money = 30000; // amount of money the player has
+	int[] upgrades = {1, 0, 4, 3};
+	//damage, magSize, reload, fireRate
 
 	Font moneyLeftFont = new Font("Serif", Font.PLAIN, GRWIDTH / 20); // font for money at the top
 	Font attributesFont = new Font("Serif", Font.BOLD, GRWIDTH / 40); // font for money at the top
@@ -172,18 +174,18 @@ public class UpgradeMenu {
 		// gun objects
 		// damage, reload time, bullet #, price, fire rate, pic, picFlipped
 		// pistol
-		guns[0] = new Gun(10, 100, 7, 0, 2, pistolImg, pistolFlipped, pistolSide, true, true, "pistol");
+		guns[0] = new Gun(10, 100, 7, 0, 2, pistolImg, pistolFlipped, pistolSide, true, true, "pistol", upgrades);
 		// AR15
-		guns[1] = new Gun(6, 200, 30, 1500, 1, AR15Img, AR15Flipped, AR15Side, false, false, "AR15");
+		guns[1] = new Gun(6, 200, 30, 1500, 1, AR15Img, AR15Flipped, AR15Side, false, false, "AR15", upgrades);
 		// sniper
-		guns[2] = new Gun(30, 250, 10, 4000, 5, sniperImg, sniperFlipped, sniperSide, false, false, "sniper");
+		guns[2] = new Gun(30, 250, 10, 4000, 5, sniperImg, sniperFlipped, sniperSide, false, false, "sniper", upgrades);
 		// minigun
-		guns[3] = new Gun(3, 8, 400, 8500, 5, minigunImg, minigunFlipped, minigunSide, false, false, "minigun");
+		guns[3] = new Gun(3, 8, 400, 8500, 5, minigunImg, minigunFlipped, minigunSide, false, false, "minigun", upgrades);
 		// shotgun/grenade launcher
 		guns[4] = new Gun(50, 170, 5, 12000, 5, grenadeLauncherImg, grenadeLauncherFlipped, grenadeLauncherSide, false,
-				false, "shotgun");
+				false, "shotgun", upgrades);
 		// water hose
-		guns[5] = new Gun(2, 500, 1000, 20000, 5, hoseImg, hoseFlipped, hoseSide, false, false, "hose");
+		guns[5] = new Gun(2, 500, 1000, 20000, 5, hoseImg, hoseFlipped, hoseSide, false, false, "hose", upgrades);
 
 		equippedGun = guns[0];
 	}
@@ -264,6 +266,7 @@ public class UpgradeMenu {
 		} else
 			magazineImg = magazineDark;
 		gc.getMouseClick(); // this fixes the glitch for scrolling
+		
 		// choosing which button to show for equip & ...
 		if (!currentGun.isBought()) {
 			showButton(buyBTN);
@@ -318,16 +321,22 @@ public class UpgradeMenu {
 
 			// rectangles for attributes
 			gc.setStroke(GRHEIGHT / 100);
-			for (int i = 0; i < 5; i++) {
-				gc.setColor(Color.RED);
-				gc.fillRect(700 + (i * GRWIDTH / 23), (int)(GRWIDTH / 4.2), GRWIDTH / 23, 20);
-				gc.fillRect(700 + (i * GRWIDTH / 23), GRHEIGHT / 2, GRWIDTH / 23, 20);
-				
+			for (int i = 0; i < currentGun.getUpgrades().length; i++) {
+				for (int j = 0; j < currentGun.getUpgrades()[i]; j++) {
+					gc.setColor(Color.RED);
+					gc.fillRect((int)(GRWIDTH / 1.63) + (j * GRWIDTH / 23), (int)(GRWIDTH / 4.2), GRWIDTH / 23, 20);	//damage
+					gc.fillRect((int)(GRWIDTH / 1.63) + (j * GRWIDTH / 23), GRHEIGHT / 2, GRWIDTH / 23, 20);			//magazineSize
+					gc.fillRect((int)(GRWIDTH / 1.63) + (j * GRWIDTH / 23), (int)(GRWIDTH / 3.08), GRWIDTH / 23, 20);	//reloadSpeed
+					gc.fillRect((int)(GRWIDTH / 1.63) + (j * GRWIDTH / 23), (int)(GRWIDTH / 2.71), GRWIDTH / 23, 20);	//fireRate
+				}
+			}
+			
+			for (int k = 0; k < 5; k++) {
 				gc.setColor(Color.BLACK);
-				gc.drawRect(700 + (i * GRWIDTH / 23), (int)(GRWIDTH / 4.2), GRWIDTH / 23, 20);	//damage
-				gc.drawRect(700 + (i * GRWIDTH / 23), GRHEIGHT / 2, GRWIDTH / 23, 20);			//magazineSize
-				gc.drawRect(700 + (i * GRWIDTH / 23), (int)(GRWIDTH / 3.08), GRWIDTH / 23, 20);	//reloadSpeed
-				gc.drawRect(700 + (i * GRWIDTH / 23), (int)(GRWIDTH / 2.71), GRWIDTH / 23, 20);	//fireRate
+				gc.drawRect((int)(GRWIDTH / 1.63) + (k * GRWIDTH / 23), (int)(GRWIDTH / 4.2), GRWIDTH / 23, 20);	//damage
+				gc.drawRect((int)(GRWIDTH / 1.63) + (k * GRWIDTH / 23), GRHEIGHT / 2, GRWIDTH / 23, 20);			//magazineSize
+				gc.drawRect((int)(GRWIDTH / 1.63) + (k * GRWIDTH / 23), (int)(GRWIDTH / 3.08), GRWIDTH / 23, 20);	//reloadSpeed
+				gc.drawRect((int)(GRWIDTH / 1.63) + (k * GRWIDTH / 23), (int)(GRWIDTH / 2.71), GRWIDTH / 23, 20);	//fireRate
 			}
 
 			// cursor

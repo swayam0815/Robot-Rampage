@@ -320,11 +320,14 @@ public class UpgradeMenu {
 			gc.setStroke(GRHEIGHT / 100);
 			for (int i = 0; i < 5; i++) {
 				gc.setColor(Color.RED);
-				gc.fillRect(700 + (i * 50), 300, 50, 20);
-				gc.fillRect(700 + (i * 50), GRHEIGHT / 2, 50, 20);
+				gc.fillRect(700 + (i * GRWIDTH / 23), (int)(GRWIDTH / 4.2), GRWIDTH / 23, 20);
+				gc.fillRect(700 + (i * GRWIDTH / 23), GRHEIGHT / 2, GRWIDTH / 23, 20);
+				
 				gc.setColor(Color.BLACK);
-				gc.drawRect(700 + (i * 50), 300, 50, 20);
-				gc.drawRect(700 + (i * 50), GRHEIGHT / 2, 50, 20);
+				gc.drawRect(700 + (i * GRWIDTH / 23), (int)(GRWIDTH / 4.2), GRWIDTH / 23, 20);	//damage
+				gc.drawRect(700 + (i * GRWIDTH / 23), GRHEIGHT / 2, GRWIDTH / 23, 20);			//magazineSize
+				gc.drawRect(700 + (i * GRWIDTH / 23), (int)(GRWIDTH / 3.08), GRWIDTH / 23, 20);	//reloadSpeed
+				gc.drawRect(700 + (i * GRWIDTH / 23), (int)(GRWIDTH / 2.71), GRWIDTH / 23, 20);	//fireRate
 			}
 
 			// cursor

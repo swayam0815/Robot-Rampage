@@ -17,7 +17,7 @@ import hsa2.GraphicsConsole;
 public class AnimationMain extends Rectangle {
 
 	public static void main(String[] args) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-		new AnimationMain(gc, 5);
+		//new AnimationMain(gc, 5);
 	}
 
 	/***** Global Variables ******/
@@ -27,7 +27,8 @@ public class AnimationMain extends Rectangle {
 	private static int GRWIDTH = (int) (GRHEIGHT * 1.777777777778); // this sets the size of the grid to fit
 	// the screen
 
-	private static GraphicsConsole gc = new GraphicsConsole(GRWIDTH, GRHEIGHT);
+	private static GraphicsConsole gc;
+	//= new GraphicsConsole(GRWIDTH, GRHEIGHT);
 
 	// sound effects
 	private static Clip gunshotSound;
@@ -69,7 +70,7 @@ public class AnimationMain extends Rectangle {
 
 	private int size = 50;
 	private static int counter = 0;
-
+	private static int gunNum = 0;
 	// bullet attributes
 	ArrayList<Rectangle> bullets = new ArrayList<Rectangle>();
 	ArrayList<Rectangle> hit = new ArrayList<Rectangle>();
@@ -79,7 +80,7 @@ public class AnimationMain extends Rectangle {
 	// gun object for player guns
 	// damage, reload time, bullet #, price, fire rate, pic, picFlipped
 
-	private static ShotGun equippedGun; // the gun being held by the player
+	private static Gun equippedGun; // the gun being held by the player
 	private Rectangle player = new Rectangle(0, 0, (int) (GRHEIGHT / 2 * 1.777777777777778), GRHEIGHT / 2);
 
 	// THE ENEMIES
@@ -101,14 +102,17 @@ public class AnimationMain extends Rectangle {
 	private static int robotCounter = 0;
 	private static int numRobots = 100;
 	private static int totalWaves;
+	
+	private static Gun [] guns = new Gun[5];
 
+	
 	public AnimationMain(GraphicsConsole x, int totalWaves)
 			throws LineUnavailableException, IOException, UnsupportedAudioFileException {
 		running = true;
 		gc = x;
 		getimg();
 		this.totalWaves = totalWaves;
-		equippedGun = new ShotGun(6, 500, 30, 1500, 1, AR15Img, AR15Flipped, AR15Side, false, false);
+		equippedGun = new Gun(6, 500, 30, 1500, 1, AR15Img, AR15Flipped, AR15Side, false, false, "shotgun");
 
 		initiate();
 
@@ -140,7 +144,7 @@ public class AnimationMain extends Rectangle {
 	}
 
 	private void initiate() throws IOException {
-
+		guns = UpgradeMenu.getGuns();
 		backGround = ImageIO.read(new File("bakground.png"));
 		forcefield = ImageIO.read(new File(("ForceField.png")));
 		bullet = ImageIO.read(new File(("bullet cartoon.png")));
@@ -174,7 +178,18 @@ public class AnimationMain extends Rectangle {
 
 	private void mechanics() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
 		// moving left and right
+		
+		if(gc.isKeyDown(69)) {
 
+			if(gunNum + 1 < guns.length) {
+				gunNum++;
+				equippedGun = guns[gunNum];
+			}
+			else
+				gunNum = 0;
+		}
+		
+		
 		if (gc.isKeyDown(37) || gc.isKeyDown(65))
 			moveX -= 10;
 		if (gc.isKeyDown(39) || gc.isKeyDown(100) || gc.isKeyDown(68))
@@ -190,7 +205,10 @@ public class AnimationMain extends Rectangle {
 		if ((gc.getMouseClick() > 0 || gc.isKeyDown(32)) && bulletsLeft > 0) {
 			int prev = bullets.size();
 
-			Gun.shoot(equippedGun, bullets, CrossHair.x, CrossHair.y, bulletSize);
+			if (equippedGun.getName().equals("shotgun")) {
+				Gun.shoot(bullets, CrossHair.x, CrossHair.y, bulletSize, ranNum(1, 5));
+			} else
+				Gun.shoot(bullets, CrossHair.x, CrossHair.y, bulletSize);
 
 			bulletsLeft -= bullets.size() - prev;
 			// -= counter;

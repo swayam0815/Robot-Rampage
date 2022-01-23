@@ -17,7 +17,7 @@ import hsa2.GraphicsConsole;
 public class AnimationMain extends Rectangle {
 
 	public static void main(String[] args) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-		new AnimationMain(gc);
+		new AnimationMain(gc, 5);
 	}
 
 	/***** Global Variables ******/
@@ -67,9 +67,6 @@ public class AnimationMain extends Rectangle {
 
 	private static boolean autoReload = true; // code for purchasing to be added later
 
-	// enemy/robot variables
-	private int x = 0;
-	private int y = 0;
 	private int size = 50;
 	private static int counter = 0;
 
@@ -95,20 +92,23 @@ public class AnimationMain extends Rectangle {
 	private static Image AR15Flipped; // "AR15 POV flipped.png"
 	private static Image AR15Side; // "AR15 POV flipped.png"
 
-	// value to go through guns array, see below
-	private static int gunNum = 0;
-
-	// array of player guns
-	private static Gun[] guns = new Gun[5];
+	private static boolean running = true;
 
 	private static boolean newWave = true;
-	private static boolean running = true;
-	public AnimationMain(GraphicsConsole x)
+	private final int small = 6;
+	private final int big = 2;
+	private final int lar = 1;
+	private static int robotCounter = 0;
+	private static int numRobots = 100;
+	private static int totalWaves;
+
+	public AnimationMain(GraphicsConsole x, int totalWaves)
 			throws LineUnavailableException, IOException, UnsupportedAudioFileException {
 		running = true;
 		gc = x;
 		getimg();
-		equippedGun = new Gun(6, 1, 30, 1500, 1, AR15Img, AR15Flipped, AR15Side, false, false);
+		this.totalWaves = totalWaves;
+		equippedGun = new Gun(6, 500, 30, 1500, 1, AR15Img, AR15Flipped, AR15Side, false, false);
 
 		initiate();
 
@@ -125,7 +125,8 @@ public class AnimationMain extends Rectangle {
 				gc.sleep(1);
 
 			} else {
-				running = false;}
+				running = false;
+			}
 		}
 		new Start(gc);
 
@@ -223,8 +224,25 @@ public class AnimationMain extends Rectangle {
 
 	public void enemyMechanics() {
 
-		if (counter % 10 == 0)
-			enemies.add(new Rectangle(ranNum(1, GRWIDTH), 0, size, size));
+		if (enemies.size() < 50 && wave < totalWaves) {
+			if (robotCounter % small == 0) {
+				for (int i = 0; i < wave * small; i++)
+					enemies.add(new Rectangle(ranNum(1, GRWIDTH), 0, size * small, size * small));
+			}
+			if (robotCounter % big == 0) {
+				for (int i = 0; i < wave * big; i++)
+					enemies.add(new Rectangle(ranNum(1, GRWIDTH), 0, size * big, size * big));
+			}
+			if (robotCounter % lar == 0) {
+				for (int i = 0; i < wave * lar; i++)
+					enemies.add(new Rectangle(ranNum(1, GRWIDTH), 0, size * lar, size * lar));
+			}
+		} else {
+			running = false;
+		}
+
+		if (counter % 7629 == 0)
+			robotCounter++;
 
 		for (Rectangle rect : enemies) {
 
@@ -375,7 +393,7 @@ public class AnimationMain extends Rectangle {
 						GRHEIGHT - (GRWIDTH / 16));
 			}
 
-			if (wave + 1 < 5)
+			if (wave + 1 < totalWaves && counter % 789658 == 0)
 				wave++;
 
 		}

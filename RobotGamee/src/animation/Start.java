@@ -80,7 +80,7 @@ public class Start {
 		if (cursor.intersects(levelsBTN)) {
 			levels = levelsLight;
 			if (gc.getMouseClick() > 0) {
-				new AnimationMain(gc);
+				new AnimationMain(gc,5);
 			}
 		} else
 			levels = levelsDark;

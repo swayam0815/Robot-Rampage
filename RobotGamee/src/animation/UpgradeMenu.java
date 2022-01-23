@@ -263,7 +263,7 @@ public class UpgradeMenu {
 		} else
 			back = backDark;
 
-		// add buttons
+		// add buttons (works only if gun has been bought)
 		if (currentGun.isBought()) {
 			if (cursor.intersects(damageBTN)) {
 				damageImg = addLight;
@@ -272,6 +272,10 @@ public class UpgradeMenu {
 					if (money > price && upgrades[0] < 5) {
 						upgrades[0]++;
 						currentGun.setUpgrades(upgrades);
+						
+						for (int b = 0; b < upgrades.length; b++) {
+							System.out.println(upgrades[b]);
+						}
 					}
 				}
 	
@@ -307,10 +311,8 @@ public class UpgradeMenu {
 			if (cursor.intersects(fireRateBTN)) {
 				fireRateImg = addLight;
 				if (gc.getMouseClick() > 0) {
-					upgrades = currentGun.getUpgrades();
-					if (money > price && upgrades[3] < 5) {
-						upgrades[3]++;
-						currentGun.setUpgrades(upgrades);
+					if (money > price && currentGun.getUpgrades()[3] < 5) {
+						currentGun.getUpgrades()[3]++;
 					}
 				}
 	

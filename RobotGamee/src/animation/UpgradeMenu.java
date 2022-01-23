@@ -320,23 +320,24 @@ public class UpgradeMenu {
 			gc.drawImage(fireRateImg, GRWIDTH / 2, GRHEIGHT / 2, GRWIDTH / 10, GRWIDTH / 9);
 
 			// rectangles for attributes
-			gc.setStroke(GRHEIGHT / 100);
 			for (int i = 0; i < currentGun.getUpgrades().length; i++) {
 				for (int j = 0; j < currentGun.getUpgrades()[i]; j++) {
 					gc.setColor(Color.RED);
-					gc.fillRect((int)(GRWIDTH / 1.63) + (j * GRWIDTH / 23), (int)(GRWIDTH / 4.2), GRWIDTH / 23, 20);	//damage
-					gc.fillRect((int)(GRWIDTH / 1.63) + (j * GRWIDTH / 23), GRHEIGHT / 2, GRWIDTH / 23, 20);			//magazineSize
-					gc.fillRect((int)(GRWIDTH / 1.63) + (j * GRWIDTH / 23), (int)(GRWIDTH / 3.08), GRWIDTH / 23, 20);	//reloadSpeed
-					gc.fillRect((int)(GRWIDTH / 1.63) + (j * GRWIDTH / 23), (int)(GRWIDTH / 2.71), GRWIDTH / 23, 20);	//fireRate
+					gc.fillRect((int)(GRWIDTH / 1.63) + (j * GRWIDTH / 23), (int)(GRWIDTH / 4.2), GRWIDTH / 23, (int)(GRHEIGHT / 32.5));	//damage
+					gc.fillRect((int)(GRWIDTH / 1.63) + (j * GRWIDTH / 23), GRHEIGHT / 2, GRWIDTH / 23, (int)(GRHEIGHT / 32.5));			//magazineSize
+					gc.fillRect((int)(GRWIDTH / 1.63) + (j * GRWIDTH / 23), (int)(GRWIDTH / 3.08), GRWIDTH / 23, (int)(GRHEIGHT / 32.5));	//reloadSpeed
+					gc.fillRect((int)(GRWIDTH / 1.63) + (j * GRWIDTH / 23), (int)(GRWIDTH / 2.71), GRWIDTH / 23, (int)(GRHEIGHT / 32.5));	//fireRate
 				}
 			}
 			
+			gc.setStroke(GRHEIGHT / 100);
+
 			for (int k = 0; k < 5; k++) {
 				gc.setColor(Color.BLACK);
-				gc.drawRect((int)(GRWIDTH / 1.63) + (k * GRWIDTH / 23), (int)(GRWIDTH / 4.2), GRWIDTH / 23, 20);	//damage
-				gc.drawRect((int)(GRWIDTH / 1.63) + (k * GRWIDTH / 23), GRHEIGHT / 2, GRWIDTH / 23, 20);			//magazineSize
-				gc.drawRect((int)(GRWIDTH / 1.63) + (k * GRWIDTH / 23), (int)(GRWIDTH / 3.08), GRWIDTH / 23, 20);	//reloadSpeed
-				gc.drawRect((int)(GRWIDTH / 1.63) + (k * GRWIDTH / 23), (int)(GRWIDTH / 2.71), GRWIDTH / 23, 20);	//fireRate
+				gc.drawRect((int)(GRWIDTH / 1.63) + (k * GRWIDTH / 23), (int)(GRWIDTH / 4.2), GRWIDTH / 23, (int)(GRHEIGHT / 32.5));	//damage
+				gc.drawRect((int)(GRWIDTH / 1.63) + (k * GRWIDTH / 23), GRHEIGHT / 2, GRWIDTH / 23, (int)(GRHEIGHT / 32.5));			//magazineSize
+				gc.drawRect((int)(GRWIDTH / 1.63) + (k * GRWIDTH / 23), (int)(GRWIDTH / 3.08), GRWIDTH / 23, (int)(GRHEIGHT / 32.5));	//reloadSpeed
+				gc.drawRect((int)(GRWIDTH / 1.63) + (k * GRWIDTH / 23), (int)(GRWIDTH / 2.71), GRWIDTH / 23, (int)(GRHEIGHT / 32.5));	//fireRate
 			}
 
 			// cursor

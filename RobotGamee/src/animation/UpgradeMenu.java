@@ -86,7 +86,7 @@ public class UpgradeMenu {
 	private static Image hoseImg; // "Water Hose POV.png"
 	private static Image hoseFlipped; // "Water Hose POV flipped.png"
 	private static Image hoseSide; // "Water Hose POV flipped.png"
-	private static Gun[] guns = new Gun[5];
+	private static Gun[] guns = new Gun[6];
 	private static Gun currentGun;		//the gun that will be shown on screen
 	private static Gun equippedGun;		//the gun that is equipped by the player
 	// variables
@@ -155,28 +155,29 @@ public class UpgradeMenu {
 		sniperImg = ImageIO.read(new File("Sniper POV.png"));
 		sniperFlipped = ImageIO.read(new File("Sniper POV flipped.png"));
 		sniperSide = ImageIO.read(new File("Sniper side view.png"));
+		minigunImg = ImageIO.read(new File("Minigun POV.png"));
+		minigunFlipped = ImageIO.read(new File("Minigun POV flipped.png"));
+		minigunSide = ImageIO.read(new File("Minigun side view.png"));
 		grenadeLauncherImg = ImageIO.read(new File("Grenade Launcher POV.png"));
 		grenadeLauncherFlipped = ImageIO.read(new File("Grenade Launcher POV flipped.png"));
 		grenadeLauncherSide = ImageIO.read(new File("GrenadeLauncher side view.png"));
 		hoseImg = ImageIO.read(new File("Water Hose POV.png"));
 		hoseFlipped = ImageIO.read(new File("Water Hose POV flipped.png"));
 		hoseSide = ImageIO.read(new File("WaterHose side view.png"));
-//				minigunSide = ImageIO.read(new File("Minigun side view.png"));
 		// gun objects
 		// damage, reload time, bullet #, price, fire rate, pic, picFlipped
 		// pistol
 		guns[0] = new Gun(10, 100, 7, 0, 2, pistolImg, pistolFlipped, pistolSide, true, true);
-		// ar15
+		// AR15
 		guns[1] = new Gun(6, 200, 30, 1500, 1, AR15Img, AR15Flipped, AR15Side, false, false);
 		// sniper
 		guns[2] = new Gun(30, 250, 10, 4000, 5, sniperImg, sniperFlipped, sniperSide, false, false);
 		// minigun
-		// guns[3] = new Gun(3, 8, 400, 8500, 5, minigunImg, minigunFlipped, minigunSide,
-		// false, false);
+		guns[3] = new Gun(3, 8, 400, 8500, 5, minigunImg, minigunFlipped, minigunSide, false, false);
 		// shotgun/grenade launcher
-		guns[3] = new Gun(50, 170, 5, 12000, 5, grenadeLauncherImg, grenadeLauncherFlipped, grenadeLauncherSide, false,
-				false);
-		guns[4] = new Gun(2, 500, 1000, 20000, 5, hoseImg, hoseFlipped, hoseSide, false, false);
+		guns[4] = new Gun(50, 170, 5, 12000, 5, grenadeLauncherImg, grenadeLauncherFlipped, grenadeLauncherSide, false,false);
+		// water hose
+		guns[5] = new Gun(2, 500, 1000, 20000, 5, hoseImg, hoseFlipped, hoseSide, false, false);
 		
 		equippedGun = guns[0];
 	}

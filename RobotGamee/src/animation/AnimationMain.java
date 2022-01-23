@@ -224,7 +224,7 @@ public class AnimationMain extends Rectangle {
 
 	public void enemyMechanics() {
 
-		if (enemies.size() < 50 && wave < totalWaves) {
+		if (enemies.size() < 500 && wave < totalWaves) {
 			if (robotCounter % small == 0) {
 				for (int i = 0; i < wave * small; i++)
 					enemies.add(new Rectangle(ranNum(1, GRWIDTH), 0, size * small, size * small));

@@ -264,57 +264,71 @@ public class UpgradeMenu {
 			back = backDark;
 
 		// add buttons
-		if (cursor.intersects(damageBTN)) {
-			damageImg = addLight;
-			if (gc.getMouseClick() > 0) {
-				upgrades = currentGun.getUpgrades();
-				if (money > price && upgrades[0] < 5) {
-					upgrades[0]++;
-					currentGun.setUpgrades(upgrades);
+		if (currentGun.isBought()) {
+			if (cursor.intersects(damageBTN)) {
+				damageImg = addLight;
+				if (gc.getMouseClick() > 0) {
+					upgrades = currentGun.getUpgrades();
+					if (money > price && upgrades[0] < 5) {
+						upgrades[0]++;
+						currentGun.setUpgrades(upgrades);
+					}
 				}
-			}
-
-		} else
-			damageImg = addDark;
+	
+			} else
+				damageImg = addDark;
+			
+			if (cursor.intersects(magazineBTN)) {
+				magazineImg = addLight;
+				if (gc.getMouseClick() > 0) {
+					upgrades = currentGun.getUpgrades();
+					if (money > price && upgrades[1] < 5) {
+						upgrades[1]++;
+						currentGun.setUpgrades(upgrades);
+					}
+				}
+	
+			} else
+				magazineImg = addDark;
+	
+			if (cursor.intersects(reloadTimeBTN)) {
+				reloadTimeImg = addLight;
+				if (gc.getMouseClick() > 0) {
+					upgrades = currentGun.getUpgrades();
+					if (money > price && upgrades[2] < 5) {
+						upgrades[2]++;
+						currentGun.setUpgrades(upgrades);
+					}
+				}
+	
+			} else
+				reloadTimeImg = addDark;
+	
+			if (cursor.intersects(fireRateBTN)) {
+				fireRateImg = addLight;
+				if (gc.getMouseClick() > 0) {
+					upgrades = currentGun.getUpgrades();
+					if (money > price && upgrades[3] < 5) {
+						upgrades[3]++;
+						currentGun.setUpgrades(upgrades);
+					}
+				}
+	
+			} else
+				fireRateImg = addDark;
+			
+			
+		}
 		
-		if (cursor.intersects(magazineBTN)) {
-			magazineImg = addLight;
-			if (gc.getMouseClick() > 0) {
-				upgrades = currentGun.getUpgrades();
-				if (money > price && upgrades[1] < 5) {
-					upgrades[1]++;
-					currentGun.setUpgrades(upgrades);
-				}
-			}
+		
+		
+		
+		
+		
+//		for (int a = 0; a < upgrades.length; a++) {
+//			upgrades[a] = 0;
+//		}
 
-		} else
-			magazineImg = addDark;
-
-		if (cursor.intersects(reloadTimeBTN)) {
-			reloadTimeImg = addLight;
-			if (gc.getMouseClick() > 0) {
-				upgrades = currentGun.getUpgrades();
-				if (money > price && upgrades[2] < 5) {
-					upgrades[2]++;
-					currentGun.setUpgrades(upgrades);
-				}
-			}
-
-		} else
-			reloadTimeImg = addDark;
-
-		if (cursor.intersects(fireRateBTN)) {
-			fireRateImg = addLight;
-			if (gc.getMouseClick() > 0) {
-				upgrades = currentGun.getUpgrades();
-				if (money > price && upgrades[3] < 5) {
-					upgrades[3]++;
-					currentGun.setUpgrades(upgrades);
-				}
-			}
-
-		} else
-			fireRateImg = addDark;
 
 		
 		gc.getMouseClick(); // this fixes the glitch for scrolling
@@ -332,31 +346,38 @@ public class UpgradeMenu {
 				showButton(equipBTN);
 			}
 		}
-
+				
 	}
 
 	public void drawGraphics() throws IOException {
 		synchronized (gc) {
 			gc.setBackgroundColor(Color.BLACK);
 			gc.clear();
+			
 			// background
 			gc.drawImage(background, 0, 0, GRWIDTH, GRHEIGHT);
+			
 			// the gun
 			gc.drawImage(currentGun.getPicSide(), (int) (GRWIDTH / 5.5), (int) (GRHEIGHT / 3.170731707317073),
 					(int) (gunSize * 1.777777777778), gunSize);
+			
 			// buy/equip/equipped button
 			gc.drawImage(equippedImg, equippedBTN);
 			gc.drawImage(buyImg, buyBTN);
 			gc.drawImage(equipImg, equipBTN);
+			
 			// lock on guns
 			if (!currentGun.isBought())
 				gc.drawImage(locked, (int) (GRWIDTH / 5.5), (int) (GRHEIGHT / 3.170731707317073),
 						(int) (gunSize * 1.777777777778), gunSize);
+		
 			// pg up & pg down
 			gc.drawImage(pgUpImg, pgUp);
 			gc.drawImage(pgDownImg, pgDown);
+			
 			// back button
 			gc.drawImage(back, backBTN);
+			
 			// money left for player
 			gc.drawImage(roboPartsImg, GRWIDTH / 20, 0, GRWIDTH / 14, GRWIDTH / 14);
 			gc.setColor(Color.RED);
@@ -396,7 +417,6 @@ public class UpgradeMenu {
 			}
 			
 			gc.setStroke(GRHEIGHT / 100);
-
 			for (int k = 0; k < 5; k++) {
 				gc.setColor(Color.BLACK);	//outlines for upgrade bars
 				gc.drawRect((int)(GRWIDTH / 1.63) + (k * GRWIDTH / 23), (int)(GRWIDTH / 4.2), GRWIDTH / 23, (int)(GRHEIGHT / 32.5));	//damage

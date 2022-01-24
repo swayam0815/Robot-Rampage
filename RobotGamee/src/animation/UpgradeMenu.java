@@ -62,6 +62,13 @@ public class UpgradeMenu {
 	private Image magazineNameImg;
 	private Image reloadTimeNameImg;
 	private Image fireRateNameImg;
+	
+	private Image normalBullet;
+	private Image shotgunBullet;
+	private Image waterDrop;
+	private Image normalBulletBottom;
+	private Image shotgunBulletBottom;
+	private Image waterDropBottom;
 
 	// pictures that will replace them
 	private Image buyLight;
@@ -76,6 +83,7 @@ public class UpgradeMenu {
 	private Image backDark;
 	private Image addLight;
 	private Image addDark;
+	
 	// gun pictures
 	private static Image pistolImg; // "Pistol POV.png"
 	private static Image pistolFlipped; // "Pistol POV flipped.png"
@@ -95,6 +103,8 @@ public class UpgradeMenu {
 	private static Image hoseImg; // "Water Hose POV.png"
 	private static Image hoseFlipped; // "Water Hose POV flipped.png"
 	private static Image hoseSide; // "Water Hose POV flipped.png"
+	
+	//gun objects
 	private static Gun[] guns = new Gun[6];
 	private static Gun currentGun; // the gun that will be shown on screen
 	private static Gun equippedGun; // the gun that is equipped by the player
@@ -155,6 +165,13 @@ public class UpgradeMenu {
 		reloadTimeNameImg = ImageIO.read(new File("reload speed.png"));
 		fireRateNameImg = ImageIO.read(new File("fire rate.png"));
 
+		normalBullet = ImageIO.read(new File("bullet cartoon.png"));
+		shotgunBullet = ImageIO.read(new File("shotgun bullet.png"));
+		waterDrop = ImageIO.read(new File("water drop cartoon.png"));
+		normalBulletBottom = ImageIO.read(new File("Bullet Bottom.png"));
+		shotgunBulletBottom = ImageIO.read(new File("Shotgun Bullet Bottom.png"));
+		waterDropBottom = ImageIO.read(new File("water drop bullet.png"));
+
 		cursorImg = ImageIO.read(new File("cursor.png"));
 		cursorClicked = ImageIO.read(new File("cursor clicked.png"));
 		// gun pictures
@@ -179,18 +196,18 @@ public class UpgradeMenu {
 		// gun objects
 		// damage, reload time, bullet #, price, fire rate, pic, picFlipped
 		// pistol
-		guns[0] = new Gun(10, 100, 7, 0, 2, pistolImg, pistolFlipped, pistolSide, true, true, "pistol", upgrades);
+		guns[0] = new Gun(10, 100, 7, 0, 2, pistolImg, pistolFlipped, pistolSide, normalBullet, normalBulletBottom, true, true, "pistol", upgrades, 10);
 		// AR15
-		guns[1] = new Gun(6, 200, 30, 1500, 1, AR15Img, AR15Flipped, AR15Side, false, false, "AR15", upgrades);
+		guns[1] = new Gun(6, 200, 30, 1500, 1, AR15Img, AR15Flipped, AR15Side, normalBullet, normalBulletBottom, false, false, "AR15", upgrades, 10);
 		// sniper
-		guns[2] = new Gun(30, 250, 10, 4000, 5, sniperImg, sniperFlipped, sniperSide, false, false, "sniper", upgrades);
+		guns[2] = new Gun(30, 250, 10, 4000, 5, sniperImg, sniperFlipped, sniperSide, normalBullet, normalBulletBottom, false, false, "sniper", upgrades, 10);
 		// minigun
-		guns[3] = new Gun(3, 8, 400, 8500, 5, minigunImg, minigunFlipped, minigunSide, false, false, "minigun", upgrades);
+		guns[3] = new Gun(3, 8, 400, 8500, 5, minigunImg, minigunFlipped, minigunSide, normalBullet, normalBulletBottom, false, false, "minigun", upgrades, 10);
 		// shotgun/grenade launcher
-		guns[4] = new Gun(50, 170, 5, 12000, 5, grenadeLauncherImg, grenadeLauncherFlipped, grenadeLauncherSide, false,
-				false, "shotgun", upgrades);
+		guns[4] = new Gun(50, 170, 5, 12000, 5, grenadeLauncherImg, grenadeLauncherFlipped, grenadeLauncherSide, normalBullet, normalBulletBottom, false,
+				false, "shotgun", upgrades, 10);
 		// water hose
-		guns[5] = new Gun(2, 500, 1000, 20000, 5, hoseImg, hoseFlipped, hoseSide, false, false, "hose", upgrades);
+		guns[5] = new Gun(2, 500, 1000, 20000, 5, hoseImg, hoseFlipped, hoseSide, normalBullet, normalBulletBottom, false, false, "hose", upgrades, 10);
 
 		equippedGun = guns[0];
 	}

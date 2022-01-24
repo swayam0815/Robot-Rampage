@@ -13,6 +13,8 @@ public class Gun {
 	private Image pic;
 	private Image picFlipped;
 	private Image picSide;
+	private Image bulletPic;
+	private Image bulletBottom;
 	private boolean isBought;
 	private boolean isEquipped;
 	private String name;
@@ -23,7 +25,7 @@ public class Gun {
 	}
 
 	public Gun(int damage, int reloadTime, int magazineSize, int price, int fireRate, Image pic, Image picFlipped,
-			Image picSide, boolean isBought, boolean isEquipped, String name, int[] Upgrades, int bulletD) {
+			Image picSide, Image bulletpic, Image bulletBottom, boolean isBought, boolean isEquipped, String name, int[] Upgrades, int bulletD) {
 		this.damage = damage;
 		this.reloadTime = reloadTime;
 		this.magazineSize = magazineSize;
@@ -32,6 +34,8 @@ public class Gun {
 		this.pic = pic;
 		this.picFlipped = picFlipped;
 		this.picSide = picSide;
+		this.bulletPic = bulletPic;
+		this.bulletBottom = bulletBottom;
 		this.isBought = isBought;
 		this.isEquipped = isEquipped;
 		this.name = name;
@@ -134,24 +138,10 @@ public class Gun {
 	}
 
 	/**
-	 * @param pic the pic to set
-	 */
-	public void setPic(Image pic) {
-		this.pic = pic;
-	}
-
-	/**
 	 * @return the picFlipped
 	 */
 	public Image getPicFlipped() {
 		return picFlipped;
-	}
-
-	/**
-	 * @param picFlipped the picFlipped to set
-	 */
-	public void setPicFlipped(Image picFlipped) {
-		this.picFlipped = picFlipped;
 	}
 
 	/**
@@ -162,12 +152,18 @@ public class Gun {
 	}
 
 	/**
-	 * @param picSide the picSide to set
+	 * @return the picSide
 	 */
-	public void setPicSide(Image picSide) {
-		this.picSide = picSide;
+	public Image getBulletPic() {
+		return bulletPic;
 	}
 
+	/**
+	 * @return the picSide
+	 */
+	public Image getBulletBottom() {
+		return bulletBottom;
+	}
 	/**
 	 * @return the isBought
 	 */

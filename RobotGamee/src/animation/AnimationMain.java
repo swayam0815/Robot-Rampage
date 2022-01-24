@@ -313,7 +313,7 @@ public class AnimationMain extends Rectangle {
 
 			// animating projectiles/bullets
 			for (Rectangle rect : bullets) {
-				gc.drawImage(bulletBottom, rect);
+				gc.drawImage(equippedGun.getBulletBottom(), rect);
 
 				// basically nerfing bullet speed by using this if statement
 				// so bullet only moves every factor of FireRate
@@ -390,12 +390,12 @@ public class AnimationMain extends Rectangle {
 			// bullets
 			if (bulletsLeft < 13) {
 				for (int b = 0; b < bulletsLeft; b++) {
-					gc.drawImage(bullet, ReloadButton.width * 8 / 6 + (GRWIDTH / 20) + b * (ReloadButton.width / 3 + 1),
+					gc.drawImage(equippedGun.getBulletPic(), ReloadButton.width * 8 / 6 + (GRWIDTH / 20) + b * (ReloadButton.width / 3 + 1),
 							GRHEIGHT - (GRWIDTH / 10), ReloadButton.width / 3,
 							(int) (ReloadButton.width / 3 * (2.68421)));
 				}
 			} else {
-				gc.drawImage(bullet, ReloadButton.width * 8 / 6 + (GRWIDTH / 20), GRHEIGHT - (GRWIDTH / 10),
+				gc.drawImage(equippedGun.getBulletPic(), ReloadButton.width * 8 / 6 + (GRWIDTH / 20), GRHEIGHT - (GRWIDTH / 10),
 						ReloadButton.width / 3, (int) (ReloadButton.width / 3 * (2.68421)));
 
 				gc.setColor(Color.WHITE);

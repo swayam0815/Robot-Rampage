@@ -53,7 +53,7 @@ public class MainMenu {
 	public MainMenu(GraphicsConsole gc) throws IOException, LineUnavailableException, UnsupportedAudioFileException {
 		this.gc = gc;
 		initialize();
-	}
+	} 
 
 	private void initialize() throws IOException, LineUnavailableException, UnsupportedAudioFileException {
 		gc.enableMouseMotion();

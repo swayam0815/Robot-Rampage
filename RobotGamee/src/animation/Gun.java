@@ -25,7 +25,7 @@ public class Gun {
 	}
 
 	public Gun(int damage, int reloadTime, int magazineSize, int price, int fireRate, Image pic, Image picFlipped,
-			Image picSide, Image bulletpic, Image bulletBottom, boolean isBought, boolean isEquipped, String name, int[] Upgrades, int bulletD) {
+			Image picSide, Image bulletPic, Image bulletBottom, boolean isBought, boolean isEquipped, String name, int[] Upgrades, int bulletD) {
 		this.damage = damage;
 		this.reloadTime = reloadTime;
 		this.magazineSize = magazineSize;

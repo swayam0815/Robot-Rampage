@@ -134,8 +134,11 @@ public class AnimationMain extends Rectangle {
 				running = false;
 			}
 		}
-		new Start(gc);
-
+		Image mission = ImageIO.read(new File("MissionFailed.png"));
+		
+		while(true) {
+		gc.drawImage(mission, 0, 0, GRWIDTH, GRHEIGHT);
+		}
 	}
 
 	private void getimg() throws IOException {
@@ -212,7 +215,7 @@ public class AnimationMain extends Rectangle {
 		}
 
 		// gun reloads with the 'R' key OR by hovering over button
-		if (gc.isKeyDown(82) || (!reloading && CrossHair.intersects(ReloadButton))
+		if (!reloading && gc.isKeyDown(82) || (!reloading && CrossHair.intersects(ReloadButton))
 				|| (autoReload && bulletsLeft == 0)) {
 			bulletsLeft = -1; // this makes the reload sound play ONLY once
 			reloading = true;
@@ -234,12 +237,16 @@ public class AnimationMain extends Rectangle {
 		player.y = GRHEIGHT - (GRHEIGHT / 2) + (CrossHair.y / 5) + 10;
 
 	}
-
+	// higher the number - the easier the game
+	private static int difficulty = 10;
 	public void enemyMechanics() {
 
+		
+		
 		if (enemies.size() < 500 && wave < totalWaves) {
+			
 			if (robotCounter % small == 0) {
-				for (int i = 0; i < wave * small; i++)
+				for (int i = 0; i < ((int) (wave * small) / difficulty); i++)
 					enemies.add(new Rectangle(ranNum(1, GRWIDTH), 0, size * small, size * small));
 			}
 			if (robotCounter % big == 0) {
@@ -250,9 +257,8 @@ public class AnimationMain extends Rectangle {
 				for (int i = 0; i < wave * lar; i++)
 					enemies.add(new Rectangle(ranNum(1, GRWIDTH), 0, size * lar, size * lar));
 			}
-		} else {
-			running = false;
-		}
+		} 
+		
 
 		if (counter % 7629 == 0)
 			robotCounter++;
@@ -317,7 +323,7 @@ public class AnimationMain extends Rectangle {
 					rect.width--;
 					rect.height--;
 				}
-				if (rect.width <= 10 && rect.height <= 1)
+				if (rect.width <= equippedGun.getBulletD() && rect.height <= equippedGun.getBulletD())
 					hit.add(rect);
 				for (Rectangle enem : enemies) {
 
@@ -396,7 +402,17 @@ public class AnimationMain extends Rectangle {
 				gc.drawString("x" + bulletsLeft, ReloadButton.width * 8 / 6 + (GRWIDTH / 13),
 						GRHEIGHT - (GRWIDTH / 16));
 			}
-
+			
+			
+			// resseting counter values, so they dont take up too much memory
+			if(counter > 100000)
+				counter = 0;
+			if(robotCounter > 100000)
+				counter = 0;
+			if(fireCounter > 100000)
+				counter = 0;
+			
+			
 			if (wave + 1 < totalWaves && counter % 789658 == 0)
 				wave++;
 

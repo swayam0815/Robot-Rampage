@@ -19,13 +19,12 @@ public class Gun {
 	private boolean isEquipped;
 	private String name;
 	private int bulletD;
-	private int[] Upgrades = new int[4];
 
 	public static void main(String[] args) {
 	}
 
 	public Gun(int damage, int reloadTime, int magazineSize, int price, int fireRate, Image pic, Image picFlipped,
-			Image picSide, Image bulletPic, Image bulletBottom, boolean isBought, boolean isEquipped, String name, int[] Upgrades, int bulletD) {
+			Image picSide, Image bulletPic, Image bulletBottom, boolean isBought, boolean isEquipped, String name,  int bulletD) {
 		this.damage = damage;
 		this.reloadTime = reloadTime;
 		this.magazineSize = magazineSize;
@@ -39,7 +38,6 @@ public class Gun {
 		this.isBought = isBought;
 		this.isEquipped = isEquipped;
 		this.name = name;
-		this.Upgrades = Upgrades;
 		this.bulletD = bulletD;
 
 	}
@@ -204,20 +202,6 @@ public class Gun {
 	 */
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	/**
-	 * @return the upgrades of the gun
-	 */
-	public int[] getUpgrades() {
-		return Upgrades;
-	}
-
-	/**
-	 * @param the upgrades done to the gun
-	 */
-	public void setUpgrades(int[] Upgrades) {
-		this.Upgrades = Upgrades;
 	}
 
 	/**

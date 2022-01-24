@@ -245,16 +245,23 @@ public class UpgradeMenu {
 					gunNum--;
 				else
 					gunNum = guns.length - 1;
-		} else
+		}
+		else
 			pgDownImg = pgDownDark;
 		if (cursor.intersects(pgUp)) {
 			pgUpImg = pgUpLight;
-			if (gc.getMouseClick() > 0)
+			if (gc.getMouseClick() > 0) {
+				for (int a = 0; a < upgrades.length; a++) {
+				upgrades[a] = 0;
+				}
+
 				if (gunNum + 1 < guns.length) {
 					gunNum++;
 				} else
 					gunNum = 0;
-		} else
+			}
+		}
+		else
 			pgUpImg = pgUpDark;
 		if (cursor.intersects(backBTN)) {
 			back = backLight;
@@ -322,17 +329,6 @@ public class UpgradeMenu {
 			
 		}
 		
-		
-		
-		
-		
-		
-//		for (int a = 0; a < upgrades.length; a++) {
-//			upgrades[a] = 0;
-//		}
-
-
-		
 		gc.getMouseClick(); // this fixes the glitch for scrolling
 		
 		// choosing which button to show for equip & ...
@@ -392,9 +388,9 @@ public class UpgradeMenu {
 			gc.drawImage(fireRateImg, fireRateBTN);
 
 			// names for attributes
-			gc.drawImage(damageNameImg, GRWIDTH / 2, 175, GRWIDTH / 10, GRWIDTH / 9);
-			gc.drawImage(magazineNameImg, GRWIDTH / 2, 225, GRWIDTH / 10, GRWIDTH / 9);
-			gc.drawImage(reloadTimeNameImg, GRWIDTH / 2, 275, GRWIDTH / 10, GRWIDTH / 9);
+			gc.drawImage(damageNameImg, GRWIDTH / 2, (int)(GRWIDTH / 6.6), GRWIDTH / 10, GRWIDTH / 9);
+			gc.drawImage(magazineNameImg, GRWIDTH / 2, (int)(GRWIDTH / 5.13333), GRWIDTH / 10, GRWIDTH / 9);
+			gc.drawImage(reloadTimeNameImg, GRWIDTH / 2, (int)(GRWIDTH / 4.2), GRWIDTH / 10, GRWIDTH / 9);
 			gc.drawImage(fireRateNameImg, GRWIDTH / 2, GRHEIGHT / 2, GRWIDTH / 10, GRWIDTH / 9);
 
 			// rectangles for attributes

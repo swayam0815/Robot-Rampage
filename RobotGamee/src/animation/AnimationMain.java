@@ -17,7 +17,6 @@ import hsa2.GraphicsConsole;
 public class AnimationMain extends Rectangle {
 
 	public static void main(String[] args) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-		//new AnimationMain(gc, 5);
 	}
 
 	/***** Global Variables ******/
@@ -116,8 +115,6 @@ public class AnimationMain extends Rectangle {
 		gc = x;
 		getimg();
 		this.totalWaves = totalWaves;
-		equippedGun = new Gun(6, 500, 30, 1500, 1, AR15Img, AR15Flipped, AR15Side, false, false, "shotgun", upgrades);
-
 		initiate();
 
 		while (gc.getKeyCode() != 'Q' && running == true) {
@@ -206,15 +203,12 @@ public class AnimationMain extends Rectangle {
 
 		// shooting the gun
 		if ((gc.getMouseClick() > 0 || gc.isKeyDown(32)) && bulletsLeft > 0) {
-			int prev = bullets.size();
-
 			if (equippedGun.getName().equals("shotgun")) {
 				Gun.shoot(bullets, CrossHair.x, CrossHair.y, bulletSize, ranNum(1, 5));
 			} else
 				Gun.shoot(bullets, CrossHair.x, CrossHair.y, bulletSize);
 
-			bulletsLeft -= bullets.size() - prev;
-			// -= counter;
+			bulletsLeft--;
 		}
 
 		// gun reloads with the 'R' key OR by hovering over button

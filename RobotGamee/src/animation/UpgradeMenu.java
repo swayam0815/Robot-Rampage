@@ -302,7 +302,7 @@ public class UpgradeMenu {
 					if (money > price && upgrades[2] < 5) {
 						upgrades[2]++;
 						currentGun.setUpgrades(upgrades);
-					}
+					} 
 				}
 	
 			} else

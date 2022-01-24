@@ -204,10 +204,10 @@ public class UpgradeMenu {
 		// minigun
 		guns[3] = new Gun(3, 8, 400, 8500, 5, minigunImg, minigunFlipped, minigunSide, normalBullet, normalBulletBottom, false, false, "minigun", upgrades, 10);
 		// shotgun/grenade launcher
-		guns[4] = new Gun(50, 170, 5, 12000, 5, grenadeLauncherImg, grenadeLauncherFlipped, grenadeLauncherSide, normalBullet, normalBulletBottom, false,
+		guns[4] = new Gun(50, 170, 5, 12000, 5, grenadeLauncherImg, grenadeLauncherFlipped, grenadeLauncherSide, shotgunBullet, shotgunBulletBottom, false,
 				false, "shotgun", upgrades, 10);
 		// water hose
-		guns[5] = new Gun(2, 500, 1000, 20000, 5, hoseImg, hoseFlipped, hoseSide, normalBullet, normalBulletBottom, false, false, "hose", upgrades, 10);
+		guns[5] = new Gun(2, 500, 1000, 20000, 5, hoseImg, hoseFlipped, hoseSide, waterDrop, waterDropBottom, false, false, "hose", upgrades, 10);
 
 		equippedGun = guns[0];
 	}

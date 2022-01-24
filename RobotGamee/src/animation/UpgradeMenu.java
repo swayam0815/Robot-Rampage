@@ -346,7 +346,7 @@ public class UpgradeMenu {
 		}
 				
 	}
-
+	
 	public void drawGraphics() throws IOException {
 		synchronized (gc) {
 			gc.setBackgroundColor(Color.BLACK);

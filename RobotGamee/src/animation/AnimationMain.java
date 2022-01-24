@@ -115,6 +115,7 @@ public class AnimationMain extends Rectangle {
 		gc = x;
 		getimg();
 		this.totalWaves = totalWaves;
+		equippedGun = UpgradeMenu.getGun();
 		initiate();
 
 		while (gc.getKeyCode() != 'Q' && running == true) {
@@ -188,7 +189,6 @@ public class AnimationMain extends Rectangle {
 			else
 				gunNum = 0;
 		}
-		
 		
 		if (gc.isKeyDown(37) || gc.isKeyDown(65))
 			moveX -= 10;

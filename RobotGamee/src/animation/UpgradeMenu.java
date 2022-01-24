@@ -211,7 +211,7 @@ public class UpgradeMenu {
 
 		equippedGun = guns[0];
 	}
-	
+
 	
 	public static Gun[] getGuns() {
 		return guns;

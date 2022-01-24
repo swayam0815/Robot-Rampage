@@ -16,7 +16,7 @@ public class MainMenu {
 	// size
 	private static int GRHEIGHT = (int) GRsize.getHeight() - 70; // (int)GRsize.getHeight() - 70
 	private static int GRWIDTH = (int) (GRHEIGHT * 1.777777777778); // this sets the size of the grid to fit the screen
-	
+
 	// gc
 	private static GraphicsConsole gc = new GraphicsConsole(GRWIDTH, GRHEIGHT);
 
@@ -50,8 +50,9 @@ public class MainMenu {
 		new MainMenu(gc);
 	}
 
-	public MainMenu(GraphicsConsole gc) throws IOException, LineUnavailableException, UnsupportedAudioFileException {
-		this.gc = gc;
+	public MainMenu(GraphicsConsole x) throws IOException, LineUnavailableException, UnsupportedAudioFileException {
+		gc = x;
+		new setInitialValues(gc, GRWIDTH, GRHEIGHT);
 		initialize();
 	}
 
@@ -81,12 +82,12 @@ public class MainMenu {
 	private void mechanics() throws IOException, LineUnavailableException, UnsupportedAudioFileException {
 		cursor.x = gc.getMouseX() - (cursor.width / 2);
 		cursor.y = gc.getMouseY() - (cursor.height / 2);
-		
+
 		// buttons light up when hovered over
 		if (cursor.intersects(startBTN)) {
 			start = startLight;
 			if (gc.getMouseClick() > 0) {
-				new Start(gc);
+				new Start(gc, setInitialValues.getGuns());
 			}
 		} else
 			start = startDark;
@@ -104,7 +105,7 @@ public class MainMenu {
 			quit = quitDark;
 
 		gc.getMouseClick();
-		
+
 	}
 
 	private void drawGraphics() {

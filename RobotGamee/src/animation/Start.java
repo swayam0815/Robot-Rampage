@@ -49,8 +49,12 @@ public class Start {
 	public static void main(String[] args) throws LineUnavailableException, IOException, UnsupportedAudioFileException {
 	}
 
-	public Start(GraphicsConsole gc) throws IOException, LineUnavailableException, UnsupportedAudioFileException {
+	public static Gun[] guns;
+
+	public Start(GraphicsConsole gc, Gun[] guns)
+			throws IOException, LineUnavailableException, UnsupportedAudioFileException {
 		this.gc = gc;
+		this.guns = guns;
 		gc.enableMouseMotion();
 		gc.enableMouse(); // enables motion and click for the
 
@@ -80,7 +84,7 @@ public class Start {
 		if (cursor.intersects(levelsBTN)) {
 			levels = levelsLight;
 			if (gc.getMouseClick() > 0) {
-				new AnimationMain(gc,5);
+				new AnimationMain(gc, 5);
 			}
 		} else
 			levels = levelsDark;
@@ -88,7 +92,7 @@ public class Start {
 		if (cursor.intersects(upgradeBTN)) {
 			Upgrade = UpgradeLight;
 			if (gc.getMouseClick() > 0)
-				new UpgradeMenu(gc);
+				new UpgradeMenu(gc, guns);
 		} else
 			Upgrade = UpgradeDark;
 
@@ -98,7 +102,7 @@ public class Start {
 				new MainMenu(gc);
 		} else
 			back = backDark;
-		
+
 		gc.getMouseClick();
 	}
 

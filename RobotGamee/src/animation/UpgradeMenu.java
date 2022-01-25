@@ -86,7 +86,6 @@ public class UpgradeMenu {
 	// variables
 	private int gunSize = (int) (GRHEIGHT / 3.61111111111111); // the size of the gun picture
 	private int gunNum = 0; // represents the gun currently being shown
-	private int price = 0; // the price that will show up on screen
 
 	// le guns
 	private static Gun[] guns = new Gun[6];
@@ -219,8 +218,11 @@ public class UpgradeMenu {
 			if (cursor.intersects(damageBTN)) {
 				damageImg = addLight;
 				if (gc.getMouseClick() > 0) {
-					if (setInitialValues.getMoney() > price)
+					if (setInitialValues.getMoney() > currentGun.getUpgradePrice()) {
 						currentGun.setDamage(currentGun.getDamage() + 1);
+						setInitialValues.setMoney(setInitialValues.getMoney() - currentGun.getUpgradePrice());
+						currentGun.setUpgradePrice(currentGun.getUpgradePrice() + 100);
+						}
 				}
 			} else
 				damageImg = addDark;
@@ -228,8 +230,11 @@ public class UpgradeMenu {
 			if (cursor.intersects(magazineBTN)) {
 				magazineImg = addLight;
 				if (gc.getMouseClick() > 0) {
-					if (setInitialValues.getMoney() > price)
+					if (setInitialValues.getMoney() > currentGun.getUpgradePrice()) {
 						currentGun.setMagazineSize(currentGun.getMagazineSize() + 1);
+						setInitialValues.setMoney(setInitialValues.getMoney() - currentGun.getUpgradePrice());
+						currentGun.setUpgradePrice(currentGun.getUpgradePrice() + 100);
+					}
 				}
 			} else
 				magazineImg = addDark;
@@ -237,8 +242,11 @@ public class UpgradeMenu {
 			if (cursor.intersects(reloadTimeBTN)) {
 				reloadTimeImg = addLight;
 				if (gc.getMouseClick() > 0) {
-					if (setInitialValues.getMoney() > price)
+					if (setInitialValues.getMoney() > currentGun.getUpgradePrice()) {
 						currentGun.setReloadTime(currentGun.getReloadTime() - 1);
+						setInitialValues.setMoney(setInitialValues.getMoney() - currentGun.getUpgradePrice());
+						currentGun.setUpgradePrice(currentGun.getUpgradePrice() + 100);
+					}
 				}
 			} else
 				reloadTimeImg = addDark;
@@ -246,8 +254,11 @@ public class UpgradeMenu {
 			if (cursor.intersects(fireRateBTN) && currentGun.getFireRate() != 0) {
 				fireRateImg = addLight;
 				if (gc.getMouseClick() > 0) {
-					if (setInitialValues.getMoney() > price)
+					if (setInitialValues.getMoney() > currentGun.getUpgradePrice()) {
 						currentGun.setFireRate(currentGun.getFireRate() + 1);
+						setInitialValues.setMoney(setInitialValues.getMoney() - currentGun.getUpgradePrice());
+						currentGun.setUpgradePrice(currentGun.getUpgradePrice() + 100);
+					}
 				}
 			} else
 				fireRateImg = addDark;

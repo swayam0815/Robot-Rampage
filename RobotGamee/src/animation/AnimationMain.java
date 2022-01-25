@@ -134,8 +134,8 @@ public class AnimationMain extends Rectangle {
 			equippedGun = UpgradeMenu.getGun();
 		else {
 			getImg();
-			equippedGun = new Gun(10, 100, 7, 0, 2, pistolImg, pistolFlipped, pistolSide, normalBullet,
-					normalBulletBottom, true, true, "pistol", upgrades, 10);
+//			equippedGun = new Gun(10, 100, 7, 0, 2, pistolImg, pistolFlipped, pistolSide, normalBullet,
+//					normalBulletBottom, true, true, "pistol", upgrades, 10);
 		}
 		initiate();
 

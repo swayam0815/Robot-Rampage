@@ -114,8 +114,7 @@ public class UpgradeMenu {
 	private int money = 30000; // amount of money the player has
 	private int price = 0;	// the price that will show up on screen
 
-	Font moneyLeftFont = new Font("Serif", Font.PLAIN, GRWIDTH / 20); // font for money at the top
-	Font attributesFont = new Font("Serif", Font.BOLD, GRWIDTH / 40); // font for money at the top
+	Font moneyLeftFont = new Font("Elephant", Font.ITALIC, GRWIDTH / 30); // font for money at the top
 
 	public UpgradeMenu(GraphicsConsole gc) throws IOException, LineUnavailableException, UnsupportedAudioFileException {
 		this.gc = gc;
@@ -126,19 +125,11 @@ public class UpgradeMenu {
 		Image loading = ImageIO.read(new File("loading.png"));
 		gc.setBackgroundColor(loading, GRWIDTH, GRHEIGHT);
 		setValues();
+		gc.setFont(moneyLeftFont);
+		
 		while (gc.getKeyCode() != 'Q') {
 			mechanics();
-
-			gc.setFont(moneyLeftFont);
-
 			drawGraphics();
-			gc.setFont(attributesFont);
-
-			gc.drawString(currentGun.getDamage() + "", 150, 200);
-			gc.drawString(currentGun.getMagazineSize() + "", 150, 300);
-			gc.drawString(currentGun.getReloadTime() + "", 150, 400);
-			gc.drawString(currentGun.getFireRate() + "", 150, 500);
-
 			gc.sleep(1);
 		}
 	}
@@ -383,9 +374,9 @@ public class UpgradeMenu {
 			gc.drawImage(back, backBTN);
 			
 			// money left for player
-			gc.drawImage(roboPartsImg, GRWIDTH / 20, 0, GRWIDTH / 14, GRWIDTH / 14);
+			gc.drawImage(roboPartsImg, GRWIDTH / 20, GRHEIGHT / 50, GRWIDTH / 16, GRWIDTH / 16);
 			gc.setColor(Color.RED);
-			gc.drawString("" + money, GRWIDTH / 8, GRHEIGHT / 10);
+			gc.drawString("" + money, GRWIDTH / 8, GRHEIGHT / 11);
 
 			// add buttons (magazine, damage, ...)
 			gc.drawImage(damageImg, damageBTN);
@@ -400,7 +391,10 @@ public class UpgradeMenu {
 			gc.drawImage(fireRateNameImg, GRWIDTH / 2, GRHEIGHT / 2, GRWIDTH / 10, GRWIDTH / 9);
 
 			//attributes of each gun
-			gc.drawString(currentGun.getDamage() + "", 100, 200);
+			gc.drawString(currentGun.getDamage() + "", 150, 200);
+			gc.drawString(currentGun.getMagazineSize() + "", 150, 300);
+			gc.drawString(currentGun.getReloadTime() + "", 150, 400);
+			gc.drawString(currentGun.getFireRate() + "", 150, 500);
 			
 			// cursor
 			if (gc.getMouseButton(0))

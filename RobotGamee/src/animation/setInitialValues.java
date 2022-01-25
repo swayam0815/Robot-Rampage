@@ -42,10 +42,11 @@ public class setInitialValues {
 	private static Gun[] guns = new Gun[6];
 
 	public setInitialValues(GraphicsConsole gc, int GRWIDTH, int GRHEIGHT) throws IOException {
-		Image loading = ImageIO.read(new File("loading.png"));
-		
-		gc.setBackgroundColor(loading, GRWIDTH, GRHEIGHT);
-
+		/*
+		 * Image loading = ImageIO.read(new File("loading.png"));
+		 * 
+		 * gc.setBackgroundColor(loading, GRWIDTH, GRHEIGHT);
+		 */
 		normalBullet = ImageIO.read(new File("bullet cartoon.png"));
 		shotgunBullet = ImageIO.read(new File("shotgun bullet.png"));
 		waterDrop = ImageIO.read(new File("water drop cartoon.png"));

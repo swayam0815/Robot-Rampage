@@ -251,6 +251,12 @@ public class AnimationMain extends Rectangle {
 				} else
 					Gun.shoot(bullets, CrossHair.x, CrossHair.y, bulletSize);
 
+				//gunshot sound
+				gunshotEffect = AudioSystem.getAudioInputStream(new File("gunshot sound.wav").getAbsoluteFile());
+				gunshotSound = AudioSystem.getClip();
+				gunshotSound.open(gunshotEffect);
+				gunshotSound.start();
+				
 				bulletsLeft--;
 			}
 		} else { // if gun is full-automatic
@@ -260,6 +266,12 @@ public class AnimationMain extends Rectangle {
 				} else
 					Gun.shoot(bullets, CrossHair.x, CrossHair.y, bulletSize);
 
+				//gunshot sound
+				gunshotEffect = AudioSystem.getAudioInputStream(new File("gunshot sound.wav").getAbsoluteFile());
+				gunshotSound = AudioSystem.getClip();
+				gunshotSound.open(gunshotEffect);
+				gunshotSound.start();
+				
 				bulletsLeft--;
 
 			}

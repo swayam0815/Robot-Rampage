@@ -177,22 +177,25 @@ public class AnimationMain extends Rectangle {
 
 		gc.sleep(1000);
 
+		//lose if forcefield dies, win if robots die
 		if (forceStrength <= 0)
 			mission = ImageIO.read(new File("lose.png"));
 		else if (forceStrength > 0)
 			mission = ImageIO.read(new File("win.png"));
 
 		while (true) {
-			
+			//check if the back button has been pressed
 			if (cursor.intersects(backBTN)) {
 				back = backLight;
 				if (gc.getMouseClick() > 0)
 					new Start(gc, guns);
 			} else
 				back = backDark;
-
+			
+			//fixes the bug for clicking
 			gc.getMouseClick();
 
+			//set coordinates for cursor
 			cursor.x = gc.getMouseX() - (cursor.width / 2);
 			cursor.y = gc.getMouseY() - (cursor.height / 2);
 

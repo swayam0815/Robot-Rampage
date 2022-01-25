@@ -100,7 +100,7 @@ public class UpgradeMenu {
 		this.guns = guns;
 		init();
 	}
-
+	
 	public void init() throws IOException, LineUnavailableException, UnsupportedAudioFileException {
 		Image loading = ImageIO.read(new File("loading.png"));
 		gc.setBackgroundColor(loading, GRWIDTH, GRHEIGHT);

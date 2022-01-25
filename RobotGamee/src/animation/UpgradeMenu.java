@@ -36,11 +36,15 @@ public class UpgradeMenu {
 			GRHEIGHT / 7);
 	private static Rectangle equipBTN = new Rectangle(GRWIDTH / 5, (int) (GRWIDTH / 2.6), 0, 0);
 	private static Rectangle backBTN = new Rectangle(GRWIDTH / 54, (int) (GRHEIGHT / 1.09), GRWIDTH / 8, GRHEIGHT / 14);
-	
-	private static Rectangle damageBTN = new Rectangle((int)(GRWIDTH / 1.19), (int)(GRHEIGHT / 2.45), (int)(GRHEIGHT / 16.25), (int)(GRHEIGHT / 16.25));
-	private static Rectangle magazineBTN = new Rectangle((int)(GRWIDTH / 1.19), (int)(GRHEIGHT / 2.06), (int)(GRHEIGHT / 16.25), (int)(GRHEIGHT / 16.25));
-	private static Rectangle reloadTimeBTN = new Rectangle((int)(GRWIDTH / 1.19), (int)(GRHEIGHT / 1.78), (int)(GRHEIGHT / 16.25), (int)(GRHEIGHT / 16.25));
-	private static Rectangle fireRateBTN = new Rectangle((int)(GRWIDTH / 1.19), (int)(GRHEIGHT / 1.53), (int)(GRHEIGHT / 16.25), (int)(GRHEIGHT / 16.25));
+
+	private static Rectangle damageBTN = new Rectangle((int) (GRWIDTH / 1.19), (int) (GRHEIGHT / 2.45),
+			(int) (GRHEIGHT / 16.25), (int) (GRHEIGHT / 16.25));
+	private static Rectangle magazineBTN = new Rectangle((int) (GRWIDTH / 1.19), (int) (GRHEIGHT / 2.06),
+			(int) (GRHEIGHT / 16.25), (int) (GRHEIGHT / 16.25));
+	private static Rectangle reloadTimeBTN = new Rectangle((int) (GRWIDTH / 1.19), (int) (GRHEIGHT / 1.78),
+			(int) (GRHEIGHT / 16.25), (int) (GRHEIGHT / 16.25));
+	private static Rectangle fireRateBTN = new Rectangle((int) (GRWIDTH / 1.19), (int) (GRHEIGHT / 1.53),
+			(int) (GRHEIGHT / 16.25), (int) (GRHEIGHT / 16.25));
 
 	// pictures that will show on screen
 	private Image background;
@@ -62,13 +66,6 @@ public class UpgradeMenu {
 	private Image magazineNameImg;
 	private Image reloadTimeNameImg;
 	private Image fireRateNameImg;
-	
-	private Image normalBullet;
-	private Image shotgunBullet;
-	private Image waterDrop;
-	private Image normalBulletBottom;
-	private Image shotgunBulletBottom;
-	private Image waterDropBottom;
 
 	// pictures that will replace them
 	private Image buyLight;
@@ -83,41 +80,24 @@ public class UpgradeMenu {
 	private Image backDark;
 	private Image addLight;
 	private Image addDark;
-	
-	// gun pictures
-	private static Image pistolImg; // "Pistol POV.png"
-	private static Image pistolFlipped; // "Pistol POV flipped.png"
-	private static Image pistolSide; // "Pistol POV flipped.png"
-	private static Image AR15Img; // "AR15 POV.png"
-	private static Image AR15Flipped; // "AR15 POV flipped.png"
-	private static Image AR15Side; // "AR15 POV flipped.png"
-	private static Image sniperImg; // "Sniper POV.png"
-	private static Image sniperFlipped; // "Sniper POV flipped.png"
-	private static Image sniperSide; // "Sniper POV flipped.png"
-	private static Image minigunImg; // "Sniper POV.png"
-	private static Image minigunFlipped; // "Sniper POV flipped.png"
-	private static Image minigunSide; // "Sniper POV flipped.png"
-	private static Image grenadeLauncherImg; // "Grenade Launcher POV.png"
-	private static Image grenadeLauncherFlipped;// "Grenade Launcher POV flipped.png"
-	private static Image grenadeLauncherSide;// "Grenade Launcher POV flipped.png"
-	private static Image hoseImg; // "Water Hose POV.png"
-	private static Image hoseFlipped; // "Water Hose POV flipped.png"
-	private static Image hoseSide; // "Water Hose POV flipped.png"
-	
-	//gun objects
-	private static Gun[] guns = new Gun[6];
+
 	private static Gun currentGun; // the gun that will be shown on screen
 	private static Gun equippedGun; // the gun that is equipped by the player
 	// variables
 	private int gunSize = (int) (GRHEIGHT / 3.61111111111111); // the size of the gun picture
 	private int gunNum = 0; // represents the gun currently being shown
 	private int money = 30000; // amount of money the player has
-	private int price = 0;	// the price that will show up on screen
+	private int price = 0; // the price that will show up on screen
+
+	// le guns
+	private static Gun[] guns = new Gun[6];
 
 	Font moneyLeftFont = new Font("Elephant", Font.ITALIC, GRWIDTH / 30); // font for money at the top
 
-	public UpgradeMenu(GraphicsConsole gc) throws IOException, LineUnavailableException, UnsupportedAudioFileException {
+	public UpgradeMenu(GraphicsConsole gc, Gun[] guns)
+			throws IOException, LineUnavailableException, UnsupportedAudioFileException {
 		this.gc = gc;
+		this.guns = guns;
 		init();
 	}
 
@@ -163,54 +143,12 @@ public class UpgradeMenu {
 		reloadTimeNameImg = ImageIO.read(new File("reload speed.png"));
 		fireRateNameImg = ImageIO.read(new File("fire rate.png"));
 
-		normalBullet = ImageIO.read(new File("bullet cartoon.png"));
-		shotgunBullet = ImageIO.read(new File("shotgun bullet.png"));
-		waterDrop = ImageIO.read(new File("water drop cartoon.png"));
-		normalBulletBottom = ImageIO.read(new File("Bullet Bottom.png"));
-		shotgunBulletBottom = ImageIO.read(new File("Shotgun Bullet Bottom.png"));
-		waterDropBottom = ImageIO.read(new File("water drop bullet.png"));
-
 		cursorImg = ImageIO.read(new File("cursor.png"));
 		cursorClicked = ImageIO.read(new File("cursor clicked.png"));
-		// gun pictures
-		pistolImg = ImageIO.read(new File("Pistol POV.png"));
-		pistolFlipped = ImageIO.read(new File("Pistol POV flipped.png"));
-		pistolSide = ImageIO.read(new File("Pistol side view.png"));
-		AR15Img = ImageIO.read(new File("AR15 POV.png"));
-		AR15Flipped = ImageIO.read(new File("AR15 POV flipped.png"));
-		AR15Side = ImageIO.read(new File("AR15 side view.png"));
-		sniperImg = ImageIO.read(new File("Sniper POV.png"));
-		sniperFlipped = ImageIO.read(new File("Sniper POV flipped.png"));
-		sniperSide = ImageIO.read(new File("Sniper side view.png"));
-		minigunImg = ImageIO.read(new File("Minigun POV.png"));
-		minigunFlipped = ImageIO.read(new File("Minigun POV flipped.png"));
-		minigunSide = ImageIO.read(new File("Minigun side view.png"));
-		grenadeLauncherImg = ImageIO.read(new File("Grenade Launcher POV.png"));
-		grenadeLauncherFlipped = ImageIO.read(new File("Grenade Launcher POV flipped.png"));
-		grenadeLauncherSide = ImageIO.read(new File("GrenadeLauncher side view.png"));
-		hoseImg = ImageIO.read(new File("Water Hose POV.png"));
-		hoseFlipped = ImageIO.read(new File("Water Hose POV flipped.png"));
-		hoseSide = ImageIO.read(new File("WaterHose side view.png"));
-		// gun objects
-		// damage, reload time, bullet #, price, fire rate, pic, picFlipped
-		// pistol
-		guns[0] = new Gun(10, 100, 7, 0, 2, pistolImg, pistolFlipped, pistolSide, normalBullet, normalBulletBottom, true, true, "pistol", 10);
-		// AR15
-		guns[1] = new Gun(6, 200, 30, 1500, 1, AR15Img, AR15Flipped, AR15Side, normalBullet, normalBulletBottom, false, false, "AR15", 10);
-		// sniper
-		guns[2] = new Gun(30, 250, 10, 4000, 5, sniperImg, sniperFlipped, sniperSide, normalBullet, normalBulletBottom, false, false, "sniper", 10);
-		// minigun
-		guns[3] = new Gun(3, 8, 400, 8500, 5, minigunImg, minigunFlipped, minigunSide, normalBullet, normalBulletBottom, false, false, "minigun", 10);
-		// shotgun/grenade launcher
-		guns[4] = new Gun(50, 170, 5, 12000, 5, grenadeLauncherImg, grenadeLauncherFlipped, grenadeLauncherSide, shotgunBullet, shotgunBulletBottom, false,
-				false, "shotgun", 10);
-		// water hose
-		guns[5] = new Gun(2, 500, 1000, 20000, 5, hoseImg, hoseFlipped, hoseSide, waterDrop, waterDropBottom, false, false, "hose", 10);
 
 		equippedGun = guns[0];
 	}
 
-	
 	public static Gun[] getGuns() {
 		return guns;
 	}
@@ -260,8 +198,7 @@ public class UpgradeMenu {
 					gunNum--;
 				else
 					gunNum = guns.length - 1;
-		}
-		else
+		} else
 			pgDownImg = pgDownDark;
 		if (cursor.intersects(pgUp)) {
 			pgUpImg = pgUpLight;
@@ -271,13 +208,12 @@ public class UpgradeMenu {
 				} else
 					gunNum = 0;
 			}
-		}
-		else
+		} else
 			pgUpImg = pgUpDark;
 		if (cursor.intersects(backBTN)) {
 			back = backLight;
 			if (gc.getMouseClick() > 0)
-				new Start(gc);
+				new Start(gc, guns);
 		} else
 			back = backDark;
 
@@ -289,45 +225,40 @@ public class UpgradeMenu {
 					if (money > price)
 						currentGun.setDamage(currentGun.getDamage() + 1);
 				}
-			}
-			else
+			} else
 				damageImg = addDark;
-			
+
 			if (cursor.intersects(magazineBTN)) {
 				magazineImg = addLight;
 				if (gc.getMouseClick() > 0) {
 					if (money > price)
 						currentGun.setMagazineSize(currentGun.getMagazineSize() + 1);
 				}
-			}
-			else
+			} else
 				magazineImg = addDark;
-	
+
 			if (cursor.intersects(reloadTimeBTN)) {
 				reloadTimeImg = addLight;
 				if (gc.getMouseClick() > 0) {
 					if (money > price)
-						currentGun.setReloadTime(currentGun.getReloadTime() + 1);					
+						currentGun.setReloadTime(currentGun.getReloadTime() + 1);
 				}
-			}
-			else
+			} else
 				reloadTimeImg = addDark;
-	
+
 			if (cursor.intersects(fireRateBTN)) {
 				fireRateImg = addLight;
 				if (gc.getMouseClick() > 0) {
 					if (money > price)
 						currentGun.setFireRate(currentGun.getFireRate() + 1);
 				}
-			}
-			else
+			} else
 				fireRateImg = addDark;
-			
-			
+
 		}
-		
+
 		gc.getMouseClick(); // this fixes the glitch for scrolling
-		
+
 		// choosing which button to show for equip & ...
 		if (!currentGun.isBought()) {
 			showButton(buyBTN);
@@ -341,38 +272,38 @@ public class UpgradeMenu {
 				showButton(equipBTN);
 			}
 		}
-				
+
 	}
-	
+
 	public void drawGraphics() throws IOException {
 		synchronized (gc) {
 			gc.setBackgroundColor(Color.BLACK);
 			gc.clear();
-			
+
 			// background
 			gc.drawImage(background, 0, 0, GRWIDTH, GRHEIGHT);
-			
+
 			// the gun
 			gc.drawImage(currentGun.getPicSide(), (int) (GRWIDTH / 5.5), (int) (GRHEIGHT / 3.170731707317073),
 					(int) (gunSize * 1.777777777778), gunSize);
-			
+
 			// buy/equip/equipped button
 			gc.drawImage(equippedImg, equippedBTN);
 			gc.drawImage(buyImg, buyBTN);
 			gc.drawImage(equipImg, equipBTN);
-			
+
 			// lock on guns
 			if (!currentGun.isBought())
 				gc.drawImage(locked, (int) (GRWIDTH / 5.5), (int) (GRHEIGHT / 3.170731707317073),
 						(int) (gunSize * 1.777777777778), gunSize);
-		
+
 			// pg up & pg down
 			gc.drawImage(pgUpImg, pgUp);
 			gc.drawImage(pgDownImg, pgDown);
-			
+
 			// back button
 			gc.drawImage(back, backBTN);
-			
+
 			// money left for player
 			gc.drawImage(roboPartsImg, GRWIDTH / 20, GRHEIGHT / 50, GRWIDTH / 16, GRWIDTH / 16);
 			gc.setColor(Color.RED);
@@ -385,9 +316,9 @@ public class UpgradeMenu {
 			gc.drawImage(fireRateImg, fireRateBTN);
 
 			// names for attributes
-			gc.drawImage(damageNameImg, GRWIDTH / 2, (int)(GRWIDTH / 6.6), GRWIDTH / 10, GRWIDTH / 9);
-			gc.drawImage(magazineNameImg, GRWIDTH / 2, (int)(GRWIDTH / 5.13333), GRWIDTH / 10, GRWIDTH / 9);
-			gc.drawImage(reloadTimeNameImg, GRWIDTH / 2, (int)(GRWIDTH / 4.2), GRWIDTH / 10, GRWIDTH / 9);
+			gc.drawImage(damageNameImg, GRWIDTH / 2, (int) (GRWIDTH / 6.6), GRWIDTH / 10, GRWIDTH / 9);
+			gc.drawImage(magazineNameImg, GRWIDTH / 2, (int) (GRWIDTH / 5.13333), GRWIDTH / 10, GRWIDTH / 9);
+			gc.drawImage(reloadTimeNameImg, GRWIDTH / 2, (int) (GRWIDTH / 4.2), GRWIDTH / 10, GRWIDTH / 9);
 			gc.drawImage(fireRateNameImg, GRWIDTH / 2, GRHEIGHT / 2, GRWIDTH / 10, GRWIDTH / 9);
 
 			//attributes of each gun
@@ -395,7 +326,7 @@ public class UpgradeMenu {
 			gc.drawString(currentGun.getMagazineSize() + "", 150, 300);
 			gc.drawString(currentGun.getReloadTime() + "", 150, 400);
 			gc.drawString(currentGun.getFireRate() + "", 150, 500);
-			
+
 			// cursor
 			if (gc.getMouseButton(0))
 				gc.drawImage(cursorClicked, cursor.x, cursor.y - cursor.width * 2, cursor.width * 15,

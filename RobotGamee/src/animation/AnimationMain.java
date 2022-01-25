@@ -17,6 +17,7 @@ import hsa2.GraphicsConsole;
 public class AnimationMain extends Rectangle {
 
 	public static void main(String[] args) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+		new AnimationMain(gc, 2);
 	}
 
 	/***** Global Variables ******/
@@ -26,8 +27,7 @@ public class AnimationMain extends Rectangle {
 	private static int GRWIDTH = (int) (GRHEIGHT * 1.777777777778); // this sets the size of the grid to fit
 // the screen
 
-	private static GraphicsConsole gc;
-// = new GraphicsConsole(GRWIDTH, GRHEIGHT);
+	private static GraphicsConsole gc = new GraphicsConsole(GRWIDTH, GRHEIGHT);
 
 // sound effects
 	private static Clip gunshotSound;
@@ -86,7 +86,7 @@ public class AnimationMain extends Rectangle {
 	private static boolean defeat = false;
 
 	private ArrayList<Rectangle> enemies = new ArrayList<Rectangle>();
-	private static int wave = 0;
+	private static int wave = 1;
 	private ArrayList<Rectangle> destroyedEnemies = new ArrayList<Rectangle>();
 	private static Image AR15Img; // "AR15 POV.png"
 	private static Image AR15Flipped; // "AR15 POV flipped.png"
@@ -95,9 +95,9 @@ public class AnimationMain extends Rectangle {
 	private static boolean running = true;
 
 	private static boolean newWave = true;
-	private final int small = 6;
+	private final int small = 1;
 	private final int big = 2;
-	private final int lar = 1;
+	private final int lar = 6;
 	private static int robotCounter = 0;
 	private static int numRobots = 100;
 	private static int totalWaves;
@@ -113,6 +113,8 @@ public class AnimationMain extends Rectangle {
 	private static Image pistolSide; // "Pistol POV flipped.png"
 	private static Image normalBullet;
 	private static Image normalBulletBottom;
+	private static boolean win;
+	private static Image mission;
 
 	public static void getImg() throws IOException {
 		normalBullet = ImageIO.read(new File("bullet cartoon.png"));
@@ -134,31 +136,43 @@ public class AnimationMain extends Rectangle {
 			equippedGun = UpgradeMenu.getGun();
 		else {
 			getImg();
-//			equippedGun = new Gun(10, 100, 7, 0, 2, pistolImg, pistolFlipped, pistolSide, normalBullet,
-//					normalBulletBottom, true, true, "pistol", upgrades, 10);
+			
+			equippedGun = new Gun(6, 200, 5000, 1500, 1, AR15Img, AR15Flipped, AR15Side, normalBullet,
+					normalBulletBottom, false, false, "AR15", 10);
 		}
 		initiate();
 
-		while (gc.getKeyCode() != 'Q' && running == true) {
+		while (wave + 1 <= totalWaves && forceStrength > 0) {
 
-			if (forceStrength > 0) {
-				mechanics();
+			gc.drawString(String.valueOf(enemies.size()), 250, 250);
 
-				if (!defeat)
-					enemyMechanics();
+			gc.drawString(String.valueOf(wave), 400, 500);
 
-				drawGraphics();
+			mechanics();
 
-				gc.sleep(1);
+			enemyMechanics();
 
-			} else {
-				running = false;
-			}
+			drawGraphics();
+
+			gc.sleep(1);
+
 		}
-		Image mission = ImageIO.read(new File("MissionFailed.png"));
 
-		while (true) {
-			gc.drawImage(mission, 0, 0, GRWIDTH, GRHEIGHT);
+		gc.sleep(1000);
+
+		if (forceStrength <= 0)
+			mission = ImageIO.read(new File("lose.png"));
+		else if (forceStrength > 0)
+			mission = ImageIO.read(new File("win.png"));
+
+		while (true)
+
+		{
+			gc.sleep(1);
+			synchronized (gc) {
+				gc.clear();
+				gc.drawImage(mission, 0, 0, GRWIDTH, GRHEIGHT);
+			}
 		}
 	}
 
@@ -262,69 +276,60 @@ public class AnimationMain extends Rectangle {
 
 	public void enemyMechanics() {
 
-		if (enemies.size() <= 20 && wave < totalWaves) {
+		if (newWave) {
+			for (int i = 0; i < (2 * (int) (wave * small)); i++)
+				enemies.add(new Rectangle(ranNum(1, GRWIDTH), 0, size * small, size * small));
 
-			if (robotCounter % small == 0) {
-				for (int i = 0; i < (2 * (int) (wave * small)); i++)
-					enemies.add(new Rectangle(ranNum(1, GRWIDTH), 0, size * small, size * small));
-				robotCounter++;
+			for (int i = 0; i < wave * big; i++)
+				enemies.add(new Rectangle(ranNum(1, GRWIDTH), 0, size * big, size * big));
 
-				if (robotCounter % big == 0) {
-					for (int i = 0; i < wave * big; i++)
-						enemies.add(new Rectangle(ranNum(1, GRWIDTH), 0, size * big, size * big));
-					robotCounter++;
+			for (int i = 0; i < wave * lar; i++)
+				enemies.add(new Rectangle(ranNum(1, GRWIDTH), 0, size * lar, size * lar));
 
-				}
-				if (robotCounter % lar == 0) {
-					for (int i = 0; i < wave * lar; i++)
-						enemies.add(new Rectangle(ranNum(1, GRWIDTH), 0, size * lar, size * lar));
-					robotCounter++;
+			newWave = false;
+		}
 
-				}
-				wave++;
+		for (Rectangle rect : enemies) {
+
+			if (rect.x + rect.width < player.x + moveX)
+				rect.x += 2;
+
+			if (rect.x > player.x + moveX + player.width)
+				rect.x -= 2;
+
+			if (counter % 2 == 0) {
+				rect.y++;
+
 			}
 
-			if (counter % 7629 == 0)
-				robotCounter++;
-
-			for (Rectangle rect : enemies) {
-
-				if (rect.x + rect.width < player.x + moveX)
-					rect.x += 2;
-
-				if (rect.x > player.x + moveX + player.width)
-					rect.x -= 2;
-
-				if (counter % 2 == 0 && rect.y + 1 <= GRHEIGHT + rect.y) {
-					rect.y++;
-
-				}
-
-				if (counter % 5 == 0) {
-					rect.width++;
-					rect.height++;
-				}
+			if (counter % 5 == 0) {
+				rect.width++;
+				rect.height++;
+			}
 // rect.height = rect.width = rect.y + size;
 // this is for robots to increase size when moving forward
 
-				counter++;
+			counter++;
 
-				if (rect.y >= GRHEIGHT - (size + size / 2)) {
-					rect.y = GRHEIGHT - (size + size / 2);
-					forceStrength--;
-				}
-
-				if (rect.x < 0)
-					rect.x = 1;
-				if (rect.x + rect.width > GRWIDTH)
-					rect.x = GRWIDTH - rect.width;
+			if (rect.y >= GRHEIGHT - (size + size / 2)) {
+				rect.y = GRHEIGHT - (size + size / 2);
+				forceStrength--;
 			}
-		}
 
+			if (rect.x < 0)
+				rect.x = 1;
+			if (rect.x + rect.width > GRWIDTH)
+				rect.x = GRWIDTH - rect.width;
+		}
 	}
 
 	private void drawGraphics() {
 		synchronized (gc) {
+
+			if (enemies.size() < 2) {
+				newWave = true;
+				wave++;
+			}
 			gc.setBackgroundColor(Color.BLACK);
 			gc.clear();
 

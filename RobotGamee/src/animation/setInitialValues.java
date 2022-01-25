@@ -77,22 +77,22 @@ public class setInitialValues {
 		// pistol
 		// damage, reload, mag size, price, firerate, pic, pic, pic pic
 		guns[0] = new Gun(10, 100, 7, 0, 0, 4, pistolImg, pistolFlipped, pistolSide, normalBullet, normalBulletBottom,
-				true, true, "pistol", 10);
+				true, true, "pistol", 10 ,100);
 		// AR15
 		guns[1] = new Gun(6, 200, 30, 1500, 3, 3, AR15Img, AR15Flipped, AR15Side, normalBullet, normalBulletBottom, false,
-				false, "AR15", 10);
+				false, "AR15", 10 ,100);
 		// sniper
 		guns[2] = new Gun(30, 250, 10, 4000, 0, 1, sniperImg, sniperFlipped, sniperSide, normalBullet, normalBulletBottom,
-				false, false, "sniper", 10);
+				false, false, "sniper", 10 ,100);
 		// minigun
 		guns[3] = new Gun(3, 300, 100, 8500, 2, 2, minigunImg, minigunFlipped, minigunSide, normalBullet, normalBulletBottom,
-				false, false, "minigun", 10);
+				false, false, "minigun", 10 ,100);
 		// shotgun/grenade launcher
 		guns[4] = new Gun(50, 170, 5, 12000, 0, 3, grenadeLauncherImg, grenadeLauncherFlipped, grenadeLauncherSide,
-				shotgunBullet, shotgunBulletBottom, false, false, "shotgun", 50);
+				shotgunBullet, shotgunBulletBottom, false, false, "shotgun", 50 ,100);
 		// water hose
 		guns[5] = new Gun(2, 500, 1000, 20000, 1, 3, hoseImg, hoseFlipped, hoseSide, waterDrop, waterDropBottom, false,
-				false, "hose", 10);
+				false, "hose", 10 ,100);
 
 	}
 

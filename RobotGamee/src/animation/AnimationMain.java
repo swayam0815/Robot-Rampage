@@ -150,7 +150,7 @@ public class AnimationMain extends Rectangle {
 		else {
 			getImg();
 
-			equippedGun = new Gun(6, 200, 5000, 1500, 3, AR15Img, AR15Flipped, AR15Side, normalBullet,
+			equippedGun = new Gun(6, 200, 5000, 1500, 3, 10, AR15Img, AR15Flipped, AR15Side, normalBullet,
 					normalBulletBottom, false, false, "AR15", 10);
 		}
 		initiate();
@@ -364,9 +364,9 @@ public class AnimationMain extends Rectangle {
 				gc.drawImage(equippedGun.getBulletBottom(), rect);
 
 // basically nerfing bullet speed by using this if statement
-// so bullet only moves every factor of FireRate
+// so bullet only moves every factor of bulletSpeed
 
-				if (bulletSpeed % equippedGun.getFireRate() == 0) {
+				if (bulletSpeed % equippedGun.getBulletSpeed() == 0) {
 					rect.y--;
 					rect.width--;
 					rect.height--;

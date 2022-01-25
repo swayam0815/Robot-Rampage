@@ -10,6 +10,7 @@ public class Gun {
 	private int magazineSize;
 	private int price;
 	private int fireRate;
+	private int bulletSpeed;
 	private Image pic;
 	private Image picFlipped;
 	private Image picSide;
@@ -25,13 +26,14 @@ public class Gun {
 	public static void main(String[] args) {
 	}
 
-	public Gun(int damage, int reloadTime, int magazineSize, int price, int fireRate, Image pic, Image picFlipped,
+	public Gun(int damage, int reloadTime, int magazineSize, int price, int fireRate, int bulletSpeed, Image pic, Image picFlipped,
 			Image picSide, Image bulletPic, Image bulletBottom, boolean isBought, boolean isEquipped, String name,  int bulletD) {
 		this.damage = damage;
 		this.reloadTime = reloadTime;
 		this.magazineSize = magazineSize;
 		this.price = price;
 		this.fireRate = fireRate;
+		this.bulletSpeed = bulletSpeed;
 		this.pic = pic;
 		this.picFlipped = picFlipped;
 		this.picSide = picSide;
@@ -128,6 +130,13 @@ public class Gun {
 	 */
 	public void setFireRate(int fireRate) {
 		this.fireRate = fireRate;
+	}
+	
+	/**
+	 * @return the speed of the gun's bullet
+	 */
+	public int getBulletSpeed() {
+		return bulletSpeed;
 	}
 
 	/**

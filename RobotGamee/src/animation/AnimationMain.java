@@ -149,6 +149,7 @@ public class AnimationMain extends Rectangle {
 		wave = 1;
 		defeat = false;
 		win = false;
+		forceStrength = 200;
 		this.totalWaves = totalWaves;
 
 		equippedGun = UpgradeMenu.getGun();

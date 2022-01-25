@@ -17,7 +17,6 @@ import hsa2.GraphicsConsole;
 public class AnimationMain extends Rectangle {
 
 	public static void main(String[] args) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-		new AnimationMain(gc, 2);
 	}
 
 	/***** Global Variables ******/
@@ -27,7 +26,8 @@ public class AnimationMain extends Rectangle {
 	private static int GRWIDTH = (int) (GRHEIGHT * 1.777777777778); // this sets the size of the grid to fit
 // the screen
 
-	private static GraphicsConsole gc = new GraphicsConsole(GRWIDTH, GRHEIGHT);
+	private static GraphicsConsole gc;
+	//= new GraphicsConsole(GRWIDTH, GRHEIGHT);
 
 // sound effects
 	private static Clip gunshotSound;
@@ -53,7 +53,6 @@ public class AnimationMain extends Rectangle {
 	private static Image cursorImg;
 	private static Image cursorClicked;
 
-
 // robot pictures
 	private Image robo; // "Thomas face.png"
 
@@ -62,7 +61,7 @@ public class AnimationMain extends Rectangle {
 	private Rectangle ReloadButton = new Rectangle((GRWIDTH / 20) - (GRWIDTH / 50), GRHEIGHT - (GRWIDTH / 10),
 			GRHEIGHT / 10, GRHEIGHT / 10); // this button reloads the gun
 
-	private int shotCounter = 0; //crucial for fireRate
+	private int shotCounter = 0; // crucial for fireRate
 	private int bulletsLeft; // number of bullets left in the gun
 	private int reload; // provides an angle for the arc around the reload button
 	private boolean reloading; // checks if the gun is reloading
@@ -82,11 +81,9 @@ public class AnimationMain extends Rectangle {
 	ArrayList<Rectangle> hit = new ArrayList<Rectangle>();
 	private int bulletSize = 50;
 	private int bulletSpeed = 0;
-	
-	
+
 	private static Rectangle backBTN = new Rectangle(GRWIDTH / 54, (int) (GRHEIGHT / 1.09), GRWIDTH / 8, GRHEIGHT / 14);
 	private static Rectangle cursor = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 100, GRHEIGHT / 100);
-
 
 // gun object for player guns
 // damage, reload time, bullet #, price, fire rate, pic, picFlipped
@@ -126,7 +123,6 @@ public class AnimationMain extends Rectangle {
 	private static Image normalBullet;
 	private static Image normalBulletBottom;
 	private static boolean win;
-	private static Image mission;
 
 	public static void getImg() throws IOException {
 		normalBullet = ImageIO.read(new File("bullet cartoon.png"));
@@ -134,7 +130,7 @@ public class AnimationMain extends Rectangle {
 		pistolFlipped = ImageIO.read(new File("Pistol POV flipped.png"));
 		pistolSide = ImageIO.read(new File("Pistol side view.png"));
 		normalBulletBottom = ImageIO.read(new File("Bullet Bottom.png"));
-		
+
 		backLight = ImageIO.read(new File("lightBack.png"));
 		backDark = ImageIO.read(new File("darkBack.png"));
 		cursorImg = ImageIO.read(new File("cursor.png"));
@@ -153,7 +149,7 @@ public class AnimationMain extends Rectangle {
 			equippedGun = UpgradeMenu.getGun();
 		else {
 			getImg();
-			
+
 			equippedGun = new Gun(6, 200, 5000, 1500, 3, AR15Img, AR15Flipped, AR15Side, normalBullet,
 					normalBulletBottom, false, false, "AR15", 10);
 		}
@@ -177,43 +173,12 @@ public class AnimationMain extends Rectangle {
 
 		gc.sleep(1000);
 
-		//lose if forcefield dies, win if robots die
+		// lose if forcefield dies, win if robots die
 		if (forceStrength <= 0)
-			mission = ImageIO.read(new File("lose.png"));
+			new Mission(gc, false, guns);
 		else if (forceStrength > 0)
-			mission = ImageIO.read(new File("win.png"));
+			new Mission(gc, true, guns);
 
-		while (true) {
-			//check if the back button has been pressed
-			if (cursor.intersects(backBTN)) {
-				back = backLight;
-				if (gc.getMouseClick() > 0)
-					new Start(gc, guns);
-			} else
-				back = backDark;
-			
-			//fixes the bug for clicking
-			gc.getMouseClick();
-
-			//set coordinates for cursor
-			cursor.x = gc.getMouseX() - (cursor.width / 2);
-			cursor.y = gc.getMouseY() - (cursor.height / 2);
-
-			gc.sleep(1);
-			synchronized (gc) {
-				gc.clear();
-				gc.drawImage(mission, 0, 0, GRWIDTH, GRHEIGHT);
-				// back button
-				gc.drawImage(back, backBTN);
-				// cursor
-				if (gc.getMouseButton(0))
-					gc.drawImage(cursorClicked, cursor.x, cursor.y - cursor.width * 2, cursor.width * 15,
-							cursor.height * 15);
-				else
-					gc.drawImage(cursorImg, cursor.x, cursor.y - cursor.width * 2, cursor.width * 15, cursor.height * 15);
-
-			}
-		}
 	}
 
 	private void getimg() throws IOException {
@@ -279,7 +244,7 @@ public class AnimationMain extends Rectangle {
 			moveX = -(GRWIDTH + (GRWIDTH / 11));
 
 // shooting the gun
-		if (equippedGun.getFireRate() == 0) {	//if gun is semi-auto
+		if (equippedGun.getFireRate() == 0) { // if gun is semi-auto
 			if (gc.getMouseClick() > 0 && bulletsLeft > 0) {
 				if (equippedGun.getName().equals("shotgun")) {
 					Gun.shoot(bullets, CrossHair.x, CrossHair.y, bulletSize, ranNum(1, 5));
@@ -288,8 +253,7 @@ public class AnimationMain extends Rectangle {
 
 				bulletsLeft--;
 			}
-		}
-		else {	//if gun is full-automatic
+		} else { // if gun is full-automatic
 			if (gc.getMouseButton(0) && bulletsLeft > 0 && shotCounter % equippedGun.getFireRate() == 0) {
 				if (equippedGun.getName().equals("shotgun")) {
 					Gun.shoot(bullets, CrossHair.x, CrossHair.y, bulletSize, ranNum(1, 5));
@@ -297,7 +261,7 @@ public class AnimationMain extends Rectangle {
 					Gun.shoot(bullets, CrossHair.x, CrossHair.y, bulletSize);
 
 				bulletsLeft--;
-				
+
 			}
 		}
 		shotCounter++;

@@ -102,8 +102,6 @@ public class UpgradeMenu {
 	}
 	
 	public void init() throws IOException, LineUnavailableException, UnsupportedAudioFileException {
-		Image loading = ImageIO.read(new File("loading.png"));
-		gc.setBackgroundColor(loading, GRWIDTH, GRHEIGHT);
 		setValues();
 		gc.setFont(moneyLeftFont);
 		

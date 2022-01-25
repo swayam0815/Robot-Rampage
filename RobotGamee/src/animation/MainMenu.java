@@ -47,12 +47,13 @@ public class MainMenu {
 	private static Image creditsDark;
 
 	public static void main(String[] args) throws LineUnavailableException, IOException, UnsupportedAudioFileException {
+		new setInitialValues(gc, GRWIDTH, GRHEIGHT);
 		new MainMenu(gc);
+//		new MainMenu(gc);
 	}
 
 	public MainMenu(GraphicsConsole x) throws IOException, LineUnavailableException, UnsupportedAudioFileException {
 		gc = x;
-		new setInitialValues(gc, GRWIDTH, GRHEIGHT);
 		initialize();
 	}
 

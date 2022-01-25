@@ -20,6 +20,8 @@ public class Gun {
 	private String name;
 	private int bulletD;
 
+
+	
 	public static void main(String[] args) {
 	}
 

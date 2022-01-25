@@ -86,7 +86,6 @@ public class UpgradeMenu {
 	// variables
 	private int gunSize = (int) (GRHEIGHT / 3.61111111111111); // the size of the gun picture
 	private int gunNum = 0; // represents the gun currently being shown
-	private int money = 30000; // amount of money the player has
 	private int price = 0; // the price that will show up on screen
 
 	// le guns
@@ -172,8 +171,8 @@ public class UpgradeMenu {
 		// buttons light up when hovered over
 		if (cursor.intersects(buyBTN)) {
 			buyImg = buyLight;
-			if (gc.getMouseClick() > 0 && money > currentGun.getPrice()) {
-				money -= currentGun.getPrice();
+			if (gc.getMouseClick() > 0 && setInitialValues.getMoney() > currentGun.getPrice()) {
+				setInitialValues.setMoney(setInitialValues.getMoney() - currentGun.getPrice());
 				currentGun.setBought(true);
 			}
 		} else
@@ -220,7 +219,7 @@ public class UpgradeMenu {
 			if (cursor.intersects(damageBTN)) {
 				damageImg = addLight;
 				if (gc.getMouseClick() > 0) {
-					if (money > price)
+					if (setInitialValues.getMoney() > price)
 						currentGun.setDamage(currentGun.getDamage() + 1);
 				}
 			} else
@@ -229,7 +228,7 @@ public class UpgradeMenu {
 			if (cursor.intersects(magazineBTN)) {
 				magazineImg = addLight;
 				if (gc.getMouseClick() > 0) {
-					if (money > price)
+					if (setInitialValues.getMoney() > price)
 						currentGun.setMagazineSize(currentGun.getMagazineSize() + 1);
 				}
 			} else
@@ -238,7 +237,7 @@ public class UpgradeMenu {
 			if (cursor.intersects(reloadTimeBTN)) {
 				reloadTimeImg = addLight;
 				if (gc.getMouseClick() > 0) {
-					if (money > price)
+					if (setInitialValues.getMoney() > price)
 						currentGun.setReloadTime(currentGun.getReloadTime() - 1);
 				}
 			} else
@@ -247,7 +246,7 @@ public class UpgradeMenu {
 			if (cursor.intersects(fireRateBTN) && currentGun.getFireRate() != 0) {
 				fireRateImg = addLight;
 				if (gc.getMouseClick() > 0) {
-					if (money > price)
+					if (setInitialValues.getMoney() > price)
 						currentGun.setFireRate(currentGun.getFireRate() + 1);
 				}
 			} else
@@ -305,7 +304,7 @@ public class UpgradeMenu {
 			// money left for player
 			gc.drawImage(roboPartsImg, GRWIDTH / 20, GRHEIGHT / 50, GRWIDTH / 16, GRWIDTH / 16);
 			gc.setColor(Color.RED);
-			gc.drawString("" + money, GRWIDTH / 8, GRHEIGHT / 11);
+			gc.drawString("" + setInitialValues.getMoney(), GRWIDTH / 8, GRHEIGHT / 11);
 
 			// add buttons (magazine, damage, ...)
 			gc.drawImage(damageImg, damageBTN);

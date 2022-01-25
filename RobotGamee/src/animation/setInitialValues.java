@@ -9,6 +9,9 @@ import javax.imageio.ImageIO;
 import hsa2.*;
 
 public class setInitialValues {
+	
+	private static int money = 30000;	//the player's in-game currency
+	
 	private Image normalBullet;
 	private Image shotgunBullet;
 	private Image waterDrop;
@@ -95,6 +98,14 @@ public class setInitialValues {
 
 	public static Gun[] getGuns() {
 		return guns;
+	}
+	
+	public static int getMoney() {
+		return money;
+	}
+	
+	public static void setMoney(int newMoney) {
+		money = newMoney;
 	}
 
 }

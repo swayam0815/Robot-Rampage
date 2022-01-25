@@ -150,7 +150,7 @@ public class AnimationMain extends Rectangle {
 		else {
 			getImg();
 
-			equippedGun = new Gun(6, 200, 5000, 1500, 3, 10, AR15Img, AR15Flipped, AR15Side, normalBullet,
+			equippedGun = new Gun(6, 200, 5000, 1500, 3, 3, AR15Img, AR15Flipped, AR15Side, normalBullet,
 					normalBulletBottom, false, false, "AR15", 10);
 		}
 		initiate();

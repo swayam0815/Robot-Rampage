@@ -56,6 +56,7 @@ public class AnimationMain extends Rectangle {
 	private Rectangle ReloadButton = new Rectangle((GRWIDTH / 20) - (GRWIDTH / 50), GRHEIGHT - (GRWIDTH / 10),
 			GRHEIGHT / 10, GRHEIGHT / 10); // this button reloads the gun
 
+	private int shotCounter = 0; //crucial for fireRate
 	private int bulletsLeft; // number of bullets left in the gun
 	private int reload; // provides an angle for the arc around the reload button
 	private boolean reloading; // checks if the gun is reloading
@@ -137,7 +138,7 @@ public class AnimationMain extends Rectangle {
 		else {
 			getImg();
 			
-			equippedGun = new Gun(6, 200, 5000, 1500, 1, AR15Img, AR15Flipped, AR15Side, normalBullet,
+			equippedGun = new Gun(6, 200, 5000, 1500, 3, AR15Img, AR15Flipped, AR15Side, normalBullet,
 					normalBulletBottom, false, false, "AR15", 10);
 		}
 		initiate();
@@ -239,14 +240,28 @@ public class AnimationMain extends Rectangle {
 			moveX = -(GRWIDTH + (GRWIDTH / 11));
 
 // shooting the gun
-		if ((gc.getMouseClick() > 0 || gc.isKeyDown(32)) && bulletsLeft > 0) {
-			if (equippedGun.getName().equals("shotgun")) {
-				Gun.shoot(bullets, CrossHair.x, CrossHair.y, bulletSize, ranNum(1, 5));
-			} else
-				Gun.shoot(bullets, CrossHair.x, CrossHair.y, bulletSize);
+		if (equippedGun.getFireRate() == 0) {	//if gun is semi-auto
+			if (gc.getMouseClick() > 0 && bulletsLeft > 0) {
+				if (equippedGun.getName().equals("shotgun")) {
+					Gun.shoot(bullets, CrossHair.x, CrossHair.y, bulletSize, ranNum(1, 5));
+				} else
+					Gun.shoot(bullets, CrossHair.x, CrossHair.y, bulletSize);
 
-			bulletsLeft--;
+				bulletsLeft--;
+			}
 		}
+		else {	//if gun is full-automatic
+			if (gc.getMouseButton(0) && bulletsLeft > 0 && shotCounter % equippedGun.getFireRate() == 0) {
+				if (equippedGun.getName().equals("shotgun")) {
+					Gun.shoot(bullets, CrossHair.x, CrossHair.y, bulletSize, ranNum(1, 5));
+				} else
+					Gun.shoot(bullets, CrossHair.x, CrossHair.y, bulletSize);
+
+				bulletsLeft--;
+				
+			}
+		}
+		shotCounter++;
 
 // gun reloads with the 'R' key OR by hovering over button
 		if (!reloading && gc.isKeyDown(82) || (!reloading && CrossHair.intersects(ReloadButton))

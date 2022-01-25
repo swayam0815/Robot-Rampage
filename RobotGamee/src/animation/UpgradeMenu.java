@@ -92,7 +92,7 @@ public class UpgradeMenu {
 	// le guns
 	private static Gun[] guns = new Gun[6];
 
-	Font moneyLeftFont = new Font("Elephant", Font.ITALIC, GRWIDTH / 30); // font for money at the top
+	Font moneyLeftFont = new Font("Elephant", Font.ITALIC, GRWIDTH / 40); // font for money at the top
 
 	public UpgradeMenu(GraphicsConsole gc, Gun[] guns)
 			throws IOException, LineUnavailableException, UnsupportedAudioFileException {
@@ -241,12 +241,12 @@ public class UpgradeMenu {
 				reloadTimeImg = addLight;
 				if (gc.getMouseClick() > 0) {
 					if (money > price)
-						currentGun.setReloadTime(currentGun.getReloadTime() + 1);
+						currentGun.setReloadTime(currentGun.getReloadTime() - 1);
 				}
 			} else
 				reloadTimeImg = addDark;
 
-			if (cursor.intersects(fireRateBTN)) {
+			if (cursor.intersects(fireRateBTN) && currentGun.getFireRate() != 0) {
 				fireRateImg = addLight;
 				if (gc.getMouseClick() > 0) {
 					if (money > price)
@@ -322,10 +322,13 @@ public class UpgradeMenu {
 			gc.drawImage(fireRateNameImg, GRWIDTH / 2, GRHEIGHT / 2, GRWIDTH / 10, GRWIDTH / 9);
 
 			//attributes of each gun
-			gc.drawString(currentGun.getDamage() + "", 150, 200);
-			gc.drawString(currentGun.getMagazineSize() + "", 150, 300);
-			gc.drawString(currentGun.getReloadTime() + "", 150, 400);
-			gc.drawString(currentGun.getFireRate() + "", 150, 500);
+			gc.drawString(currentGun.getDamage() + "", GRWIDTH / 3 * 2, (int)(GRWIDTH / 3.915));
+			gc.drawString(currentGun.getMagazineSize() + "", GRWIDTH / 3 * 2, (int)(GRHEIGHT / 1.88));
+			gc.drawString(currentGun.getReloadTime() + "", GRWIDTH / 3 * 2, (int)(GRWIDTH / 2.924));
+			if (currentGun.getFireRate() == 0)
+				gc.drawString("Semi-Auto", GRWIDTH / 30 * 19, (int)(GRHEIGHT / 1.46));
+			else
+				gc.drawString(currentGun.getFireRate() + "", GRWIDTH / 3 * 2, (int)(GRHEIGHT / 1.46));
 
 			// cursor
 			if (gc.getMouseButton(0))

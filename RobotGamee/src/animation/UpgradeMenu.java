@@ -325,10 +325,10 @@ public class UpgradeMenu {
 
 			if (currentGun.isBought()) {
 				//robo parts before prices
-				gc.drawImage(roboPartsImg, (int)(GRWIDTH / 1.27), 265, (int) (GRHEIGHT / 16.25), (int) (GRHEIGHT / 16.25));
-				gc.drawImage(roboPartsImg, (int)(GRWIDTH / 1.27), 315, (int) (GRHEIGHT / 16.25), (int) (GRHEIGHT / 16.25));
-				gc.drawImage(roboPartsImg, (int)(GRWIDTH / 1.27), 365, (int) (GRHEIGHT / 16.25), (int) (GRHEIGHT / 16.25));
-				gc.drawImage(roboPartsImg, (int)(GRWIDTH / 1.27), 415, (int) (GRHEIGHT / 16.25), (int) (GRHEIGHT / 16.25));
+				gc.drawImage(roboPartsImg, (int)(GRWIDTH / 1.27), (int)(GRHEIGHT / 2.452), (int) (GRHEIGHT / 16.25), (int) (GRHEIGHT / 16.25));
+				gc.drawImage(roboPartsImg, (int)(GRWIDTH / 1.27), (int)(GRHEIGHT / 2.063), (int) (GRHEIGHT / 16.25), (int) (GRHEIGHT / 16.25));
+				gc.drawImage(roboPartsImg, (int)(GRWIDTH / 1.27), (int)(GRHEIGHT / 1.78), (int) (GRHEIGHT / 16.25), (int) (GRHEIGHT / 16.25));
+				gc.drawImage(roboPartsImg, (int)(GRWIDTH / 1.27), (int)(GRWIDTH / 2.783), (int) (GRHEIGHT / 16.25), (int) (GRHEIGHT / 16.25));
 				
 				//upgrade prices
 				gc.drawString(currentGun.getUpgradePrice() + "", (int)(GRWIDTH / 1.21), (int)(GRWIDTH / 3.915));

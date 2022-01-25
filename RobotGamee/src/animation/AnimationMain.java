@@ -47,6 +47,12 @@ public class AnimationMain extends Rectangle {
 	private Image reloadButton; // "reload button.png"
 	private Image bulletBottom; // "Bullet Bottom.png"
 	private Image gunshotFire; // "gunshot fire.png"
+	private Image back;
+	private static Image backLight;
+	private static Image backDark;
+	private static Image cursorImg;
+	private static Image cursorClicked;
+
 
 // robot pictures
 	private Image robo; // "Thomas face.png"
@@ -76,6 +82,11 @@ public class AnimationMain extends Rectangle {
 	ArrayList<Rectangle> hit = new ArrayList<Rectangle>();
 	private int bulletSize = 50;
 	private int bulletSpeed = 0;
+	
+	
+	private static Rectangle backBTN = new Rectangle(GRWIDTH / 54, (int) (GRHEIGHT / 1.09), GRWIDTH / 8, GRHEIGHT / 14);
+	private static Rectangle cursor = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 100, GRHEIGHT / 100);
+
 
 // gun object for player guns
 // damage, reload time, bullet #, price, fire rate, pic, picFlipped
@@ -123,6 +134,11 @@ public class AnimationMain extends Rectangle {
 		pistolFlipped = ImageIO.read(new File("Pistol POV flipped.png"));
 		pistolSide = ImageIO.read(new File("Pistol side view.png"));
 		normalBulletBottom = ImageIO.read(new File("Bullet Bottom.png"));
+		
+		backLight = ImageIO.read(new File("lightBack.png"));
+		backDark = ImageIO.read(new File("darkBack.png"));
+		cursorImg = ImageIO.read(new File("cursor.png"));
+		cursorClicked = ImageIO.read(new File("cursor clicked.png"));
 
 	}
 
@@ -166,13 +182,33 @@ public class AnimationMain extends Rectangle {
 		else if (forceStrength > 0)
 			mission = ImageIO.read(new File("win.png"));
 
-		while (true)
+		while (true) {
+			
+			if (cursor.intersects(backBTN)) {
+				back = backLight;
+				if (gc.getMouseClick() > 0)
+					new Start(gc, guns);
+			} else
+				back = backDark;
 
-		{
+			gc.getMouseClick();
+
+			cursor.x = gc.getMouseX() - (cursor.width / 2);
+			cursor.y = gc.getMouseY() - (cursor.height / 2);
+
 			gc.sleep(1);
 			synchronized (gc) {
 				gc.clear();
 				gc.drawImage(mission, 0, 0, GRWIDTH, GRHEIGHT);
+				// back button
+				gc.drawImage(back, backBTN);
+				// cursor
+				if (gc.getMouseButton(0))
+					gc.drawImage(cursorClicked, cursor.x, cursor.y - cursor.width * 2, cursor.width * 15,
+							cursor.height * 15);
+				else
+					gc.drawImage(cursorImg, cursor.x, cursor.y - cursor.width * 2, cursor.width * 15, cursor.height * 15);
+
 			}
 		}
 	}

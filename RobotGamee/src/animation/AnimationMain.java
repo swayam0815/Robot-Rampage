@@ -27,7 +27,7 @@ public class AnimationMain extends Rectangle {
 // the screen
 
 	private static GraphicsConsole gc;
-	//= new GraphicsConsole(GRWIDTH, GRHEIGHT);
+	// = new GraphicsConsole(GRWIDTH, GRHEIGHT);
 
 // sound effects
 	private static Clip gunshotSound;
@@ -143,16 +143,15 @@ public class AnimationMain extends Rectangle {
 		running = true;
 		gc = x;
 		getimg();
+
+		// setting up variables
+		// more
+		wave = 1;
+		defeat = false;
+		win = false;
 		this.totalWaves = totalWaves;
 
-		if (UpgradeMenu.getGun() != null)
-			equippedGun = UpgradeMenu.getGun();
-		else {
-			getImg();
-
-			equippedGun = new Gun(6, 200, 5000, 1500, 3, 3, AR15Img, AR15Flipped, AR15Side, normalBullet,
-					normalBulletBottom, false, false, "AR15", 10);
-		}
+		equippedGun = UpgradeMenu.getGun();
 		initiate();
 
 		while (wave + 1 <= totalWaves && forceStrength > 0) {
@@ -171,7 +170,7 @@ public class AnimationMain extends Rectangle {
 
 		}
 
-		gc.sleep(1000);
+		gc.sleep(100);
 
 		// lose if forcefield dies, win if robots die
 		if (forceStrength <= 0)

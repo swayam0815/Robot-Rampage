@@ -329,8 +329,8 @@ public class AnimationMain extends Rectangle {
 
 			counter++;
 
-			if (rect.y >= GRHEIGHT - (size + size / 2)) {
-				rect.y = GRHEIGHT - (size + size / 2);
+			if (rect.y >= GRHEIGHT - (rect.y + rect.y / 2)) {
+				rect.y = GRHEIGHT - (rect.y + rect.y / 2);
 				forceStrength--;
 			}
 

@@ -33,6 +33,9 @@ public class cutscene {
 
 	public cutscene() throws IOException {
 		getImg();
+		
+		
+		
 		while (true) {
 
 			mechanics();

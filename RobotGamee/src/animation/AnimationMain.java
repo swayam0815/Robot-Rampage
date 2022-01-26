@@ -113,12 +113,6 @@ public class AnimationMain extends Rectangle {
 	private static boolean win;
 
 	public static void getImg() throws IOException {
-		normalBullet = ImageIO.read(new File("bullet cartoon.png"));
-		pistolImg = ImageIO.read(new File("Pistol POV.png"));
-		pistolFlipped = ImageIO.read(new File("Pistol POV flipped.png"));
-		pistolSide = ImageIO.read(new File("Pistol side view.png"));
-		normalBulletBottom = ImageIO.read(new File("Bullet Bottom.png"));
-
 	}
 
 	public AnimationMain(GraphicsConsole x, int totalWaves, Gun[] guns, int levelNum)
@@ -145,10 +139,6 @@ public class AnimationMain extends Rectangle {
 
 		while (wave + 1 <= totalWaves && forceStrength > 0) {
 
-			gc.drawString(String.valueOf(enemies.size()), 250, 250);
-
-			gc.drawString(String.valueOf(wave), 400, 500);
-
 			mechanics();
 
 			enemyMechanics();
@@ -166,12 +156,21 @@ public class AnimationMain extends Rectangle {
 			new Mission(gc, false, guns);
 		} else if (forceStrength > 0) {
 
-			if (levelNum + 1 < 5) {
-				levels.win(levelNum + 1);
-				new Mission(gc, true, guns);
-			} else {
-				levels.win(levelNum + 1);
+			if (levelNum != 5)
+				if (levelNum + 1 < 5) {
+					levels.win(levelNum + 1);
+					new Mission(gc, true, guns);
+				} else {
+					levels.win(levelNum);
 
+					new Mission(gc, true, guns);
+				}
+			else {
+				gc.drawImage(ImageIO.read(new File("bossman.jpeg")), 0, 0, GRWIDTH, GRHEIGHT);
+				AudioInputStream boss = AudioSystem.getAudioInputStream(new File("EVILBOSS.wav").getAbsoluteFile());
+				Clip evilBoss = AudioSystem.getClip();
+				evilBoss.open(boss);
+				evilBoss.start();
 				new Mission(gc, true, guns);
 			}
 
@@ -323,6 +322,8 @@ public class AnimationMain extends Rectangle {
 	public void enemyMechanics() {
 
 		if (newWave) {
+			bullets.removeAll(bullets);
+
 			for (int i = 0; i < (2 * (int) (wave * small)); i++)
 				enemies.add(new Rectangle(ranNum(1, GRWIDTH), 0, size * small, size * small));
 
@@ -371,6 +372,9 @@ public class AnimationMain extends Rectangle {
 
 	private void drawGraphics() {
 		synchronized (gc) {
+			gc.drawString("Robots left in wave: " + String.valueOf(enemies.size()), 250, 250);
+
+			gc.drawString("Wave #: " + String.valueOf(wave), 250, 500);
 
 			if (enemies.size() < 2) {
 				newWave = true;
@@ -462,7 +466,7 @@ public class AnimationMain extends Rectangle {
 // reload button
 			gc.drawImage(reloadButton, ReloadButton.x, ReloadButton.y, ReloadButton.width, ReloadButton.height);
 
-			gc.drawString(String.valueOf(forceStrength), 500, 500);
+			gc.drawString("Forcefield Strength: " + String.valueOf(forceStrength), 500, 500);
 
 // bullets
 			if (bulletsLeft < 13) {

@@ -49,13 +49,13 @@ public class intro {
 	}
 
 	private static Dimension GRsize = Toolkit.getDefaultToolkit().getScreenSize(); // creates a variable to get screen
-	// size
+// size
 	private static int GRHEIGHT = (int) GRsize.getHeight() - 70; // (int)GRsize.getHeight() - 70
 	private static int GRWIDTH = (int) (GRHEIGHT * 1.777777777778); // this sets the size of the grid to fit
-	// the screen
+// the screen
 
 	private static GraphicsConsole gc;
-	// = new GraphicsConsole(GRWIDTH, GRHEIGHT);
+// = new GraphicsConsole(GRWIDTH, GRHEIGHT);
 
 	public intro(GraphicsConsole gc) throws IOException, InterruptedException {
 		this.gc = gc;
@@ -68,7 +68,6 @@ public class intro {
 		synchronized (gc) {
 			gc.drawImage(op[2], 0, 0, GRWIDTH, GRHEIGHT);
 			for (int i = 1; i < op.length; i++) {
-				System.out.println(i);
 				gc.drawImage(op[i], 0, 0, GRWIDTH, GRHEIGHT);
 				gc.wait(100 - i);
 			}

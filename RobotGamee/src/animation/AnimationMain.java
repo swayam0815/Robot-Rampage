@@ -27,7 +27,7 @@ public class AnimationMain extends Rectangle {
 // the screen
 
 	private static GraphicsConsole gc;
-	// = new GraphicsConsole(GRWIDTH, GRHEIGHT);
+// = new GraphicsConsole(GRWIDTH, GRHEIGHT);
 
 // sound effects
 	private static Clip gunshotSound;
@@ -102,7 +102,7 @@ public class AnimationMain extends Rectangle {
 	private static int numRobots = 100;
 	private static int totalWaves;
 
-	private static Gun[] guns = new Gun[6];
+	private static Gun[] guns;
 
 // gun pictures
 	private static Image pistolImg; // "Pistol POV.png"
@@ -121,14 +121,15 @@ public class AnimationMain extends Rectangle {
 
 	}
 
-	public AnimationMain(GraphicsConsole x, int totalWaves)
+	public AnimationMain(GraphicsConsole x, int totalWaves, Gun[] guns, int levelNum)
 			throws LineUnavailableException, IOException, UnsupportedAudioFileException {
 		running = true;
 		gc = x;
+		this.guns = guns;
 		getimg();
 
-		// setting up variables
-		// more
+// setting up variables
+// more
 		wave = 1;
 		defeat = false;
 		win = false;
@@ -160,11 +161,21 @@ public class AnimationMain extends Rectangle {
 
 		gc.sleep(100);
 
-		// lose if forcefield dies, win if robots die
-		if (forceStrength <= 0)
+// lose if forcefield dies, win if robots die
+		if (forceStrength <= 0) {
 			new Mission(gc, false, guns);
-		else if (forceStrength > 0)
-			new Mission(gc, true, guns);
+		} else if (forceStrength > 0) {
+
+			if (levelNum + 1 < 5) {
+				levels.win(levelNum + 1);
+				new Mission(gc, true, guns);
+			} else {
+				levels.win(levelNum + 1);
+
+				new Mission(gc, true, guns);
+			}
+
+		}
 
 	}
 
@@ -208,16 +219,16 @@ public class AnimationMain extends Rectangle {
 
 	private void mechanics() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
 
-//		if (gc.isKeyDown(69)) {
+// if (gc.isKeyDown(69)) {
 //
-//			if (gunNum + 1 < guns.length) {
-//				gunNum++;
-//				equippedGun = guns[gunNum];
-//			} else
-//				gunNum = 0;
-//		}
-		
-		// moving left and right
+// if (gunNum + 1 < guns.length) {
+// gunNum++;
+// equippedGun = guns[gunNum];
+// } else
+// gunNum = 0;
+// }
+
+// moving left and right
 		if (gc.isKeyDown(37) || gc.isKeyDown(65))
 			moveX -= 10;
 		if (gc.isKeyDown(39) || gc.isKeyDown(100) || gc.isKeyDown(68))
@@ -237,23 +248,23 @@ public class AnimationMain extends Rectangle {
 						Gun.shoot(bullets, CrossHair.x, CrossHair.y, bulletSize, ranNum(1, 5));
 					} else
 						Gun.shoot(bullets, CrossHair.x, CrossHair.y, bulletSize);
-	
-					// gunshot sound
+
+// gunshot sound
 					gunshotEffect = AudioSystem.getAudioInputStream(new File("gunshot sound.wav").getAbsoluteFile());
 					gunshotSound = AudioSystem.getClip();
 					gunshotSound.open(gunshotEffect);
 					gunshotSound.start();
-					
-					//shell fall sound
-					shellFallEffect = AudioSystem.getAudioInputStream(new File("bullet shell fall.wav").getAbsoluteFile());
+
+// shell fall sound
+					shellFallEffect = AudioSystem
+							.getAudioInputStream(new File("bullet shell fall.wav").getAbsoluteFile());
 					shellFall = AudioSystem.getClip();
 					shellFall.open(shellFallEffect);
 					shellFall.start();
-	
+
 					bulletsLeft--;
-				}
-				else {
-					//empty gun sound
+				} else {
+// empty gun sound
 					dryFireEffect = AudioSystem.getAudioInputStream(new File("gun dry fire.wav").getAbsoluteFile());
 					dryFire = AudioSystem.getClip();
 					dryFire.open(dryFireEffect);
@@ -264,17 +275,16 @@ public class AnimationMain extends Rectangle {
 			if (gc.getMouseButton(0) && shotCounter % equippedGun.getFireRate() == 0) {
 				if (bulletsLeft > 0) {
 					Gun.shoot(bullets, CrossHair.x, CrossHair.y, bulletSize);
-	
-					// gunshot sound
+
+// gunshot sound
 					gunshotEffect = AudioSystem.getAudioInputStream(new File("gunshot sound.wav").getAbsoluteFile());
 					gunshotSound = AudioSystem.getClip();
 					gunshotSound.open(gunshotEffect);
 					gunshotSound.start();
-					
+
 					bulletsLeft--;
-				}
-				else {
-					//empty gun sound
+				} else {
+// empty gun sound
 					dryFireEffect = AudioSystem.getAudioInputStream(new File("gun dry fire.wav").getAbsoluteFile());
 					dryFire = AudioSystem.getClip();
 					dryFire.open(dryFireEffect);

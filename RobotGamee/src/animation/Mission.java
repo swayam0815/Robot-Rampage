@@ -13,21 +13,21 @@ import hsa2.GraphicsConsole;
 public class Mission {
 
 	private static Dimension GRsize = Toolkit.getDefaultToolkit().getScreenSize(); // creates a variable to get screen
-	// size
+// size
 	private static int GRHEIGHT = (int) GRsize.getHeight() - 70; // (int)GRsize.getHeight() - 70
 	private static int GRWIDTH = (int) (GRHEIGHT * 1.777777777778); // this sets the size of the grid to fit the screen
 
-	// gc
+// gc
 	private static GraphicsConsole gc;
-	// = new GraphicsConsole(GRWIDTH, GRHEIGHT);
+// = new GraphicsConsole(GRWIDTH, GRHEIGHT);
 
 	private static Rectangle cursor = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 100, GRHEIGHT / 100); // to
-																												// aim
+// aim
 
 	private static Rectangle creditsBTN = new Rectangle(GRWIDTH / 141 * 57, GRHEIGHT / 78 * 55, GRWIDTH / 141 * 30,
 			GRHEIGHT / 79 * 9);
 
-	// the images that will show on screen
+// the images that will show on screen
 	private static Image cursorImg;
 	private static Image cursorClicked;
 	private static Image bkg;
@@ -52,7 +52,7 @@ public class Mission {
 		gc.enableMouseMotion();
 		gc.enableMouse(); // enables motion and click for the
 
-		// images imported
+// images imported
 		cursorImg = ImageIO.read(new File("cursor.png"));
 		cursorClicked = ImageIO.read(new File("cursor clicked.png"));
 
@@ -91,13 +91,13 @@ public class Mission {
 		synchronized (gc) {
 			gc.clear();
 
-			// background
+// background
 			gc.drawImage(bkg, 0, 0, GRWIDTH, GRHEIGHT);
 
-			// back button
+// back button
 			gc.drawImage(back, creditsBTN);
 
-			// cursor
+// cursor
 			if (gc.getMouseButton(0))
 				gc.drawImage(cursorClicked, cursor.x, cursor.y - cursor.width * 2, cursor.width * 15,
 						cursor.height * 15);

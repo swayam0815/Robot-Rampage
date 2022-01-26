@@ -20,12 +20,12 @@ public class UpgradeMenu {
 	}
 
 	private static Dimension GRsize = Toolkit.getDefaultToolkit().getScreenSize(); // creates a variable to get screen
-	// size
+// size
 	private static int GRHEIGHT = (int) GRsize.getHeight() - 70; // (int)GRsize.getHeight() - 70
 	private static int GRWIDTH = (int) (GRHEIGHT * 1.777777777778); // this sets the size of the grid to fit the screen
 	private static GraphicsConsole gc;
-	// = new GraphicsConsole(GRWIDTH, GRHEIGHT);
-	// rectangles
+// = new GraphicsConsole(GRWIDTH, GRHEIGHT);
+// rectangles
 	private static Rectangle cursor = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 100, GRHEIGHT / 100);
 	private static Rectangle pgDown = new Rectangle((int) (GRWIDTH / 1.29), (int) (GRHEIGHT / 1.31), GRWIDTH / 11,
 			GRWIDTH / 11);
@@ -46,7 +46,7 @@ public class UpgradeMenu {
 	private static Rectangle fireRateBTN = new Rectangle((int) (GRWIDTH / 1.335), (int) (GRHEIGHT / 1.53),
 			(int) (GRHEIGHT / 16.25), (int) (GRHEIGHT / 16.25));
 
-	// pictures that will show on screen
+// pictures that will show on screen
 	private Image background;
 	private Image buyImg;
 	private Image equipImg;
@@ -67,7 +67,7 @@ public class UpgradeMenu {
 	private Image reloadTimeNameImg;
 	private Image fireRateNameImg;
 
-	// pictures that will replace them
+// pictures that will replace them
 	private Image buyLight;
 	private Image buyDark;
 	private Image equipLight;
@@ -83,27 +83,39 @@ public class UpgradeMenu {
 
 	private static Gun currentGun; // the gun that will be shown on screen
 	private static Gun equippedGun; // the gun that is equipped by the player
-	// variables
+// variables
 	private int gunSize = (int) (GRHEIGHT / 3.61111111111111); // the size of the gun picture
 	private int gunNum = 0; // represents the gun currently being shown
 
-	// le guns
-	private static Gun[] guns = new Gun[6];
+// le guns
+	private static Gun[] guns;
 
 	Font moneyLeftFont = new Font("Elephant", Font.ITALIC, GRWIDTH / 40); // font for money at the top
+	private static boolean running;
 
 	public UpgradeMenu(GraphicsConsole gc, Gun[] guns)
 			throws IOException, LineUnavailableException, UnsupportedAudioFileException {
+		System.out.println("object declared");
 		this.gc = gc;
+		System.out.println("gc");
+
+		running = true;
+		System.out.println("running");
+
+		gunNum = 0;
+		System.out.println("gunnum");
 		this.guns = guns;
+		currentGun = guns[gunNum];
+		System.out.println("current");
+
 		init();
 	}
-	
+
 	public void init() throws IOException, LineUnavailableException, UnsupportedAudioFileException {
 		setValues();
 		gc.setFont(moneyLeftFont);
-		
-		while (gc.getKeyCode() != 'Q') {
+
+		while (running) {
 			mechanics();
 			drawGraphics();
 			gc.sleep(1);
@@ -117,7 +129,7 @@ public class UpgradeMenu {
 	public void setValues() throws IOException {
 		gc.enableMouseMotion();
 		gc.enableMouse(); // enables motion and click for the mouse
-		// pictures
+// pictures
 		background = ImageIO.read(new File("UpgradesMenu.jpg"));
 		buyLight = ImageIO.read(new File("lightBuy.png"));
 		buyDark = ImageIO.read(new File("buy button.png"));
@@ -164,10 +176,10 @@ public class UpgradeMenu {
 	private void mechanics() throws IOException, LineUnavailableException, UnsupportedAudioFileException {
 		cursor.x = gc.getMouseX() - (cursor.width / 2);
 		cursor.y = gc.getMouseY() - (cursor.height / 2);
-		// represents the gun currently selected
+// represents the gun currently selected
 		currentGun = guns[gunNum];
 
-		// buttons light up when hovered over
+// buttons light up when hovered over
 		if (cursor.intersects(buyBTN)) {
 			buyImg = buyLight;
 			if (gc.getMouseClick() > 0 && setInitialValues.getMoney() >= currentGun.getPrice()) {
@@ -208,12 +220,14 @@ public class UpgradeMenu {
 			pgUpImg = pgUpDark;
 		if (cursor.intersects(backBTN)) {
 			back = backLight;
-			if (gc.getMouseClick() > 0)
+			if (gc.getMouseClick() > 0) {
+				running = false;
 				new Start(gc, guns);
+			}
 		} else
 			back = backDark;
 
-		// add buttons (works only if gun has been bought)
+// add buttons (works only if gun has been bought)
 		if (currentGun.isBought()) {
 			if (cursor.intersects(damageBTN)) {
 				damageImg = addLight;
@@ -222,7 +236,7 @@ public class UpgradeMenu {
 						currentGun.setDamage(currentGun.getDamage() + 1);
 						setInitialValues.setMoney(setInitialValues.getMoney() - currentGun.getUpgradePrice());
 						currentGun.setUpgradePrice(currentGun.getUpgradePrice() + 100);
-						}
+					}
 				}
 			} else
 				damageImg = addDark;
@@ -267,7 +281,7 @@ public class UpgradeMenu {
 
 		gc.getMouseClick(); // this fixes the glitch for scrolling
 
-		// choosing which button to show for equip & ...
+// choosing which button to show for equip & ...
 		if (!currentGun.isBought()) {
 			showButton(buyBTN);
 			hideButton(equipBTN);
@@ -288,77 +302,82 @@ public class UpgradeMenu {
 			gc.setBackgroundColor(Color.BLACK);
 			gc.clear();
 
-			// background
+// background
 			gc.drawImage(background, 0, 0, GRWIDTH, GRHEIGHT);
 
-			// the gun
+// the gun
 			gc.drawImage(currentGun.getPicSide(), (int) (GRWIDTH / 5.5), (int) (GRHEIGHT / 3.170731707317073),
 					(int) (gunSize * 1.777777777778), gunSize);
 
-			// buy/equip/equipped button
+// buy/equip/equipped button
 			gc.drawImage(equippedImg, equippedBTN);
 			gc.drawImage(buyImg, buyBTN);
 			gc.drawImage(equipImg, equipBTN);
 
-			// lock on guns
+// lock on guns
 			if (!currentGun.isBought())
 				gc.drawImage(locked, (int) (GRWIDTH / 5.5), (int) (GRHEIGHT / 3.170731707317073),
 						(int) (gunSize * 1.777777777778), gunSize);
 
-			// pg up & pg down
+// pg up & pg down
 			gc.drawImage(pgUpImg, pgUp);
 			gc.drawImage(pgDownImg, pgDown);
 
-			// back button
+// back button
 			gc.drawImage(back, backBTN);
 
-			// money left for player
+// money left for player
 			gc.drawImage(roboPartsImg, GRWIDTH / 20, GRHEIGHT / 50, GRWIDTH / 16, GRWIDTH / 16);
-			gc.setColor(new Color(0,200,20));
+			gc.setColor(new Color(0, 200, 20));
 			gc.drawString("" + setInitialValues.getMoney(), GRWIDTH / 8, GRHEIGHT / 11);
 
-			// add buttons (magazine, damage, ...)
+// add buttons (magazine, damage, ...)
 			gc.drawImage(damageImg, damageBTN);
 			gc.drawImage(magazineImg, magazineBTN);
 			gc.drawImage(reloadTimeImg, reloadTimeBTN);
 			gc.drawImage(fireRateImg, fireRateBTN);
 
 			if (currentGun.isBought()) {
-				//robo parts before prices
-				gc.drawImage(roboPartsImg, (int)(GRWIDTH / 1.27), (int)(GRHEIGHT / 2.452), (int) (GRHEIGHT / 16.25), (int) (GRHEIGHT / 16.25));
-				gc.drawImage(roboPartsImg, (int)(GRWIDTH / 1.27), (int)(GRHEIGHT / 2.063), (int) (GRHEIGHT / 16.25), (int) (GRHEIGHT / 16.25));
-				gc.drawImage(roboPartsImg, (int)(GRWIDTH / 1.27), (int)(GRHEIGHT / 1.78), (int) (GRHEIGHT / 16.25), (int) (GRHEIGHT / 16.25));
-				gc.drawImage(roboPartsImg, (int)(GRWIDTH / 1.27), (int)(GRWIDTH / 2.783), (int) (GRHEIGHT / 16.25), (int) (GRHEIGHT / 16.25));
-				
-				//upgrade prices
-				gc.drawString(currentGun.getUpgradePrice() + "", (int)(GRWIDTH / 1.21), (int)(GRWIDTH / 3.915));
-				gc.drawString(currentGun.getUpgradePrice() + "", (int)(GRWIDTH / 1.21), (int)(GRHEIGHT / 1.88));
-				gc.drawString(currentGun.getUpgradePrice() + "", (int)(GRWIDTH / 1.21), (int)(GRWIDTH / 2.924));
-				gc.drawString(currentGun.getUpgradePrice() + "", (int)(GRWIDTH / 1.21), (int)(GRHEIGHT / 1.46));
+// robo parts before prices
+				gc.drawImage(roboPartsImg, (int) (GRWIDTH / 1.27), (int) (GRHEIGHT / 2.452), (int) (GRHEIGHT / 16.25),
+						(int) (GRHEIGHT / 16.25));
+				gc.drawImage(roboPartsImg, (int) (GRWIDTH / 1.27), (int) (GRHEIGHT / 2.063), (int) (GRHEIGHT / 16.25),
+						(int) (GRHEIGHT / 16.25));
+				gc.drawImage(roboPartsImg, (int) (GRWIDTH / 1.27), (int) (GRHEIGHT / 1.78), (int) (GRHEIGHT / 16.25),
+						(int) (GRHEIGHT / 16.25));
+				gc.drawImage(roboPartsImg, (int) (GRWIDTH / 1.27), (int) (GRWIDTH / 2.783), (int) (GRHEIGHT / 16.25),
+						(int) (GRHEIGHT / 16.25));
+
+// upgrade prices
+				gc.drawString(currentGun.getUpgradePrice() + "", (int) (GRWIDTH / 1.21), (int) (GRWIDTH / 3.915));
+				gc.drawString(currentGun.getUpgradePrice() + "", (int) (GRWIDTH / 1.21), (int) (GRHEIGHT / 1.88));
+				gc.drawString(currentGun.getUpgradePrice() + "", (int) (GRWIDTH / 1.21), (int) (GRWIDTH / 2.924));
+				gc.drawString(currentGun.getUpgradePrice() + "", (int) (GRWIDTH / 1.21), (int) (GRHEIGHT / 1.46));
 			}
-			
-			// names for attributes
+
+// names for attributes
 			gc.drawImage(damageNameImg, GRWIDTH / 2, (int) (GRWIDTH / 6.6), GRWIDTH / 10, GRWIDTH / 9);
 			gc.drawImage(magazineNameImg, GRWIDTH / 2, (int) (GRWIDTH / 5.13333), GRWIDTH / 10, GRWIDTH / 9);
 			gc.drawImage(reloadTimeNameImg, GRWIDTH / 2, (int) (GRWIDTH / 4.2), GRWIDTH / 10, GRWIDTH / 9);
 			gc.drawImage(fireRateNameImg, GRWIDTH / 2, GRHEIGHT / 2, GRWIDTH / 10, GRWIDTH / 9);
 
-			//attributes of each gun
+// attributes of each gun
 			gc.setColor(Color.RED);
-			gc.drawString(currentGun.getDamage() + "", (int)(GRWIDTH / 1.55), (int)(GRWIDTH / 3.915));
-			gc.drawString(currentGun.getMagazineSize() + "", (int)(GRWIDTH / 1.55), (int)(GRHEIGHT / 1.88));
+			gc.drawString(currentGun.getDamage() + "", (int) (GRWIDTH / 1.55), (int) (GRWIDTH / 3.915));
+			gc.drawString(currentGun.getMagazineSize() + "", (int) (GRWIDTH / 1.55), (int) (GRHEIGHT / 1.88));
 			if (currentGun.getReloadTime() > 20)
-				gc.drawString(currentGun.getReloadTime() + "", (int)(GRWIDTH / 1.55), (int)(GRWIDTH / 2.924));
+				gc.drawString(currentGun.getReloadTime() + "", (int) (GRWIDTH / 1.55), (int) (GRWIDTH / 2.924));
 			else
-				gc.drawString(currentGun.getReloadTime() + " (Max)", (int)(GRWIDTH / 1.65), (int)(GRWIDTH / 2.924));
+				gc.drawString(currentGun.getReloadTime() + " (Max)", (int) (GRWIDTH / 1.65), (int) (GRWIDTH / 2.924));
 			if (currentGun.getFireRate() == 0)
-				gc.drawString("Semi-Auto", (int)(GRWIDTH / 1.65), (int)(GRHEIGHT / 1.46));
+				gc.drawString("Semi-Auto", (int) (GRWIDTH / 1.65), (int) (GRHEIGHT / 1.46));
 			else if (currentGun.getFireRate() == 1)
-				gc.drawString(10 / currentGun.getFireRate() + " (Max)", (int)(GRWIDTH / 1.65), (int)(GRHEIGHT / 1.46));
+				gc.drawString(10 / currentGun.getFireRate() + " (Max)", (int) (GRWIDTH / 1.65),
+						(int) (GRHEIGHT / 1.46));
 			else
-				gc.drawString(10 /currentGun.getFireRate() + "", (int)(GRWIDTH / 1.55), (int)(GRHEIGHT / 1.46));
+				gc.drawString(10 / currentGun.getFireRate() + "", (int) (GRWIDTH / 1.55), (int) (GRHEIGHT / 1.46));
 
-			// cursor
+// cursor
 			if (gc.getMouseButton(0))
 				gc.drawImage(cursorClicked, cursor.x, cursor.y - cursor.width * 2, cursor.width * 15,
 						cursor.height * 15);

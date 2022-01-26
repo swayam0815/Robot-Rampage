@@ -15,14 +15,14 @@ import hsa2.GraphicsConsole;
 
 public class Start {
 	private static Dimension GRsize = Toolkit.getDefaultToolkit().getScreenSize(); // creates a variable to get screen
-	// size
+// size
 	private static int GRHEIGHT = (int) GRsize.getHeight() - 70; // (int)GRsize.getHeight() - 70
 	private static int GRWIDTH = (int) (GRHEIGHT * 1.777777777778); // this sets the size of the grid to fit the screen
 
 	private static GraphicsConsole gc;
-	// = new GraphicsConsole(GRWIDTH, GRHEIGHT);
+// = new GraphicsConsole(GRWIDTH, GRHEIGHT);
 
-	// images that will show on screen
+// images that will show on screen
 	private static Image cursorImg;
 	private static Image cursorClicked;
 	private static Image bkg;
@@ -30,7 +30,7 @@ public class Start {
 	private static Image Upgrade;
 	private static Image back;
 
-	// images that will replace them
+// images that will replace them
 	private static Image levelsDark;
 	private static Image UpgradeDark;
 	private static Image levelsLight;
@@ -49,16 +49,20 @@ public class Start {
 	public static void main(String[] args) throws LineUnavailableException, IOException, UnsupportedAudioFileException {
 	}
 
+	private static boolean running;
+
 	public static Gun[] guns;
 
 	public Start(GraphicsConsole gc, Gun[] guns)
 			throws IOException, LineUnavailableException, UnsupportedAudioFileException {
 		this.gc = gc;
 		this.guns = guns;
+		running = true;
+
 		gc.enableMouseMotion();
 		gc.enableMouse(); // enables motion and click for the
 
-		// images imported
+// images imported
 		cursorImg = ImageIO.read(new File("cursor.png"));
 		cursorClicked = ImageIO.read(new File("cursor clicked.png"));
 		bkg = ImageIO.read(new File("menu page 2.png"));
@@ -69,7 +73,7 @@ public class Start {
 		backLight = ImageIO.read(new File("lightBack.png"));
 		backDark = ImageIO.read(new File("darkBack.png"));
 
-		while (true) {
+		while (running) {
 			mechanics();
 			drawGraphics();
 			gc.sleep(1);
@@ -80,26 +84,31 @@ public class Start {
 		cursor.x = gc.getMouseX() - (cursor.width / 2);
 		cursor.y = gc.getMouseY() - (cursor.height / 2);
 
-		// buttons light up when hovered over
+// buttons light up when hovered over
 		if (cursor.intersects(levelsBTN)) {
 			levels = levelsLight;
 			if (gc.getMouseClick() > 0) {
-				new AnimationMain(gc, 5);
+				running = false;
+				new levels(gc, guns);
 			}
 		} else
 			levels = levelsDark;
 
 		if (cursor.intersects(upgradeBTN)) {
 			Upgrade = UpgradeLight;
-			if (gc.getMouseClick() > 0)
+			if (gc.getMouseClick() > 0) {
+				running = false;
 				new UpgradeMenu(gc, guns);
+			}
 		} else
 			Upgrade = UpgradeDark;
 
 		if (cursor.intersects(backBTN)) {
 			back = backLight;
-			if (gc.getMouseClick() > 0)
+			if (gc.getMouseClick() > 0) {
+				running = false;
 				new MainMenu(gc);
+			}
 		} else
 			back = backDark;
 
@@ -110,17 +119,17 @@ public class Start {
 		synchronized (gc) {
 			gc.clear();
 
-			// background
+// background
 			gc.drawImage(bkg, 0, 0, GRWIDTH, GRHEIGHT);
 
-			// campaign & upgrade button
+// campaign & upgrade button
 			gc.drawImage(levels, levelsBTN);
 			gc.drawImage(Upgrade, upgradeBTN);
 
-			// back button
+// back button
 			gc.drawImage(back, backBTN);
 
-			// cursor
+// cursor
 			if (gc.getMouseButton(0))
 				gc.drawImage(cursorClicked, cursor.x, cursor.y - cursor.width * 2, cursor.width * 15,
 						cursor.height * 15);

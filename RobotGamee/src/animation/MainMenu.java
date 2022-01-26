@@ -50,7 +50,6 @@ public class MainMenu {
 		new intro(gc);
 		new setInitialValues(gc, GRWIDTH, GRHEIGHT);
 		new MainMenu(gc);
-//		new MainMenu(gc);
 	}
 
 	public MainMenu(GraphicsConsole x) throws IOException, LineUnavailableException, UnsupportedAudioFileException {

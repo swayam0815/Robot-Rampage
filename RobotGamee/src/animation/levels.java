@@ -26,17 +26,18 @@ public class levels {
 // = new GraphicsConsole(GRWIDTH, GRHEIGHT);
 
 // rectangles
-	private Rectangle lvl1 = new Rectangle((int) (GRWIDTH / 5.923), (int) (GRHEIGHT / 3.421), (int) (GRWIDTH / 9.625),
+	private static Rectangle lvl1 = new Rectangle((int) (GRWIDTH / 5.923), (int) (GRHEIGHT / 3.421), (int) (GRWIDTH / 9.625),
 			(int) (GRWIDTH / 9.625));
-	private Rectangle lvl2 = new Rectangle((int) (GRWIDTH / 1.383), (int) (GRHEIGHT / 3.421), (int) (GRWIDTH / 9.625),
+	private static Rectangle lvl2 = new Rectangle((int) (GRWIDTH / 1.383), (int) (GRHEIGHT / 3.421), (int) (GRWIDTH / 9.625),
 			(int) (GRWIDTH / 9.625));
-	private Rectangle lvl3 = new Rectangle((int) (GRWIDTH / 5.923), (int) (GRHEIGHT / 1.7567), (int) (GRWIDTH / 9.625),
+	private static Rectangle lvl3 = new Rectangle((int) (GRWIDTH / 5.923), (int) (GRHEIGHT / 1.7567), (int) (GRWIDTH / 9.625),
 			(int) (GRWIDTH / 9.625));
-	private Rectangle lvl4 = new Rectangle((int) (GRWIDTH / 1.383), (int) (GRHEIGHT / 1.7567), (int) (GRWIDTH / 9.625),
+	private static Rectangle lvl4 = new Rectangle((int) (GRWIDTH / 1.383), (int) (GRHEIGHT / 1.7567), (int) (GRWIDTH / 9.625),
 			(int) (GRWIDTH / 9.625));
-	private Rectangle lvlBoss = new Rectangle((int) (GRWIDTH / 2.51), (int) (GRHEIGHT / 3.421), (int) (GRWIDTH / 4.957),
+	private static Rectangle lvlBoss = new Rectangle((int) (GRWIDTH / 2.51), (int) (GRHEIGHT / 3.421), (int) (GRWIDTH / 4.957),
 			(int) (GRHEIGHT / 2.407));
-
+	private static Rectangle[] lvlRectangles = {lvl1, lvl2, lvl3, lvl4, lvlBoss};
+	
 	private static Rectangle backBTN = new Rectangle(GRWIDTH / 54, (int) (GRHEIGHT / 1.09), GRWIDTH / 8, GRHEIGHT / 14);
 
 // images
@@ -63,6 +64,8 @@ public class levels {
 	private static Image fourDark;
 	private static Image fourLight;
 	private static Image bossLight;
+	
+	private static Image[] lvlImages = {oneImg, twoImg, threeImg, fourImg, bossImg};
 
 	private static Gun[] guns = new Gun[6];
 	private static boolean running;
@@ -185,17 +188,27 @@ public class levels {
 // background
 			gc.drawImage(lvl, 0, 0, GRWIDTH, GRHEIGHT);
 
-// locks on levels
-			gc.drawImage(lockImg, lvl2);
-			gc.drawImage(lockImg, lvl3);
-			gc.drawImage(lockImg, lvl4);
-
-// numbers on levels
-			gc.drawImage(oneImg, lvl1);
-			gc.drawImage(twoImg, lvl2);
-			gc.drawImage(threeImg, lvl3);
-			gc.drawImage(fourImg, lvl4);
-			gc.drawImage(bossImg, lvlBoss);
+			for (int i = 0; i < 5; i++) {
+				if (levelss[i])
+					gc.drawImage(lvlImages[i], lvlRectangles[i]);
+					// numbers on levels
+				else
+					if (i != 4)
+						gc.drawImage(lockImg, lvlRectangles[i]);
+						// locks on all levels, except boss
+			}
+			
+//// locks on levels
+//			gc.drawImage(lockImg, lvl2);
+//			gc.drawImage(lockImg, lvl3);
+//			gc.drawImage(lockImg, lvl4);
+//
+//// numbers on levels
+//			gc.drawImage(oneImg, lvl1);
+//			gc.drawImage(twoImg, lvl2);
+//			gc.drawImage(threeImg, lvl3);
+//			gc.drawImage(fourImg, lvl4);
+//			gc.drawImage(bossImg, lvlBoss);
 
 // back button
 			gc.drawImage(back, backBTN);

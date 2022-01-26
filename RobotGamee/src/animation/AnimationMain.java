@@ -156,7 +156,7 @@ public class AnimationMain extends Rectangle {
 			new Mission(gc, false, guns);
 		} else if (forceStrength > 0) {
 
-			if (levelNum != 5)
+			if (levelNum != 5) {
 				if (levelNum + 1 < 5) {
 					levels.win(levelNum + 1);
 					new Mission(gc, true, guns);
@@ -165,13 +165,15 @@ public class AnimationMain extends Rectangle {
 
 					new Mission(gc, true, guns);
 				}
-			else {
-				gc.drawImage(ImageIO.read(new File("bossman.jpeg")), 0, 0, GRWIDTH, GRHEIGHT);
+			} else {
+				gc.drawImage(ImageIO.read(new File("bossman.jpg")), 0, 0, GRWIDTH, GRHEIGHT);
 				AudioInputStream boss = AudioSystem.getAudioInputStream(new File("EVILBOSS.wav").getAbsoluteFile());
 				Clip evilBoss = AudioSystem.getClip();
 				evilBoss.open(boss);
 				evilBoss.start();
-				new Mission(gc, true, guns);
+
+				if (!evilBoss.isActive())
+					new Mission(gc, true, guns);
 			}
 
 		}

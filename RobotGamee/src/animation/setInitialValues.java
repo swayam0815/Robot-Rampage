@@ -90,10 +90,10 @@ public class setInitialValues {
 				false, false, "minigun", 10 ,100);
 		// shotgun/grenade launcher
 		guns[4] = new Gun(50, 170, 5, 12000, 0, 3, grenadeLauncherImg, grenadeLauncherFlipped, grenadeLauncherSide,
-				shotgunBullet, shotgunBulletBottom, false, false, "shotgun", 50 ,100);
+				shotgunBullet, shotgunBulletBottom, false, false, "shotgun", 40 ,100);
 		// water hose
 		guns[5] = new Gun(2, 500, 1000, 20000, 1, 3, hoseImg, hoseFlipped, hoseSide, waterDrop, waterDropBottom, false,
-				false, "hose", 10 ,100);
+				false, "hose", 25 ,100);
 
 	}
 

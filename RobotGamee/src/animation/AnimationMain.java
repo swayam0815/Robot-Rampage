@@ -152,7 +152,11 @@ public class AnimationMain extends Rectangle {
 		forceStrength = 200;
 		this.totalWaves = totalWaves;
 
-		equippedGun = UpgradeMenu.getGun();
+		if (UpgradeMenu.getGun() != null)
+			equippedGun = UpgradeMenu.getGun();
+		else
+			equippedGun = setInitialValues.getGuns()[0];
+
 		initiate();
 
 		while (wave + 1 <= totalWaves && forceStrength > 0) {
@@ -251,12 +255,12 @@ public class AnimationMain extends Rectangle {
 				} else
 					Gun.shoot(bullets, CrossHair.x, CrossHair.y, bulletSize);
 
-				//gunshot sound
+				// gunshot sound
 				gunshotEffect = AudioSystem.getAudioInputStream(new File("gunshot sound.wav").getAbsoluteFile());
 				gunshotSound = AudioSystem.getClip();
 				gunshotSound.open(gunshotEffect);
 				gunshotSound.start();
-				
+
 				bulletsLeft--;
 			}
 		} else { // if gun is full-automatic
@@ -266,12 +270,12 @@ public class AnimationMain extends Rectangle {
 				} else
 					Gun.shoot(bullets, CrossHair.x, CrossHair.y, bulletSize);
 
-				//gunshot sound
+				// gunshot sound
 				gunshotEffect = AudioSystem.getAudioInputStream(new File("gunshot sound.wav").getAbsoluteFile());
 				gunshotSound = AudioSystem.getClip();
 				gunshotSound.open(gunshotEffect);
 				gunshotSound.start();
-				
+
 				bulletsLeft--;
 
 			}
@@ -383,7 +387,7 @@ public class AnimationMain extends Rectangle {
 					rect.width--;
 					rect.height--;
 				}
-				if (rect.width <= equippedGun.getBulletD() && rect.height <= equippedGun.getBulletD())
+				if (rect.width <= equippedGun.getBulletD() - 5 && rect.height <= equippedGun.getBulletD() - 5)
 					hit.add(rect);
 				for (Rectangle enem : enemies) {
 
@@ -400,7 +404,9 @@ public class AnimationMain extends Rectangle {
 
 // removing hit bullets from main bullets list
 			bullets.removeAll(hit);
+			hit.removeAll(hit);
 			enemies.removeAll(destroyedEnemies);
+			destroyedEnemies.removeAll(destroyedEnemies);
 
 // Forcefield
 			gc.drawImage(forcefield, 0, 0, GRWIDTH, GRHEIGHT);

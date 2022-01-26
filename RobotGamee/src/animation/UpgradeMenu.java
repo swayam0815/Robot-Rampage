@@ -239,11 +239,11 @@ public class UpgradeMenu {
 			} else
 				magazineImg = addDark;
 
-			if (cursor.intersects(reloadTimeBTN)) {
+			if (cursor.intersects(reloadTimeBTN) && currentGun.getReloadTime() > 20) {
 				reloadTimeImg = addLight;
 				if (gc.getMouseClick() > 0) {
 					if (setInitialValues.getMoney() >= currentGun.getUpgradePrice()) {
-						currentGun.setReloadTime(currentGun.getReloadTime() - 1);
+						currentGun.setReloadTime(currentGun.getReloadTime() - 5);
 						setInitialValues.setMoney(setInitialValues.getMoney() - currentGun.getUpgradePrice());
 						currentGun.setUpgradePrice(currentGun.getUpgradePrice() + 100);
 					}
@@ -251,11 +251,11 @@ public class UpgradeMenu {
 			} else
 				reloadTimeImg = addDark;
 
-			if (cursor.intersects(fireRateBTN) && currentGun.getFireRate() != 0) {
+			if (cursor.intersects(fireRateBTN) && currentGun.getFireRate() > 1) {
 				fireRateImg = addLight;
 				if (gc.getMouseClick() > 0) {
 					if (setInitialValues.getMoney() >= currentGun.getUpgradePrice()) {
-						currentGun.setFireRate(currentGun.getFireRate() + 1);
+						currentGun.setFireRate(currentGun.getFireRate() - 1);
 						setInitialValues.setMoney(setInitialValues.getMoney() - currentGun.getUpgradePrice());
 						currentGun.setUpgradePrice(currentGun.getUpgradePrice() + 100);
 					}
@@ -347,11 +347,16 @@ public class UpgradeMenu {
 			gc.setColor(Color.RED);
 			gc.drawString(currentGun.getDamage() + "", (int)(GRWIDTH / 1.55), (int)(GRWIDTH / 3.915));
 			gc.drawString(currentGun.getMagazineSize() + "", (int)(GRWIDTH / 1.55), (int)(GRHEIGHT / 1.88));
-			gc.drawString(currentGun.getReloadTime() + "", (int)(GRWIDTH / 1.55), (int)(GRWIDTH / 2.924));
+			if (currentGun.getReloadTime() > 20)
+				gc.drawString(currentGun.getReloadTime() + "", (int)(GRWIDTH / 1.55), (int)(GRWIDTH / 2.924));
+			else
+				gc.drawString(currentGun.getReloadTime() + " (Max)", (int)(GRWIDTH / 1.65), (int)(GRWIDTH / 2.924));
 			if (currentGun.getFireRate() == 0)
 				gc.drawString("Semi-Auto", (int)(GRWIDTH / 1.65), (int)(GRHEIGHT / 1.46));
+			else if (currentGun.getFireRate() == 1)
+				gc.drawString(10 / currentGun.getFireRate() + " (Max)", (int)(GRWIDTH / 1.65), (int)(GRHEIGHT / 1.46));
 			else
-				gc.drawString(currentGun.getFireRate() + "", (int)(GRWIDTH / 1.55), (int)(GRHEIGHT / 1.46));
+				gc.drawString(10 /currentGun.getFireRate() + "", (int)(GRWIDTH / 1.55), (int)(GRHEIGHT / 1.46));
 
 			// cursor
 			if (gc.getMouseButton(0))

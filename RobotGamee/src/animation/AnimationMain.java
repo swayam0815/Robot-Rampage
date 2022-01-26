@@ -65,7 +65,6 @@ public class AnimationMain extends Rectangle {
 	private int bulletsLeft; // number of bullets left in the gun
 	private int reload; // provides an angle for the arc around the reload button
 	private boolean reloading; // checks if the gun is reloading
-	private boolean canShoot; // checks if the player is able to shoot
 	private boolean shotFired; // checks if the player has shot the gun
 	private int fireCounter; // counter for the fire out of the gun
 	private int moveX = 0; // the amount of movement for the player
@@ -214,7 +213,6 @@ public class AnimationMain extends Rectangle {
 		bulletsLeft = equippedGun.getMagazineSize();
 		reload = 0;
 		reloading = false;
-		canShoot = true;
 		shotFired = false;
 		fireCounter = 10;
 
@@ -287,7 +285,6 @@ public class AnimationMain extends Rectangle {
 				|| (autoReload && bulletsLeft == 0)) {
 			bulletsLeft = -1; // this makes the reload sound play ONLY once
 			reloading = true;
-			canShoot = false;
 
 // reload sound
 			gunCockingEffect = AudioSystem.getAudioInputStream(new File("gun cocking.wav").getAbsoluteFile());
@@ -444,7 +441,6 @@ public class AnimationMain extends Rectangle {
 					reload = 0;
 					bulletsLeft = equippedGun.getMagazineSize();
 					reloading = false;
-					canShoot = true;
 
 				}
 			}

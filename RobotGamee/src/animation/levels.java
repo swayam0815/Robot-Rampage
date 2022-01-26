@@ -65,7 +65,7 @@ public class levels {
 	private static Image fourLight;
 	private static Image bossLight;
 	
-	private static Image[] lvlImages = {oneImg, twoImg, threeImg, fourImg, bossImg};
+	private static Image[] lvlImages = new Image[5];
 
 	private static Gun[] guns = new Gun[6];
 	private static boolean running;
@@ -129,52 +129,47 @@ public class levels {
 			back = backDark;
 
 		if (cursor.intersects(lvl1)) {
-			oneImg = oneLight;
+			lvlImages[0] = oneLight;
 			if (gc.getMouseClick() > 0) {
-				System.out.println("before");
-
 				new AnimationMain(gc, 5, guns, 0);
-				System.out.println("after");
 			}
 		} else
-			oneImg = oneDark;
+			lvlImages[0] = oneDark;
 
 		if (cursor.intersects(lvl2)) {
-			twoImg = twoLight;
+			lvlImages[1] = twoLight;
 			if (gc.getMouseClick() > 0) {
 				if (levelss[1])
 					new AnimationMain(gc, 10, guns, 1);
 			}
 		} else
-			twoImg = twoDark;
+			lvlImages[1] = twoDark;
 
 		if (cursor.intersects(lvl3)) {
-			threeImg = threeLight;
+			lvlImages[2] = threeLight;
 			if (gc.getMouseClick() > 0) {
 				if (levelss[2])
-
 					new AnimationMain(gc, 15, guns, 2);
 			}
 		} else
-			threeImg = threeDark;
+			lvlImages[2] = threeDark;
 
 		if (cursor.intersects(lvl4)) {
-			fourImg = fourLight;
+			lvlImages[3] = fourLight;
 			if (gc.getMouseClick() > 0) {
 				if (levelss[3])
-
 					new AnimationMain(gc, 20, guns, 4);
 			}
 		} else
-			fourImg = fourDark;
+			lvlImages[3] = fourDark;
 
 		if (cursor.intersects(lvlBoss)) {
-			bossImg = bossLight;
+			lvlImages[4] = bossLight;
 			if (gc.getMouseClick() > 0) {
 // play boss level
 			}
 		} else
-			bossImg = null;
+			lvlImages[4] = null;
 
 // this fixes a bug with buttons
 		gc.getMouseClick();

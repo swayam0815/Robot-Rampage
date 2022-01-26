@@ -47,11 +47,6 @@ public class AnimationMain extends Rectangle {
 	private Image reloadButton; // "reload button.png"
 	private Image bulletBottom; // "Bullet Bottom.png"
 	private Image gunshotFire; // "gunshot fire.png"
-	private Image back;
-	private static Image backLight;
-	private static Image backDark;
-	private static Image cursorImg;
-	private static Image cursorClicked;
 
 // robot pictures
 	private Image robo; // "Thomas face.png"
@@ -81,9 +76,6 @@ public class AnimationMain extends Rectangle {
 	private int bulletSize = 50;
 	private int bulletSpeed = 0;
 
-	private static Rectangle backBTN = new Rectangle(GRWIDTH / 54, (int) (GRHEIGHT / 1.09), GRWIDTH / 8, GRHEIGHT / 14);
-	private static Rectangle cursor = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 100, GRHEIGHT / 100);
-
 // gun object for player guns
 // damage, reload time, bullet #, price, fire rate, pic, picFlipped
 
@@ -110,10 +102,7 @@ public class AnimationMain extends Rectangle {
 	private static int numRobots = 100;
 	private static int totalWaves;
 
-	private static Gun[] guns = new Gun[5];
-
-// delete later
-	private static int[] upgrades = { 0, 0, 0, 0 };
+	private static Gun[] guns = new Gun[6];
 
 // gun pictures
 	private static Image pistolImg; // "Pistol POV.png"
@@ -129,11 +118,6 @@ public class AnimationMain extends Rectangle {
 		pistolFlipped = ImageIO.read(new File("Pistol POV flipped.png"));
 		pistolSide = ImageIO.read(new File("Pistol side view.png"));
 		normalBulletBottom = ImageIO.read(new File("Bullet Bottom.png"));
-
-		backLight = ImageIO.read(new File("lightBack.png"));
-		backDark = ImageIO.read(new File("darkBack.png"));
-		cursorImg = ImageIO.read(new File("cursor.png"));
-		cursorClicked = ImageIO.read(new File("cursor clicked.png"));
 
 	}
 
@@ -224,14 +208,14 @@ public class AnimationMain extends Rectangle {
 
 	private void mechanics() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
 
-		if (gc.isKeyDown(69)) {
-
-			if (gunNum + 1 < guns.length) {
-				gunNum++;
-				equippedGun = guns[gunNum];
-			} else
-				gunNum = 0;
-		}
+//		if (gc.isKeyDown(69)) {
+//
+//			if (gunNum + 1 < guns.length) {
+//				gunNum++;
+//				equippedGun = guns[gunNum];
+//			} else
+//				gunNum = 0;
+//		}
 		
 		// moving left and right
 		if (gc.isKeyDown(37) || gc.isKeyDown(65))

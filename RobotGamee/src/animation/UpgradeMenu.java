@@ -170,7 +170,7 @@ public class UpgradeMenu {
 		// buttons light up when hovered over
 		if (cursor.intersects(buyBTN)) {
 			buyImg = buyLight;
-			if (gc.getMouseClick() > 0 && setInitialValues.getMoney() > currentGun.getPrice()) {
+			if (gc.getMouseClick() > 0 && setInitialValues.getMoney() >= currentGun.getPrice()) {
 				setInitialValues.setMoney(setInitialValues.getMoney() - currentGun.getPrice());
 				currentGun.setBought(true);
 			}
@@ -218,7 +218,7 @@ public class UpgradeMenu {
 			if (cursor.intersects(damageBTN)) {
 				damageImg = addLight;
 				if (gc.getMouseClick() > 0) {
-					if (setInitialValues.getMoney() > currentGun.getUpgradePrice()) {
+					if (setInitialValues.getMoney() >= currentGun.getUpgradePrice()) {
 						currentGun.setDamage(currentGun.getDamage() + 1);
 						setInitialValues.setMoney(setInitialValues.getMoney() - currentGun.getUpgradePrice());
 						currentGun.setUpgradePrice(currentGun.getUpgradePrice() + 100);
@@ -230,7 +230,7 @@ public class UpgradeMenu {
 			if (cursor.intersects(magazineBTN)) {
 				magazineImg = addLight;
 				if (gc.getMouseClick() > 0) {
-					if (setInitialValues.getMoney() > currentGun.getUpgradePrice()) {
+					if (setInitialValues.getMoney() >= currentGun.getUpgradePrice()) {
 						currentGun.setMagazineSize(currentGun.getMagazineSize() + 1);
 						setInitialValues.setMoney(setInitialValues.getMoney() - currentGun.getUpgradePrice());
 						currentGun.setUpgradePrice(currentGun.getUpgradePrice() + 100);
@@ -242,7 +242,7 @@ public class UpgradeMenu {
 			if (cursor.intersects(reloadTimeBTN)) {
 				reloadTimeImg = addLight;
 				if (gc.getMouseClick() > 0) {
-					if (setInitialValues.getMoney() > currentGun.getUpgradePrice()) {
+					if (setInitialValues.getMoney() >= currentGun.getUpgradePrice()) {
 						currentGun.setReloadTime(currentGun.getReloadTime() - 1);
 						setInitialValues.setMoney(setInitialValues.getMoney() - currentGun.getUpgradePrice());
 						currentGun.setUpgradePrice(currentGun.getUpgradePrice() + 100);
@@ -254,7 +254,7 @@ public class UpgradeMenu {
 			if (cursor.intersects(fireRateBTN) && currentGun.getFireRate() != 0) {
 				fireRateImg = addLight;
 				if (gc.getMouseClick() > 0) {
-					if (setInitialValues.getMoney() > currentGun.getUpgradePrice()) {
+					if (setInitialValues.getMoney() >= currentGun.getUpgradePrice()) {
 						currentGun.setFireRate(currentGun.getFireRate() + 1);
 						setInitialValues.setMoney(setInitialValues.getMoney() - currentGun.getUpgradePrice());
 						currentGun.setUpgradePrice(currentGun.getUpgradePrice() + 100);

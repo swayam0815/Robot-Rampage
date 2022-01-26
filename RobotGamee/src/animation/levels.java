@@ -14,7 +14,7 @@ public class levels {
 	
 	public static void main(String[] args) throws LineUnavailableException, IOException, UnsupportedAudioFileException, InterruptedException {
 		new setInitialValues(gc, GRWIDTH, GRHEIGHT);
-		new levels(gc);
+		new levels(gc, guns);
 	}
 	private static AnimationMain[] level = new AnimationMain[5];
 	private static Dimension GRsize = Toolkit.getDefaultToolkit().getScreenSize(); // creates a variable to get screen
@@ -26,28 +26,50 @@ public class levels {
 
 	//rectangles
 	private Rectangle lvl1 = new Rectangle((int)(GRWIDTH / 5.923), (int)(GRHEIGHT / 3.421), (int)(GRWIDTH / 9.625), (int)(GRWIDTH / 9.625));
-	private Rectangle lvl2 = new Rectangle(835, (int)(GRHEIGHT / 3.421), (int)(GRWIDTH / 9.625), (int)(GRWIDTH / 9.625));
-	private Rectangle lvl3 = new Rectangle((int)(GRWIDTH / 5.923), 370, (int)(GRWIDTH / 9.625), (int)(GRWIDTH / 9.625));
-	private Rectangle lvl4 = new Rectangle(835, 370, (int)(GRWIDTH / 9.625), (int)(GRWIDTH / 9.625));
-	private Rectangle lvlBoss = new Rectangle(460, (int)(GRHEIGHT / 3.421), 233, 270);
+	private Rectangle lvl2 = new Rectangle((int)(GRWIDTH / 1.383), (int)(GRHEIGHT / 3.421), (int)(GRWIDTH / 9.625), (int)(GRWIDTH / 9.625));
+	private Rectangle lvl3 = new Rectangle((int)(GRWIDTH / 5.923), (int)(GRHEIGHT / 1.7567), (int)(GRWIDTH / 9.625), (int)(GRWIDTH / 9.625));
+	private Rectangle lvl4 = new Rectangle((int)(GRWIDTH / 1.383), (int)(GRHEIGHT / 1.7567), (int)(GRWIDTH / 9.625), (int)(GRWIDTH / 9.625));
+	private Rectangle lvlBoss = new Rectangle((int)(GRWIDTH / 2.51), (int)(GRHEIGHT / 3.421), (int)(GRWIDTH / 4.957), (int)(GRHEIGHT / 2.407));
 	
+	private static Rectangle backBTN = new Rectangle(GRWIDTH / 54, (int) (GRHEIGHT / 1.09), GRWIDTH / 8, GRHEIGHT / 14);
+
 	//images
 	private static Image lvl;
 	private static Image cursorImg;
 	private static Image cursorClicked;
+	private static Image lockImg;
+	private static Image back;
+	private static Image backLight;
+	private static Image backDark;
+	
+	//number images
+	private static Image oneImg;
+	private static Image twoImg;
+	private static Image threeImg;
+	private static Image fourImg;
 	private static Image bossImg;
+	private static Image oneDark;
+	private static Image oneLight;
+	private static Image twoDark;
+	private static Image twoLight;
+	private static Image threeDark;
+	private static Image threeLight;
+	private static Image fourDark;
+	private static Image fourLight;
 	private static Image bossLight;
-	private static Image bossDark;
-	
-	
+
+
+	private static Gun[] guns = new Gun[6];
+
 	// the screen
 
 //	private static GraphicsConsole gc;
 	// = new GraphicsConsole(GRWIDTH, GRHEIGHT);
 	private static Rectangle cursor = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 100, GRHEIGHT / 100); // to
 
-	public levels(GraphicsConsole gc) throws IOException, LineUnavailableException, UnsupportedAudioFileException {
+	public levels(GraphicsConsole gc, Gun[] guns) throws IOException, LineUnavailableException, UnsupportedAudioFileException {
 		this.gc = gc;
+		this.guns = guns;
 		init();
 		while (true) {
 			mechanics();
@@ -56,21 +78,86 @@ public class levels {
 		}
 	}
 
-	private void mechanics() throws IOException, LineUnavailableException, UnsupportedAudioFileException {
-		cursor.x = gc.getMouseX() - (cursor.width / 2);
-		cursor.y = gc.getMouseY() - (cursor.height / 2);
-
-		gc.getMouseClick();
-
-	}
-
 	private static void init() throws IOException {
 		gc.enableMouse();
 		gc.enableMouseMotion();
 		
 		lvl = ImageIO.read(new File("levelMenu.png"));
+		lockImg = ImageIO.read(new File("lock.png"));
+		backLight = ImageIO.read(new File("lightBack.png"));
+		backDark = ImageIO.read(new File("darkBack.png"));
+		oneDark = ImageIO.read(new File("1 dark.png"));
+		twoDark = ImageIO.read(new File("2 dark.png"));
+		threeDark = ImageIO.read(new File("3 dark.png"));
+		fourDark = ImageIO.read(new File("4 dark.png"));
+		oneLight = ImageIO.read(new File("1 light.png"));
+		twoLight = ImageIO.read(new File("2 light.png"));
+		threeLight = ImageIO.read(new File("3 light.png"));
+		fourLight = ImageIO.read(new File("4 light.png"));
+		bossLight = ImageIO.read(new File("bossLight.png"));
+		
 		cursorImg = ImageIO.read(new File("cursor.png"));
 		cursorClicked = ImageIO.read(new File("cursor clicked.png"));
+		
+	}
+
+	private void mechanics() throws IOException, LineUnavailableException, UnsupportedAudioFileException {
+		//set coordinates for cursor
+		cursor.x = gc.getMouseX() - (cursor.width / 2);
+		cursor.y = gc.getMouseY() - (cursor.height / 2);
+
+		//this fixes a bug with buttons
+		gc.getMouseClick();
+		
+		//buttons
+		if (cursor.intersects(backBTN)) {
+			back = backLight;
+			if (gc.getMouseClick() > 0)
+				new Start(gc, guns);
+		} else
+			back = backDark;
+		
+		if (cursor.intersects(lvl1)) {
+			oneImg = oneLight;
+			if (gc.getMouseClick() > 0) {
+				//play level 1
+			}
+		} else
+			oneImg = oneDark;
+		
+		if (cursor.intersects(lvl2)) {
+			twoImg = twoLight;
+			if (gc.getMouseClick() > 0) {
+				//play level 2
+			}
+		} else
+			twoImg = twoDark;
+		
+		if (cursor.intersects(lvl3)) {
+			threeImg = threeLight;
+			if (gc.getMouseClick() > 0) {
+				//play level 3
+			}
+		} else
+			threeImg = threeDark;
+		
+		if (cursor.intersects(lvl4)) {
+			fourImg = fourLight;
+			if (gc.getMouseClick() > 0) {
+				//play level 4
+			}
+		} else
+			fourImg = fourDark;
+		
+		if (cursor.intersects(lvlBoss)) {
+			bossImg = bossLight;
+			if (gc.getMouseClick() > 0) {
+				//play boss level
+			}
+		} else
+			bossImg = null;
+
+
 
 	}
 
@@ -80,14 +167,22 @@ public class levels {
 
 			// background
 			gc.drawImage(lvl, 0, 0, GRWIDTH, GRHEIGHT);
-
-			gc.setColor(Color.GREEN);
-			gc.drawRect(lvl1);
-			gc.drawRect(lvl2);
-			gc.drawRect(lvl3);
-			gc.drawRect(lvl4);
-			gc.drawRect(lvlBoss);
 			
+			//locks on levels
+			gc.drawImage(lockImg, lvl2);
+			gc.drawImage(lockImg, lvl3);
+			gc.drawImage(lockImg, lvl4);
+			
+			//numbers on levels
+			gc.drawImage(oneImg, lvl1);
+			gc.drawImage(twoImg, lvl2);
+			gc.drawImage(threeImg, lvl3);
+			gc.drawImage(fourImg, lvl4);
+			gc.drawImage(bossImg, lvlBoss);
+			
+			// back button
+			gc.drawImage(back, backBTN);
+
 			// cursor
 			if (gc.getMouseButton(0))
 				gc.drawImage(cursorClicked, cursor.x, cursor.y - cursor.width * 2, cursor.width * 15,

@@ -70,7 +70,7 @@ public class AnimationMain extends Rectangle {
 	private int moveX = 0; // the amount of movement for the player
 	private static int forceStrength = 200; // health of the forcefield protecting the player
 
-	private static boolean autoReload = true; // code for purchasing to be added later
+	private static boolean autoReload = false; // code for purchasing to be added later
 
 	private int size = 50;
 	private static int counter = 0;
@@ -223,7 +223,6 @@ public class AnimationMain extends Rectangle {
 	}
 
 	private void mechanics() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-// moving left and right
 
 		if (gc.isKeyDown(69)) {
 
@@ -233,7 +232,8 @@ public class AnimationMain extends Rectangle {
 			} else
 				gunNum = 0;
 		}
-
+		
+		// moving left and right
 		if (gc.isKeyDown(37) || gc.isKeyDown(65))
 			moveX -= 10;
 		if (gc.isKeyDown(39) || gc.isKeyDown(100) || gc.isKeyDown(68))
@@ -247,34 +247,55 @@ public class AnimationMain extends Rectangle {
 
 // shooting the gun
 		if (equippedGun.getFireRate() == 0) { // if gun is semi-auto
-			if (gc.getMouseClick() > 0 && bulletsLeft > 0) {
-				if (equippedGun.getName().equals("shotgun")) {
-					Gun.shoot(bullets, CrossHair.x, CrossHair.y, bulletSize, ranNum(1, 5));
-				} else
-					Gun.shoot(bullets, CrossHair.x, CrossHair.y, bulletSize);
-
-				// gunshot sound
-				gunshotEffect = AudioSystem.getAudioInputStream(new File("gunshot sound.wav").getAbsoluteFile());
-				gunshotSound = AudioSystem.getClip();
-				gunshotSound.open(gunshotEffect);
-				gunshotSound.start();
-
-				bulletsLeft--;
+			if (gc.getMouseClick() > 0) {
+				if (bulletsLeft > 0) {
+					if (equippedGun.getName().equals("shotgun")) {
+						Gun.shoot(bullets, CrossHair.x, CrossHair.y, bulletSize, ranNum(1, 5));
+					} else
+						Gun.shoot(bullets, CrossHair.x, CrossHair.y, bulletSize);
+	
+					// gunshot sound
+					gunshotEffect = AudioSystem.getAudioInputStream(new File("gunshot sound.wav").getAbsoluteFile());
+					gunshotSound = AudioSystem.getClip();
+					gunshotSound.open(gunshotEffect);
+					gunshotSound.start();
+					
+					//shell fall sound
+					shellFallEffect = AudioSystem.getAudioInputStream(new File("bullet shell fall.wav").getAbsoluteFile());
+					shellFall = AudioSystem.getClip();
+					shellFall.open(shellFallEffect);
+					shellFall.start();
+	
+					bulletsLeft--;
+				}
+				else {
+					//empty gun sound
+					dryFireEffect = AudioSystem.getAudioInputStream(new File("gun dry fire.wav").getAbsoluteFile());
+					dryFire = AudioSystem.getClip();
+					dryFire.open(dryFireEffect);
+					dryFire.start();
+				}
 			}
 		} else { // if gun is full-automatic
-			if (gc.getMouseButton(0) && bulletsLeft > 0 && shotCounter % equippedGun.getFireRate() == 0) {
-				if (equippedGun.getName().equals("shotgun")) {
-					Gun.shoot(bullets, CrossHair.x, CrossHair.y, bulletSize, ranNum(1, 5));
-				} else
+			if (gc.getMouseButton(0) && shotCounter % equippedGun.getFireRate() == 0) {
+				if (bulletsLeft > 0) {
 					Gun.shoot(bullets, CrossHair.x, CrossHair.y, bulletSize);
-
-				// gunshot sound
-				gunshotEffect = AudioSystem.getAudioInputStream(new File("gunshot sound.wav").getAbsoluteFile());
-				gunshotSound = AudioSystem.getClip();
-				gunshotSound.open(gunshotEffect);
-				gunshotSound.start();
-
-				bulletsLeft--;
+	
+					// gunshot sound
+					gunshotEffect = AudioSystem.getAudioInputStream(new File("gunshot sound.wav").getAbsoluteFile());
+					gunshotSound = AudioSystem.getClip();
+					gunshotSound.open(gunshotEffect);
+					gunshotSound.start();
+					
+					bulletsLeft--;
+				}
+				else {
+					//empty gun sound
+					dryFireEffect = AudioSystem.getAudioInputStream(new File("gun dry fire.wav").getAbsoluteFile());
+					dryFire = AudioSystem.getClip();
+					dryFire.open(dryFireEffect);
+					dryFire.start();
+				}
 
 			}
 		}

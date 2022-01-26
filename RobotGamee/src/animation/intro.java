@@ -67,7 +67,7 @@ public class intro {
 
 		synchronized (gc) {
 			gc.drawImage(op[2], 0, 0, GRWIDTH, GRHEIGHT);
-			for (int i = 2; i < op.length - 1; i++) {
+			for (int i = 1; i < op.length; i++) {
 				System.out.println(i);
 				gc.drawImage(op[i], 0, 0, GRWIDTH, GRHEIGHT);
 				gc.wait(100 - i);

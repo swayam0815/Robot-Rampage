@@ -98,8 +98,13 @@ public class MainMenu {
 		} else
 			start = startDark;
 
-		if (cursor.intersects(creditsBTN))
+		if (cursor.intersects(creditsBTN)) {
 			credits = creditsLight;
+			if (gc.getMouseClick() > 0) {
+				running = false;
+				new Credits(gc);
+			}
+		}
 		else
 			credits = creditsDark;
 

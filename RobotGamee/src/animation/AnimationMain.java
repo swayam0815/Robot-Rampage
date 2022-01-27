@@ -41,10 +41,8 @@ public class AnimationMain extends Rectangle {
 	// pictures
 	private Image backGround; // "bakground.jpg"
 	private Image forcefield; // "ForceField.png"
-	private Image bullet; // "bullet cartoon.png"
 	private Image crosshair; // "crosshair.png"
 	private Image reloadButton; // "reload button.png"
-	private Image bulletBottom; // "Bullet Bottom.png"
 	private Image gunshotFire; // "gunshot fire.png"
 
 	// robot pictures
@@ -91,35 +89,27 @@ public class AnimationMain extends Rectangle {
 	private static int wave = 1;
 	private ArrayList<Rectangle> destroyedEnemies = new ArrayList<Rectangle>();
 
-	private static boolean running = true;
 
 	private static boolean newWave = true;
 	private final int small = 1;
 	private final int big = 2;
 	private final int lar = 6;
 	private static int robotCounter = 0;
-	private static int totalWaves;
 
-	private static Gun[] guns = new Gun[6];
 
-	private static boolean win;
 
 	public static void getImg() throws IOException {
 	}
 
 	public AnimationMain(GraphicsConsole x, int totalWaves, Gun[] guns, int levelNum)
 			throws LineUnavailableException, IOException, UnsupportedAudioFileException {
-		running = true;
 		gc = x;
-		this.guns = guns;
 
 // setting up variables
 // more
 		wave = 1;
 		defeat = false;
-		win = false;
 		forceStrength = 200;
-		this.totalWaves = totalWaves;
 
 		if (UpgradeMenu.getGun() != null)
 			equippedGun = UpgradeMenu.getGun();
@@ -172,13 +162,10 @@ public class AnimationMain extends Rectangle {
 	}
 
 	private void initiate() throws IOException {
-		guns = UpgradeMenu.getGuns();
 		backGround = ImageIO.read(new File("bakground.png"));
 		forcefield = ImageIO.read(new File(("ForceField.png")));
-		bullet = ImageIO.read(new File(("bullet cartoon.png")));
 		crosshair = ImageIO.read(new File("crosshair.png"));
 		reloadButton = ImageIO.read(new File("reload button.png"));
-		bulletBottom = ImageIO.read(new File("Bullet Bottom.png"));
 		gunshotFire = ImageIO.read(new File("gunshot fire.png"));
 
 // robot pictures

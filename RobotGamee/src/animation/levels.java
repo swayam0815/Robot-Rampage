@@ -16,7 +16,6 @@ public class levels {
 			throws LineUnavailableException, IOException, UnsupportedAudioFileException, InterruptedException {
 	}
 
-	private static AnimationMain[] level = new AnimationMain[5];
 	private static Dimension GRsize = Toolkit.getDefaultToolkit().getScreenSize(); // creates a variable to get screen
 	private static boolean[] levelss = new boolean[5];
 	private static int GRHEIGHT = (int) GRsize.getHeight() - 70; // (int)GRsize.getHeight() - 70
@@ -50,11 +49,6 @@ public class levels {
 	private static Image backDark;
 
 // number images
-	private static Image oneImg;
-	private static Image twoImg;
-	private static Image threeImg;
-	private static Image fourImg;
-	private static Image bossImg;
 	private static Image oneDark;
 	private static Image oneLight;
 	private static Image twoDark;
@@ -73,11 +67,11 @@ public class levels {
 
 	public levels(GraphicsConsole gc, Gun[] guns)
 			throws IOException, LineUnavailableException, UnsupportedAudioFileException {
-		this.gc = gc;
+		levels.gc = gc;
 		levelss[0] = true;
 
 		running = true;
-		this.guns = guns;
+		levels.guns = guns;
 		init();
 		while (running) {
 			mechanics();

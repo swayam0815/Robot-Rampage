@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
 
 import javax.imageio.ImageIO;
 import javax.sound.sampled.LineUnavailableException;
@@ -96,14 +95,14 @@ public class UpgradeMenu {
 	public UpgradeMenu(GraphicsConsole gc, Gun[] guns)
 			throws IOException, LineUnavailableException, UnsupportedAudioFileException {
 		System.out.println("object declared");
-		this.gc = gc;
+		UpgradeMenu.gc = gc;
 		System.out.println("gc");
 
 		running = true;
 		System.out.println("running");
 
 		gunNum = 0;
-		this.guns = guns;
+		UpgradeMenu.guns = guns;
 
 		currentGun = guns[0];
 		System.out.println("current");

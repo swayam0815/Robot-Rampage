@@ -103,9 +103,9 @@ public class UpgradeMenu {
 		System.out.println("running");
 
 		gunNum = 0;
-		System.out.println("gunnum");
 		this.guns = guns;
-		currentGun = guns[gunNum];
+
+		currentGun = guns[0];
 		System.out.println("current");
 
 		init();

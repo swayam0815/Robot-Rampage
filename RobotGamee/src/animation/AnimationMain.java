@@ -88,9 +88,6 @@ public class AnimationMain extends Rectangle {
 	private ArrayList<Rectangle> enemies = new ArrayList<Rectangle>();
 	private static int wave = 1;
 	private ArrayList<Rectangle> destroyedEnemies = new ArrayList<Rectangle>();
-	private static Image AR15Img; // "AR15 POV.png"
-	private static Image AR15Flipped; // "AR15 POV flipped.png"
-	private static Image AR15Side; // "AR15 POV flipped.png"
 
 	private static boolean running = true;
 
@@ -99,17 +96,10 @@ public class AnimationMain extends Rectangle {
 	private final int big = 2;
 	private final int lar = 6;
 	private static int robotCounter = 0;
-	private static int numRobots = 100;
 	private static int totalWaves;
 
-	private static Gun[] guns;
+	private static Gun[] guns = new Gun[6];
 
-// gun pictures
-	private static Image pistolImg; // "Pistol POV.png"
-	private static Image pistolFlipped; // "Pistol POV flipped.png"
-	private static Image pistolSide; // "Pistol POV flipped.png"
-	private static Image normalBullet;
-	private static Image normalBulletBottom;
 	private static boolean win;
 
 	public static void getImg() throws IOException {
@@ -120,7 +110,6 @@ public class AnimationMain extends Rectangle {
 		running = true;
 		gc = x;
 		this.guns = guns;
-		getimg();
 
 // setting up variables
 // more
@@ -178,12 +167,6 @@ public class AnimationMain extends Rectangle {
 
 		}
 
-	}
-
-	private void getimg() throws IOException {
-		AR15Img = ImageIO.read(new File("AR15 POV.png"));
-		AR15Flipped = ImageIO.read(new File("AR15 POV flipped.png"));
-		AR15Side = ImageIO.read(new File("AR15 side view.png"));
 	}
 
 	private void initiate() throws IOException {

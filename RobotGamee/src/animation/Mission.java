@@ -32,7 +32,6 @@ public class Mission {
 	private static Image cursorClicked;
 	private static Image bkg;
 	private static Gun[] guns = new Gun[6];
-
 	private static Rectangle backBTN = new Rectangle(GRWIDTH / 54, (int) (GRHEIGHT / 1.09), GRWIDTH / 8, GRHEIGHT / 14);
 	private Image back;
 	private Image backLight;
@@ -44,11 +43,14 @@ public class Mission {
 	public Mission(GraphicsConsole x, boolean win, Gun[] guns)
 			throws IOException, LineUnavailableException, UnsupportedAudioFileException {
 		gc = x;
-		initialize(win);
 		this.guns = guns;
+
+		initialize(win);
+
 	}
 
 	private void initialize(boolean win) throws IOException, LineUnavailableException, UnsupportedAudioFileException {
+
 		gc.enableMouseMotion();
 		gc.enableMouse(); // enables motion and click for the
 
@@ -79,7 +81,7 @@ public class Mission {
 		if (cursor.intersects(creditsBTN)) {
 			back = backLight;
 			if (gc.getMouseClick() > 0)
-				new MainMenu(gc);
+				new levels(gc, guns);
 		} else
 			back = backDark;
 

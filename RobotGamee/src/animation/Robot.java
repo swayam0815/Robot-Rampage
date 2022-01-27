@@ -1,7 +1,6 @@
 package animation;
 
 import java.awt.Image;
-import java.awt.Rectangle;
 
 public class Robot{
 	 

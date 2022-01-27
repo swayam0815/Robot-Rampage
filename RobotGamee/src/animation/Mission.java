@@ -79,7 +79,7 @@ public class Mission {
 		if (cursor.intersects(creditsBTN)) {
 			back = backLight;
 			if (gc.getMouseClick() > 0)
-				new Start(gc, guns);
+				new MainMenu(gc);
 		} else
 			back = backDark;
 

@@ -21,15 +21,14 @@ public class AnimationMain extends Rectangle {
 
 	/***** Global Variables ******/
 	private static Dimension GRsize = Toolkit.getDefaultToolkit().getScreenSize(); // creates a variable to get screen
-// size
+	// size
 	private static int GRHEIGHT = (int) GRsize.getHeight() - 70; // (int)GRsize.getHeight() - 70
 	private static int GRWIDTH = (int) (GRHEIGHT * 1.777777777778); // this sets the size of the grid to fit
-// the screen
-
+	
+	// console to draw on
 	private static GraphicsConsole gc;
-// = new GraphicsConsole(GRWIDTH, GRHEIGHT);
 
-// sound effects
+	// sound effects
 	private static Clip gunshotSound;
 	private static Clip dryFire;
 	private static Clip shellFall;
@@ -39,7 +38,7 @@ public class AnimationMain extends Rectangle {
 	private static AudioInputStream gunCockingEffect;
 	private static AudioInputStream shellFallEffect;
 
-// pictures
+	// pictures
 	private Image backGround; // "bakground.jpg"
 	private Image forcefield; // "ForceField.png"
 	private Image bullet; // "bullet cartoon.png"
@@ -48,14 +47,15 @@ public class AnimationMain extends Rectangle {
 	private Image bulletBottom; // "Bullet Bottom.png"
 	private Image gunshotFire; // "gunshot fire.png"
 
-// robot pictures
+	// robot pictures
 	private Image robo; // "Thomas face.png"
 
+	// hit boxes for buttons
 	private Rectangle CrossHair; // to aim
-// with
 	private Rectangle ReloadButton = new Rectangle((GRWIDTH / 20) - (GRWIDTH / 50), GRHEIGHT - (GRWIDTH / 10),
 			GRHEIGHT / 10, GRHEIGHT / 10); // this button reloads the gun
-
+	
+	// variables for game mechanics
 	private int shotCounter = 0; // crucial for fireRate
 	private int bulletsLeft; // number of bullets left in the gun
 	private int reload; // provides an angle for the arc around the reload button
@@ -64,27 +64,29 @@ public class AnimationMain extends Rectangle {
 	private int fireCounter; // counter for the fire out of the gun
 	private int moveX = 0; // the amount of movement for the player
 	private static int forceStrength = 200; // health of the forcefield protecting the player
-
+	
+	// boolean for powerup
 	private static boolean autoReload = false; // code for purchasing to be added later
-
+	
+	// for bullet animation
 	private int size = 50;
 	private static int counter = 0;
-	private static int gunNum = 0;
-// bullet attributes
+	
+	// bullet attributes
 	ArrayList<Rectangle> bullets = new ArrayList<Rectangle>();
 	ArrayList<Rectangle> hit = new ArrayList<Rectangle>();
 	private int bulletSize = 50;
 	private int bulletSpeed = 0;
 
-// gun object for player guns
-// damage, reload time, bullet #, price, fire rate, pic, picFlipped
-
+	// gun object for player gun
+	// damage, reload time, bullet #, price, fire rate, pic, picFlipped
 	private static Gun equippedGun; // the gun being held by the player
 	private Rectangle player = new Rectangle(0, 0, (int) (GRHEIGHT / 2 * 1.777777777777778), GRHEIGHT / 2);
 
-// THE ENEMIES
+	// condition to see if player lost or not
 	private static boolean defeat = false;
-
+	
+	// enemy attributes
 	private ArrayList<Rectangle> enemies = new ArrayList<Rectangle>();
 	private static int wave = 1;
 	private ArrayList<Rectangle> destroyedEnemies = new ArrayList<Rectangle>();

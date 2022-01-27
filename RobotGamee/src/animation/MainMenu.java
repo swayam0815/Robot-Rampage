@@ -48,7 +48,7 @@ public class MainMenu {
 
 	public static void main(String[] args)
 			throws LineUnavailableException, IOException, UnsupportedAudioFileException, InterruptedException {
-	//	new intro(gc);
+		new intro(gc);
 		new setInitialValues(gc, GRWIDTH, GRHEIGHT);
 		new MainMenu(gc);
 	}

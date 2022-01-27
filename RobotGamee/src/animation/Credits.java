@@ -38,7 +38,7 @@ public class Credits {
 	}
 
 	public Credits(GraphicsConsole gc) throws IOException, LineUnavailableException, UnsupportedAudioFileException {
-		this.gc = gc;
+		Credits.gc = gc;
 		running = true;
 		initialize();
 	}

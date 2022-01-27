@@ -55,8 +55,8 @@ public class Start {
 
 	public Start(GraphicsConsole gc, Gun[] guns)
 			throws IOException, LineUnavailableException, UnsupportedAudioFileException {
-		this.gc = gc;
-		this.guns = guns;
+		Start.gc = gc;
+		Start.guns = guns;
 		running = true;
 
 		gc.enableMouseMotion();

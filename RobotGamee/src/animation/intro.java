@@ -54,11 +54,7 @@ public class intro {
 	private static int GRWIDTH = (int) (GRHEIGHT * 1.777777777778); // this sets the size of the grid to fit
 // the screen
 
-	private static GraphicsConsole gc;
-// = new GraphicsConsole(GRWIDTH, GRHEIGHT);
-
 	public intro(GraphicsConsole gc) throws IOException, InterruptedException {
-		this.gc = gc;
 		Image loading = ImageIO.read(new File("loading.png"));
 
 		gc.setBackgroundColor(loading, GRWIDTH, GRHEIGHT);

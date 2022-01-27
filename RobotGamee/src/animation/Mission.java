@@ -32,7 +32,6 @@ public class Mission {
 	private static Image cursorClicked;
 	private static Image bkg;
 	private static Gun[] guns = new Gun[6];
-	private static Rectangle backBTN = new Rectangle(GRWIDTH / 54, (int) (GRHEIGHT / 1.09), GRWIDTH / 8, GRHEIGHT / 14);
 	private Image back;
 	private Image backLight;
 	private Image backDark;
@@ -43,7 +42,7 @@ public class Mission {
 	public Mission(GraphicsConsole x, boolean win, Gun[] guns)
 			throws IOException, LineUnavailableException, UnsupportedAudioFileException {
 		gc = x;
-		this.guns = guns;
+		Mission.guns = guns;
 
 		initialize(win);
 

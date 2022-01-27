@@ -14,7 +14,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 import hsa2.GraphicsConsole;
 
-public class AnimationMain extends Rectangle {
+public class AnimationMain {
 
 	public static void main(String[] args) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
 	}
@@ -80,9 +80,6 @@ public class AnimationMain extends Rectangle {
 	// damage, reload time, bullet #, price, fire rate, pic, picFlipped
 	private static Gun equippedGun; // the gun being held by the player
 	private Rectangle player = new Rectangle(0, 0, (int) (GRHEIGHT / 2 * 1.777777777777778), GRHEIGHT / 2);
-
-	// condition to see if player lost or not
-	private static boolean defeat = false;
 	
 	// enemy attributes
 	private ArrayList<Rectangle> enemies = new ArrayList<Rectangle>();
@@ -108,7 +105,6 @@ public class AnimationMain extends Rectangle {
 // setting up variables
 // more
 		wave = 1;
-		defeat = false;
 		forceStrength = 200;
 
 		if (UpgradeMenu.getGun() != null)

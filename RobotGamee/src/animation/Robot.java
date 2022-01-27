@@ -3,7 +3,7 @@ package animation;
 import java.awt.Image;
 import java.awt.Rectangle;
 
-public class Robot extends Rectangle{
+public class Robot{
 	 
 	private int damage;
 	private int health;
@@ -16,9 +16,7 @@ public class Robot extends Rectangle{
 	public static void main(String[] args) {
 	}
 	
-	public Robot(int damage, int health, int speed, int ATKSpeed, Image standImg, Image rightImg, Image leftImg) {
-		x = y = 0;
-		width = height = 0;
+	public Robot(int x, int y, int width, int height, int damage, int health, int speed, int ATKSpeed, Image standImg, Image rightImg, Image leftImg) {
 		this.damage = damage;
 		this.health = health;
 		this.speed = speed;

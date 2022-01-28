@@ -36,7 +36,7 @@ public class Mission {
 	private static Image cursorImg;
 	private static Image cursorClicked;
 	private static Image bkg;
-	private static Gun[] guns = new Gun[6];
+	private static Gun[] guns;
 	private Image back;
 	private Image backLight;
 	private Image backDark;

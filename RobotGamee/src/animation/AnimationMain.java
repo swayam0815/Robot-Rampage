@@ -48,15 +48,9 @@ public class AnimationMain {
 	private Image gunshotFire; // "gunshot fire.png"
 
 	// robot pictures
-	private Image tinyRobotStand; // "tinyRobot stand"
-	private Image tinyRobotRight; // "tinyRobot right"
-	private Image tinyRobotLeft; // "tinyRobot left"
-	private Image tinyRobotHurt; // "tinyRobot hurt"
-
-	private Image bigRobotStand; // "bigRobot stand"
-	private Image bigRobotRight; // "bigRobot right"
-	private Image bigRobotLeft; // "bigRobot left"
-	private Image bigRobotHurt; // "bigRobot hurt"
+	private Image tinyRobotImg; // "tinyRobot stand"
+	private Image midRobotImg; // "midRobot stand"
+	private Image bigRobotImg; // "bigRobot stand"
 
 	// hit boxes for buttons
 	private Rectangle CrossHair; // to aim
@@ -173,15 +167,9 @@ public class AnimationMain {
 		gunshotFire = ImageIO.read(new File("gunshot fire.png"));
 
 // robot pictures
-		tinyRobotStand = ImageIO.read(new File("tinyRobot stand.png"));
-		tinyRobotRight = ImageIO.read(new File("tinyRobot right.png"));
-		tinyRobotLeft = ImageIO.read(new File("tinyRobot left.png"));
-		tinyRobotHurt = ImageIO.read(new File("tinyRobot hurt.png"));
-
-		bigRobotStand = ImageIO.read(new File("bigRobot stand.png"));
-		bigRobotRight = ImageIO.read(new File("bigRobot right.png"));
-		bigRobotLeft = ImageIO.read(new File("bigRobot left.png"));
-		bigRobotHurt = ImageIO.read(new File("bigRobot hurt.png"));
+		tinyRobotImg = ImageIO.read(new File("tinyRobot stand.png"));
+		
+		bigRobotImg = ImageIO.read(new File("bigRobot stand.png"));
 
 		CrossHair = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 10, GRHEIGHT / 10);
 
@@ -318,15 +306,27 @@ public class AnimationMain {
 //x, y, width, height, damage, health, speed, ATKSpeed, standImg, rightImg, leftImg, hurtImage
 			for (int i = 0; i < (2 * (int) (wave * small)); i++)
 				enemies.add(new Robot(ranNum(1, GRWIDTH), 0, size * small, size * small,
-						1, 10, 1, 5, tinyRobotStand, tinyRobotRight, tinyRobotLeft, tinyRobotHurt));
+						1, 10, 1, 5, tinyRobotImg));
 
 			for (int i = 0; i < wave * mid; i++)
 				enemies.add(new Robot(ranNum(1, GRWIDTH), 0, size * mid, size * mid,
-						3, 18, 2, 10, bigRobotStand, bigRobotRight, bigRobotLeft, bigRobotHurt));
+						3, 18, 2, 10, bigRobotImg));
 
 			for (int i = 0; i < wave * big; i++)
 				enemies.add(new Robot(ranNum(1, GRWIDTH), 0, size * big, size * big,
-						8, 25, 8, 18, bigRobotStand, bigRobotRight, bigRobotLeft, bigRobotHurt));
+						8, 25, 8, 18, bigRobotImg));
+
+//			for (int i = 0; i < (2 * (int) (wave * small)); i++)
+//				enemies.add(new Robot(ranNum(1, GRWIDTH), 0, size * small, size * small,
+//						1, 10, 1, 5, tinyRobotStand, tinyRobotRight, tinyRobotLeft, tinyRobotHurt));
+//
+//			for (int i = 0; i < wave * mid; i++)
+//				enemies.add(new Robot(ranNum(1, GRWIDTH), 0, size * mid, size * mid,
+//						3, 18, 2, 10, midRobotStand, midRobotRight, midRobotLeft, midRobotHurt));
+//
+//			for (int i = 0; i < wave * big; i++)
+//				enemies.add(new Robot(ranNum(1, GRWIDTH), 0, size * big, size * big,
+//						8, 25, 8, 18, bigRobotStand, bigRobotRight, bigRobotLeft, bigRobotHurt));
 
 			newWave = false;
 		}
@@ -370,6 +370,7 @@ public class AnimationMain {
 				rect.x = 1;
 			if (rect.x + rect.width > GRWIDTH)
 				rect.x = GRWIDTH - rect.width;
+			
 		}
 		counter++;
 	}
@@ -392,7 +393,7 @@ public class AnimationMain {
 
 // drawing enemies
 			for (Robot rect : enemies) {
-				gc.drawImage(rect.getStandImg(), rect);
+				gc.drawImage(rect.getPic(), rect);
 			}
 			//CHECK
 
@@ -481,7 +482,7 @@ public class AnimationMain {
 						GRHEIGHT - (GRWIDTH / 16));
 			}
 
-// resseting counter values, so they dont take up too much memory
+// reseting counter values, so they don't take up too much memory
 			if (counter > 100000)
 				counter = 0;
 			if (robotCounter > 100000)

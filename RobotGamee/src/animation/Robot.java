@@ -9,25 +9,31 @@ public class Robot extends Rectangle{
 	private int health;
 	private int speed;
 	private int ATKSpeed;
-	private Image standImg;
-	private Image rightImg;
-	private Image leftImg;
-	private Image hurtImg;
+	private Image pic;
 	
 	public static void main(String[] args) {
 	}
 	
-	public Robot(int x, int y, int width, int height, int damage, int health, int speed, int ATKSpeed, Image standImg, Image rightImg, Image leftImg, Image hurtImage) {
+	public Robot(int x, int y, int width, int height, int damage, int health, int speed, int ATKSpeed, Image pic) {
 		super(x, y, width, height);
 		this.damage = damage;
 		this.health = health;
 		this.speed = speed;
 		this.ATKSpeed = ATKSpeed;
-		this.standImg = standImg;
-		this.rightImg = rightImg;
-		this.leftImg = leftImg;
-		this.hurtImg = hurtImg;
+		this.pic = pic;
 	}
+
+//	public Robot(int x, int y, int width, int height, int damage, int health, int speed, int ATKSpeed, Image standImg, Image rightImg, Image leftImg, Image hurtImage) {
+//		super(x, y, width, height);
+//		this.damage = damage;
+//		this.health = health;
+//		this.speed = speed;
+//		this.ATKSpeed = ATKSpeed;
+//		this.standImg = standImg;
+//		this.rightImg = rightImg;
+//		this.leftImg = leftImg;
+//		this.hurtImg = hurtImg;
+//	}
 
 	public int getDamage() {
 		return damage;
@@ -49,18 +55,9 @@ public class Robot extends Rectangle{
 		return ATKSpeed;
 	}
 
-	public Image getStandImg() {
-		return standImg;
-	}
-
-	public Image getRightImg() {
-		return rightImg;
+	
+	public Image getPic() {
+		return pic;
 	}
 	
-	public Image getLeftImg() {
-		return leftImg;
-	}
-	public Image getHurtImg() {
-		return hurtImg;
-	}
 }

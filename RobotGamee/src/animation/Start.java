@@ -56,9 +56,9 @@ public class Start {
 	public static void main(String[] args) throws LineUnavailableException, IOException, UnsupportedAudioFileException {
 	}
 
-	private static boolean running;
+	private static boolean running; // stops the screen from running when false
 
-	public static Gun[] guns;
+	public static Gun[] guns; // array of guns passed to all classes
 
 	public Start(GraphicsConsole gc, Gun[] guns)
 			throws IOException, LineUnavailableException, UnsupportedAudioFileException {
@@ -67,7 +67,7 @@ public class Start {
 		running = true;
 
 		gc.enableMouseMotion();
-		gc.enableMouse(); // enables motion and click for the
+		gc.enableMouse(); // enables motion and click for the mouse
 
 // images imported
 		cursorImg = ImageIO.read(new File("cursor.png"));
@@ -92,7 +92,7 @@ public class Start {
 		cursor.y = gc.getMouseY() - (cursor.height / 2);
 
 // buttons light up when hovered over
-		if (cursor.intersects(levelsBTN)) {
+		if (cursor.intersects(levelsBTN)) { // takes you to campaign (levels screen)
 			levels = levelsLight;
 			if (gc.getMouseClick() > 0) {
 				// button sound
@@ -106,7 +106,7 @@ public class Start {
 		} else
 			levels = levelsDark;
 
-		if (cursor.intersects(upgradeBTN)) {
+		if (cursor.intersects(upgradeBTN)) { // takes you to upgrades menu
 			Upgrade = UpgradeLight;
 			if (gc.getMouseClick() > 0) {
 				// button sound
@@ -120,7 +120,7 @@ public class Start {
 		} else
 			Upgrade = UpgradeDark;
 
-		if (cursor.intersects(backBTN)) {
+		if (cursor.intersects(backBTN)) { // back to the previous menu
 			back = backLight;
 			if (gc.getMouseClick() > 0) {
 				// button sound

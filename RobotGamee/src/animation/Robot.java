@@ -3,19 +3,20 @@ package animation;
 import java.awt.Image;
 import java.awt.Rectangle;
 
-public class Robot extends Rectangle{
-	 
+public class Robot extends Rectangle {
+
 	private int damage;
 	private int health;
 	private int speed;
 	private int ATKSpeed;
 	private int money;
 	private Image pic;
-	
+
 	public static void main(String[] args) {
 	}
-	
-	public Robot(int x, int y, int width, int height, int damage, int health, int speed, int ATKSpeed, int money, Image pic) {
+
+	public Robot(int x, int y, int width, int height, int damage, int health, int speed, int ATKSpeed, int money,
+			Image pic) {
 		super(x, y, width, height);
 		this.damage = damage;
 		this.health = health;
@@ -109,18 +110,4 @@ public class Robot extends Rectangle{
 		this.pic = pic;
 	}
 
-//	public Robot(int x, int y, int width, int height, int damage, int health, int speed, int ATKSpeed, Image standImg, Image rightImg, Image leftImg, Image hurtImage) {
-//		super(x, y, width, height);
-//		this.damage = damage;
-//		this.health = health;
-//		this.speed = speed;
-//		this.ATKSpeed = ATKSpeed;
-//		this.standImg = standImg;
-//		this.rightImg = rightImg;
-//		this.leftImg = leftImg;
-//		this.hurtImg = hurtImg;
-//	}
-
-
-	
 }

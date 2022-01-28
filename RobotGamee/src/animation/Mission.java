@@ -23,10 +23,10 @@ public class Mission {
 // gc
 	private static GraphicsConsole gc;
 
-	private static Rectangle cursor = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 100, GRHEIGHT / 100); // to aim
-
-	private static Rectangle creditsBTN = new Rectangle(GRWIDTH / 54, (int) (GRHEIGHT / 1.09), GRWIDTH / 8, GRHEIGHT / 14);
-	//GRWIDTH / 141 * 57, GRHEIGHT / 78 * 55, GRWIDTH / 141 * 30, GRHEIGHT / 79 * 9
+	private static Rectangle cursor = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 100, GRHEIGHT / 100); // to
+																												// aim
+	private static Rectangle creditsBTN = new Rectangle(GRWIDTH / 54, (int) (GRHEIGHT / 1.09), GRWIDTH / 8,
+			GRHEIGHT / 14);
 
 	// sound effects
 	private static Clip buttonSound;
@@ -41,8 +41,8 @@ public class Mission {
 	private Image backLight;
 	private Image backDark;
 	private Image roboPartsImg;
-	
-	private static int moneyEarned;
+
+	private static int moneyEarned; // the money earned by the player
 	private Font font = new Font("Elephant", Font.PLAIN, GRHEIGHT / 10);
 
 	public static void main(String[] args) throws LineUnavailableException, IOException, UnsupportedAudioFileException {
@@ -53,7 +53,7 @@ public class Mission {
 		gc = x;
 		Mission.guns = guns;
 		Mission.moneyEarned = moneyEarned;
-		
+
 		setInitialValues.setMoney(setInitialValues.getMoney() + moneyEarned);
 		initialize(win);
 
@@ -62,21 +62,21 @@ public class Mission {
 	private void initialize(boolean win) throws IOException, LineUnavailableException, UnsupportedAudioFileException {
 
 		gc.enableMouseMotion();
-		gc.enableMouse(); // enables motion and click for the
+		gc.enableMouse(); // enables motion and click for the mouse
 
 		gc.setFont(font);
 // images imported
 		roboPartsImg = ImageIO.read(new File("Robot parts.png"));
 		cursorImg = ImageIO.read(new File("cursor.png"));
 		cursorClicked = ImageIO.read(new File("cursor clicked.png"));
+		backLight = ImageIO.read(new File("lightBack.png"));
+		backDark = ImageIO.read(new File("darkBack.png"));
 
+		// if player wins, show mission completed. else: mission failed
 		if (win)
 			bkg = ImageIO.read(new File("win.png"));
 		else
 			bkg = ImageIO.read(new File("lose.png"));
-
-		backLight = ImageIO.read(new File("lightBack.png"));
-		backDark = ImageIO.read(new File("darkBack.png"));
 
 		while (true) {
 			mechanics();
@@ -90,7 +90,7 @@ public class Mission {
 		cursor.x = gc.getMouseX() - (cursor.width / 2);
 		cursor.y = gc.getMouseY() - (cursor.height / 2);
 
-		if (cursor.intersects(creditsBTN)) {
+		if (cursor.intersects(creditsBTN)) { // back to previous screen
 			back = backLight;
 			if (gc.getMouseClick() > 0) {
 				// button sound
@@ -98,7 +98,7 @@ public class Mission {
 				buttonSound = AudioSystem.getClip();
 				buttonSound.open(buttonEffect);
 				buttonSound.start();
-				new levels(gc, guns);	
+				new levels(gc, guns);
 			}
 		} else
 			back = backDark;
@@ -119,10 +119,10 @@ public class Mission {
 
 //money earned
 			gc.setColor(Color.RED);
-			gc.drawString("Earned:", (int)(GRWIDTH / 3.85), (int)(GRHEIGHT / 1.3));
-			gc.drawImage(roboPartsImg, (int)(GRWIDTH / 2.026), (int)(GRHEIGHT / 1.444), GRHEIGHT / 9, GRHEIGHT / 9);
+			gc.drawString("Earned:", (int) (GRWIDTH / 3.85), (int) (GRHEIGHT / 1.3));
+			gc.drawImage(roboPartsImg, (int) (GRWIDTH / 2.026), (int) (GRHEIGHT / 1.444), GRHEIGHT / 9, GRHEIGHT / 9);
 			gc.setColor(Color.GREEN);
-			gc.drawString(moneyEarned + "", (int)(GRWIDTH / 1.77), (int)(GRHEIGHT / 1.3));
+			gc.drawString(moneyEarned + "", (int) (GRWIDTH / 1.77), (int) (GRHEIGHT / 1.3));
 
 // cursor
 			if (gc.getMouseButton(0))

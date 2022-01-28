@@ -9,9 +9,10 @@ import javax.imageio.ImageIO;
 import hsa2.*;
 
 public class setInitialValues {
-	
-	private static int money = 2000;	//the player's in-game currency
-	
+
+	private static int money = 2000; // the player's in-game currency
+
+	// bullet pictures
 	private Image normalBullet;
 	private Image shotgunBullet;
 	private Image waterDrop;
@@ -41,15 +42,12 @@ public class setInitialValues {
 	private Image hoseFlipped; // "Water Hose POV flipped.png"
 	private Image hoseSide; // "Water Hose POV flipped.png"
 
-	// gun objects
+	// array for gun objects
 	private static Gun[] guns = new Gun[7];
 
 	public setInitialValues(GraphicsConsole gc, int GRWIDTH, int GRHEIGHT) throws IOException {
-		/*
-		 * Image loading = ImageIO.read(new File("loading.png"));
-		 * 
-		 * gc.setBackgroundColor(loading, GRWIDTH, GRHEIGHT);
-		 */
+
+		//bullet pics
 		normalBullet = ImageIO.read(new File("bullet cartoon.png"));
 		shotgunBullet = ImageIO.read(new File("shotgun bullet.png"));
 		waterDrop = ImageIO.read(new File("water drop cartoon.png"));
@@ -79,41 +77,52 @@ public class setInitialValues {
 		hoseImg = ImageIO.read(new File("Water Hose POV.png"));
 		hoseFlipped = ImageIO.read(new File("Water Hose POV flipped.png"));
 		hoseSide = ImageIO.read(new File("WaterHose side view.png"));
+		
 		// gun objects
-		// damage, reload time, bullet #, price, fire rate, pic, picFlipped
+		// damage, reload time, mag size, price, fire rate, pic, picFlipped, picSide, bulletPic, bulletBottomPic, isBought, isEquipped, name, bullet distance, upgrade price
 		// pistol
-		// damage, reload, mag size, price, firerate, pic, pic, pic pic
 		guns[0] = new Gun(8, 100, 7, 0, 0, 4, pistolImg, pistolFlipped, pistolSide, normalBullet, normalBulletBottom,
-				true, true, "pistol", 20 ,100);
+				true, true, "pistol", 20, 100);
 		// Deagle
-		guns[1] = new Gun(20, 120, 6, 1500, 0, 3, deagleImg, deagleFlipped, deagleSide, normalBullet, normalBulletBottom, false,
-				false, "Deagle", 20 ,100);
+		guns[1] = new Gun(20, 120, 6, 1500, 0, 3, deagleImg, deagleFlipped, deagleSide, normalBullet,
+				normalBulletBottom, false, false, "Deagle", 20, 100);
 		// AR15
-		guns[2] = new Gun(6, 200, 30, 4000, 3, 3, AR15Img, AR15Flipped, AR15Side, normalBullet, normalBulletBottom, false,
-				false, "AR15", 15 ,100);
+		guns[2] = new Gun(6, 200, 30, 4000, 3, 3, AR15Img, AR15Flipped, AR15Side, normalBullet, normalBulletBottom,
+				false, false, "AR15", 15, 100);
 		// sniper
-		guns[3] = new Gun(30, 250, 10, 6000, 0, 1, sniperImg, sniperFlipped, sniperSide, normalBullet, normalBulletBottom,
-				false, false, "sniper", 10 ,100);
+		guns[3] = new Gun(30, 250, 10, 6000, 0, 1, sniperImg, sniperFlipped, sniperSide, normalBullet,
+				normalBulletBottom, false, false, "sniper", 10, 100);
 		// minigun
-		guns[4] = new Gun(3, 300, 100, 9500, 2, 2, minigunImg, minigunFlipped, minigunSide, normalBullet, normalBulletBottom,
-				false, false, "minigun", 20 ,100);
+		guns[4] = new Gun(3, 300, 100, 9500, 2, 2, minigunImg, minigunFlipped, minigunSide, normalBullet,
+				normalBulletBottom, false, false, "minigun", 20, 100);
 		// shotgun/grenade launcher
 		guns[5] = new Gun(50, 170, 5, 14000, 0, 3, grenadeLauncherImg, grenadeLauncherFlipped, grenadeLauncherSide,
-				shotgunBullet, shotgunBulletBottom, false, false, "shotgun", 40 ,100);
+				shotgunBullet, shotgunBulletBottom, false, false, "shotgun", 40, 100);
 		// water hose
 		guns[6] = new Gun(2, 500, 1000, 20000, 1, 3, hoseImg, hoseFlipped, hoseSide, waterDrop, waterDropBottom, false,
-				false, "hose", 30 ,100);
+				false, "hose", 30, 100);
 
 	}
-
+	
+	/**
+	 * @return guns array
+	 */
 	public static Gun[] getGuns() {
 		return guns;
 	}
 	
+	/**
+	 * @return player's total money
+	 */
+
 	public static int getMoney() {
 		return money;
 	}
+
 	
+	/**
+	 * @param money to be added to total money
+	 */
 	public static void setMoney(int newMoney) {
 		money = newMoney;
 	}

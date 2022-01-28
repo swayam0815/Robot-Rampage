@@ -36,7 +36,6 @@ public class MainMenu {
 	private static Clip buttonSound;
 	private static AudioInputStream buttonEffect;
 
-
 // the images that will show on screen
 	private static Image start;
 	private static Image quit;

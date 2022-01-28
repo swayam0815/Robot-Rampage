@@ -195,14 +195,14 @@ public class levels {
 		if (cursor.intersects(lvlBoss)) {
 			lvlImages[4] = bossLight;
 			if (gc.getMouseClick() > 0) {
-				if (levelss[5]) {
-					// button sound
-					buttonEffect = AudioSystem.getAudioInputStream(new File("Button Sound.wav").getAbsoluteFile());
-					buttonSound = AudioSystem.getClip();
-					buttonSound.open(buttonEffect);
-					buttonSound.start();
-					// play boss level
-				}
+//				if (levelss[5]) {
+//					// button sound
+//					buttonEffect = AudioSystem.getAudioInputStream(new File("Button Sound.wav").getAbsoluteFile());
+//					buttonSound = AudioSystem.getClip();
+//					buttonSound.open(buttonEffect);
+//					buttonSound.start();
+//					// play boss level
+//				}
 			}
 		} else
 			lvlImages[4] = null;

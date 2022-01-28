@@ -51,6 +51,7 @@ public class AnimationMain {
 	private Image tinyRobotImg; // "tinyRobot stand"
 	private Image midRobotImg; // "midRobot stand"
 	private Image bigRobotImg; // "bigRobot stand"
+	private Image bossRobotImg; // "bigRobot stand"
 
 	// hit boxes for buttons
 	private Rectangle CrossHair; // to aim
@@ -121,7 +122,7 @@ public class AnimationMain {
 		// statement to add boss to level, if boolean passed in from constructor
 		if (bossFight)
 			//x, y, width, height, damage, health, speed, ATKSpeed, money, pic
-			enemies.add(new Robot(ranNum(1, GRWIDTH), 0, size * 10, size * 10, 1, 1000, 2520, 1, 1500, tinyRobotImg));
+			enemies.add(new Robot(ranNum(1, GRWIDTH), 0, size * 10, size * 10, 1, 1000, 2520, 1, 1500, bossRobotImg));
 
 		// MAIN GAME LOOP
 		// level runs until all waves in level defeated or player loses due to
@@ -187,6 +188,7 @@ public class AnimationMain {
 		tinyRobotImg = ImageIO.read(new File("tinyRobot stand.png"));
 		midRobotImg = ImageIO.read(new File("midRobot stand.png"));
 		bigRobotImg = ImageIO.read(new File("bigRobot stand.png"));
+		bossRobotImg = ImageIO.read(new File("bossRobot stand.png"));
 
 		// hitbox for crosshair item
 		CrossHair = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 10, GRHEIGHT / 10);
@@ -210,15 +212,6 @@ public class AnimationMain {
 
 	// method to get player I/O mechanics
 	private void mechanics() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-
-// if (gc.isKeyDown(69)) {
-//
-// if (gunNum + 1 < guns.length) {
-// gunNum++;
-// equippedGun = guns[gunNum];
-// } else
-// gunNum = 0;
-// }
 
 		// moving left and right
 		if (gc.isKeyDown(37) || gc.isKeyDown(65))
@@ -408,7 +401,6 @@ public class AnimationMain {
 			for (Robot rect : enemies) {
 				gc.drawImage(rect.getPic(), rect);
 			}
-			// CHECK
 
 // animating projectiles/bullets
 			for (Rectangle rect : bullets) {

@@ -132,7 +132,7 @@ public class MainMenu {
 				buttonSound = AudioSystem.getClip();
 				buttonSound.open(buttonEffect);
 				buttonSound.start();
-				gc.close();
+				System.exit(0);
 			}
 		} else
 			quit = quitDark;

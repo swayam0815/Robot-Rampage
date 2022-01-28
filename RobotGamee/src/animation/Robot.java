@@ -25,6 +25,90 @@ public class Robot extends Rectangle{
 		this.pic = pic;
 	}
 
+	/**
+	 * @return the damage
+	 */
+	public int getDamage() {
+		return damage;
+	}
+
+	/**
+	 * @param damage the damage to set
+	 */
+	public void setDamage(int damage) {
+		this.damage = damage;
+	}
+
+	/**
+	 * @return the health
+	 */
+	public int getHealth() {
+		return health;
+	}
+
+	/**
+	 * @param health the health to set
+	 */
+	public void setHealth(int health) {
+		this.health = health;
+	}
+
+	/**
+	 * @return the speed
+	 */
+	public int getSpeed() {
+		return speed;
+	}
+
+	/**
+	 * @param speed the speed to set
+	 */
+	public void setSpeed(int speed) {
+		this.speed = speed;
+	}
+
+	/**
+	 * @return the aTKSpeed
+	 */
+	public int getATKSpeed() {
+		return ATKSpeed;
+	}
+
+	/**
+	 * @param aTKSpeed the aTKSpeed to set
+	 */
+	public void setATKSpeed(int aTKSpeed) {
+		ATKSpeed = aTKSpeed;
+	}
+
+	/**
+	 * @return the money
+	 */
+	public int getMoney() {
+		return money;
+	}
+
+	/**
+	 * @param money the money to set
+	 */
+	public void setMoney(int money) {
+		this.money = money;
+	}
+
+	/**
+	 * @return the pic
+	 */
+	public Image getPic() {
+		return pic;
+	}
+
+	/**
+	 * @param pic the pic to set
+	 */
+	public void setPic(Image pic) {
+		this.pic = pic;
+	}
+
 //	public Robot(int x, int y, int width, int height, int damage, int health, int speed, int ATKSpeed, Image standImg, Image rightImg, Image leftImg, Image hurtImage) {
 //		super(x, y, width, height);
 //		this.damage = damage;
@@ -37,32 +121,6 @@ public class Robot extends Rectangle{
 //		this.hurtImg = hurtImg;
 //	}
 
-	public int getDamage() {
-		return damage;
-	}
-	
-	public int getHealth() {
-		return health;
-	}
 
-	public void setHealth(int health) {
-		this.health = health;
-	}
-	
-	public int getSpeed() {
-		return speed;
-	}
-	
-	public int getATKSpeed() {
-		return ATKSpeed;
-	}
-
-	public int getMoney() {
-		return money;
-	}
-	
-	public Image getPic() {
-		return pic;
-	}
 	
 }

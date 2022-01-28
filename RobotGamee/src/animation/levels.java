@@ -20,7 +20,7 @@ public class levels {
 	}
 
 	private static Dimension GRsize = Toolkit.getDefaultToolkit().getScreenSize(); // creates a variable to get screen
-	private static boolean[] levelss = new boolean[5];
+	private static boolean[] levelss = new boolean[6];
 	private static int GRHEIGHT = (int) GRsize.getHeight() - 70; // (int)GRsize.getHeight() - 70
 	private static int GRWIDTH = (int) (GRHEIGHT * 1.777777777778); // this sets the size of the grid to fit
 
@@ -28,18 +28,18 @@ public class levels {
 // = new GraphicsConsole(GRWIDTH, GRHEIGHT);
 
 // rectangles
-	private static Rectangle lvl1 = new Rectangle((int) (GRWIDTH / 5.923), (int) (GRHEIGHT / 3.421), (int) (GRWIDTH / 9.625),
-			(int) (GRWIDTH / 9.625));
-	private static Rectangle lvl2 = new Rectangle((int) (GRWIDTH / 1.383), (int) (GRHEIGHT / 3.421), (int) (GRWIDTH / 9.625),
-			(int) (GRWIDTH / 9.625));
-	private static Rectangle lvl3 = new Rectangle((int) (GRWIDTH / 5.923), (int) (GRHEIGHT / 1.7567), (int) (GRWIDTH / 9.625),
-			(int) (GRWIDTH / 9.625));
-	private static Rectangle lvl4 = new Rectangle((int) (GRWIDTH / 1.383), (int) (GRHEIGHT / 1.7567), (int) (GRWIDTH / 9.625),
-			(int) (GRWIDTH / 9.625));
-	private static Rectangle lvlBoss = new Rectangle((int) (GRWIDTH / 2.51), (int) (GRHEIGHT / 3.421), (int) (GRWIDTH / 4.957),
-			(int) (GRHEIGHT / 2.407));
-	private static Rectangle[] lvlRectangles = {lvl1, lvl2, lvl3, lvl4, lvlBoss};
-	
+	private static Rectangle lvl1 = new Rectangle((int) (GRWIDTH / 5.923), (int) (GRHEIGHT / 3.421),
+			(int) (GRWIDTH / 9.625), (int) (GRWIDTH / 9.625));
+	private static Rectangle lvl2 = new Rectangle((int) (GRWIDTH / 1.383), (int) (GRHEIGHT / 3.421),
+			(int) (GRWIDTH / 9.625), (int) (GRWIDTH / 9.625));
+	private static Rectangle lvl3 = new Rectangle((int) (GRWIDTH / 5.923), (int) (GRHEIGHT / 1.7567),
+			(int) (GRWIDTH / 9.625), (int) (GRWIDTH / 9.625));
+	private static Rectangle lvl4 = new Rectangle((int) (GRWIDTH / 1.383), (int) (GRHEIGHT / 1.7567),
+			(int) (GRWIDTH / 9.625), (int) (GRWIDTH / 9.625));
+	private static Rectangle lvlBoss = new Rectangle((int) (GRWIDTH / 2.51), (int) (GRHEIGHT / 3.421),
+			(int) (GRWIDTH / 4.957), (int) (GRHEIGHT / 2.407));
+	private static Rectangle[] lvlRectangles = { lvl1, lvl2, lvl3, lvl4, lvlBoss };
+
 	private static Rectangle backBTN = new Rectangle(GRWIDTH / 54, (int) (GRHEIGHT / 1.09), GRWIDTH / 8, GRHEIGHT / 14);
 
 	// sound effects
@@ -65,7 +65,7 @@ public class levels {
 	private static Image fourDark;
 	private static Image fourLight;
 	private static Image bossLight;
-	
+
 	private static Image[] lvlImages = new Image[5];
 
 	private static Gun[] guns = new Gun[6];
@@ -142,7 +142,7 @@ public class levels {
 				buttonSound = AudioSystem.getClip();
 				buttonSound.open(buttonEffect);
 				buttonSound.start();
-				new AnimationMain(gc, 5, guns, 0);
+				new AnimationMain(gc, 5, guns, 0, false);
 			}
 		} else
 			lvlImages[0] = oneDark;
@@ -156,7 +156,7 @@ public class levels {
 					buttonSound = AudioSystem.getClip();
 					buttonSound.open(buttonEffect);
 					buttonSound.start();
-					new AnimationMain(gc, 10, guns, 1);
+					new AnimationMain(gc, 10, guns, 1, false);
 				}
 			}
 		} else
@@ -171,7 +171,7 @@ public class levels {
 					buttonSound = AudioSystem.getClip();
 					buttonSound.open(buttonEffect);
 					buttonSound.start();
-					new AnimationMain(gc, 15, guns, 2);
+					new AnimationMain(gc, 15, guns, 2, false);
 				}
 			}
 		} else
@@ -186,7 +186,7 @@ public class levels {
 					buttonSound = AudioSystem.getClip();
 					buttonSound.open(buttonEffect);
 					buttonSound.start();
-					new AnimationMain(gc, 20, guns, 4);
+					new AnimationMain(gc, 20, guns, 4, false);
 				}
 			}
 		} else
@@ -195,14 +195,14 @@ public class levels {
 		if (cursor.intersects(lvlBoss)) {
 			lvlImages[4] = bossLight;
 			if (gc.getMouseClick() > 0) {
-//				if (levelss[5]) {
-//					// button sound
-//					buttonEffect = AudioSystem.getAudioInputStream(new File("Button Sound.wav").getAbsoluteFile());
-//					buttonSound = AudioSystem.getClip();
-//					buttonSound.open(buttonEffect);
-//					buttonSound.start();
-//					// play boss level
-//				}
+				if (levelss[5]) {
+					// button sound
+					buttonEffect = AudioSystem.getAudioInputStream(new File("Button Sound.wav").getAbsoluteFile());
+					buttonSound = AudioSystem.getClip();
+					buttonSound.open(buttonEffect);
+					buttonSound.start();
+					new AnimationMain(gc, 5, guns, 5, true);
+				}
 			}
 		} else
 			lvlImages[4] = null;
@@ -222,13 +222,12 @@ public class levels {
 			for (int i = 0; i < 5; i++) {
 				if (levelss[i])
 					gc.drawImage(lvlImages[i], lvlRectangles[i]);
-					// numbers on levels
-				else
-					if (i != 4)
-						gc.drawImage(lockImg, lvlRectangles[i]);
-						// locks on all levels, except boss
+				// numbers on levels
+				else if (i != 4)
+					gc.drawImage(lockImg, lvlRectangles[i]);
+				// locks on all levels, except boss
 			}
-			
+
 //// locks on levels
 //			gc.drawImage(lockImg, lvl2);
 //			gc.drawImage(lockImg, lvl3);

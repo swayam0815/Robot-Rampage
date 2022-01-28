@@ -160,7 +160,6 @@ public class UpgradeMenu {
 		cursorImg = ImageIO.read(new File("cursor.png"));
 		cursorClicked = ImageIO.read(new File("cursor clicked.png"));
 
-		equippedGun = guns[0];
 	}
 
 	public static Gun[] getGuns() {

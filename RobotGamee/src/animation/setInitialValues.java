@@ -22,6 +22,9 @@ public class setInitialValues {
 	private Image pistolImg; // "Pistol POV.png"
 	private Image pistolFlipped; // "Pistol POV flipped.png"
 	private Image pistolSide; // "Pistol POV flipped.png"
+	private Image deagleImg; // "Deagle POV.png"
+	private Image deagleFlipped; // "Deagle POV flipped.png"
+	private Image deagleSide; // "Deagle POV flipped.png"
 	private Image AR15Img; // "AR15 POV.png"
 	private Image AR15Flipped; // "AR15 POV flipped.png"
 	private Image AR15Side; // "AR15 POV flipped.png"
@@ -39,7 +42,7 @@ public class setInitialValues {
 	private Image hoseSide; // "Water Hose POV flipped.png"
 
 	// gun objects
-	private static Gun[] guns = new Gun[6];
+	private static Gun[] guns = new Gun[7];
 
 	public setInitialValues(GraphicsConsole gc, int GRWIDTH, int GRHEIGHT) throws IOException {
 		/*
@@ -58,6 +61,9 @@ public class setInitialValues {
 		pistolImg = ImageIO.read(new File("Pistol POV.png"));
 		pistolFlipped = ImageIO.read(new File("Pistol POV flipped.png"));
 		pistolSide = ImageIO.read(new File("Pistol side view.png"));
+		deagleImg = ImageIO.read(new File("Deagle POV.png"));
+		deagleFlipped = ImageIO.read(new File("Deagle POV flipped.png"));
+		deagleSide = ImageIO.read(new File("Deagle side view.png"));
 		AR15Img = ImageIO.read(new File("AR15 POV.png"));
 		AR15Flipped = ImageIO.read(new File("AR15 POV flipped.png"));
 		AR15Side = ImageIO.read(new File("AR15 side view.png"));
@@ -77,22 +83,25 @@ public class setInitialValues {
 		// damage, reload time, bullet #, price, fire rate, pic, picFlipped
 		// pistol
 		// damage, reload, mag size, price, firerate, pic, pic, pic pic
-		guns[0] = new Gun(10, 100, 7, 0, 0, 4, pistolImg, pistolFlipped, pistolSide, normalBullet, normalBulletBottom,
+		guns[0] = new Gun(8, 100, 7, 0, 0, 4, pistolImg, pistolFlipped, pistolSide, normalBullet, normalBulletBottom,
 				true, true, "pistol", 20 ,100);
+		// Deagle
+		guns[1] = new Gun(20, 120, 6, 1500, 0, 3, deagleImg, deagleFlipped, deagleSide, normalBullet, normalBulletBottom, false,
+				false, "Deagle", 20 ,100);
 		// AR15
-		guns[1] = new Gun(6, 200, 30, 1500, 3, 3, AR15Img, AR15Flipped, AR15Side, normalBullet, normalBulletBottom, false,
+		guns[2] = new Gun(6, 200, 30, 4000, 3, 3, AR15Img, AR15Flipped, AR15Side, normalBullet, normalBulletBottom, false,
 				false, "AR15", 15 ,100);
 		// sniper
-		guns[2] = new Gun(30, 250, 10, 4000, 0, 1, sniperImg, sniperFlipped, sniperSide, normalBullet, normalBulletBottom,
+		guns[3] = new Gun(30, 250, 10, 6000, 0, 1, sniperImg, sniperFlipped, sniperSide, normalBullet, normalBulletBottom,
 				false, false, "sniper", 10 ,100);
 		// minigun
-		guns[3] = new Gun(3, 300, 100, 8500, 2, 2, minigunImg, minigunFlipped, minigunSide, normalBullet, normalBulletBottom,
+		guns[4] = new Gun(3, 300, 100, 9500, 2, 2, minigunImg, minigunFlipped, minigunSide, normalBullet, normalBulletBottom,
 				false, false, "minigun", 20 ,100);
 		// shotgun/grenade launcher
-		guns[4] = new Gun(50, 170, 5, 12000, 0, 3, grenadeLauncherImg, grenadeLauncherFlipped, grenadeLauncherSide,
+		guns[5] = new Gun(50, 170, 5, 14000, 0, 3, grenadeLauncherImg, grenadeLauncherFlipped, grenadeLauncherSide,
 				shotgunBullet, shotgunBulletBottom, false, false, "shotgun", 40 ,100);
 		// water hose
-		guns[5] = new Gun(2, 500, 1000, 20000, 1, 3, hoseImg, hoseFlipped, hoseSide, waterDrop, waterDropBottom, false,
+		guns[6] = new Gun(2, 500, 1000, 20000, 1, 3, hoseImg, hoseFlipped, hoseSide, waterDrop, waterDropBottom, false,
 				false, "hose", 30 ,100);
 
 	}

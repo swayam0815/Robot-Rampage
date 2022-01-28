@@ -17,6 +17,8 @@ import hsa2.*;
 public class levels {
 
 	private static Dimension GRsize = Toolkit.getDefaultToolkit().getScreenSize(); // creates a variable to get screen
+
+	// array to keep track of which levels a player can play
 	private static boolean[] levelss = new boolean[6];
 	private static int GRHEIGHT = (int) GRsize.getHeight() - 70; // (int)GRsize.getHeight() - 70
 	private static int GRWIDTH = (int) (GRHEIGHT * 1.777777777778); // this sets the size of the grid to fit
@@ -50,7 +52,7 @@ public class levels {
 	private static Image backLight;
 	private static Image backDark;
 
-// number images
+	// number images
 	private static Image oneDark;
 	private static Image oneLight;
 	private static Image twoDark;
@@ -63,18 +65,25 @@ public class levels {
 
 	private static Image[] lvlImages = new Image[5];
 
+	/// array of guns to pass throughout classes
 	private static Gun[] guns = new Gun[6];
-	private static boolean running;
+	private static boolean running; // condition to see if this class running
+	// cursor hitbox
 	private static Rectangle cursor = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 100, GRHEIGHT / 100); // to
+	// class constructor
 
 	public levels(GraphicsConsole gc, Gun[] guns)
 			throws IOException, LineUnavailableException, UnsupportedAudioFileException {
+		// setting which gc to draw to
 		levels.gc = gc;
+		// marking first left playable to be true
 		levelss[0] = true;
-
+		// setting this page to be working == true
 		running = true;
+		// storing gun array
 		levels.guns = guns;
-		init();
+		init(); // initialzing class to run
+		// main class loop to keep this class running, while conditions met
 		while (running) {
 			mechanics();
 			drawGraphics();
@@ -82,14 +91,19 @@ public class levels {
 		}
 	}
 
+	// setter method to set which levels a player can play
 	public static void win(int index) {
 		levelss[index] = true;
 	}
 
+	// SETTER METHOD
+	// gets all the images for class and sets them into appropirate variables
 	private static void init() throws IOException {
+		// enanbling mouse motion
 		gc.enableMouse();
 		gc.enableMouseMotion();
 
+		// getting all the images
 		lvl = ImageIO.read(new File("levelMenu.png"));
 		lockImg = ImageIO.read(new File("lock.png"));
 		backLight = ImageIO.read(new File("lightBack.png"));
@@ -103,18 +117,19 @@ public class levels {
 		threeLight = ImageIO.read(new File("3 light.png"));
 		fourLight = ImageIO.read(new File("4 light.png"));
 		bossLight = ImageIO.read(new File("bossLight.png"));
-
 		cursorImg = ImageIO.read(new File("cursor.png"));
 		cursorClicked = ImageIO.read(new File("cursor clicked.png"));
 
 	}
 
+	// method to read player I/O
 	private void mechanics() throws IOException, LineUnavailableException, UnsupportedAudioFileException {
-// set coordinates for cursor
+		// set coordinates for cursor
 		cursor.x = gc.getMouseX() - (cursor.width / 2);
 		cursor.y = gc.getMouseY() - (cursor.height / 2);
 
-// buttons
+		// buttons
+		// lights button up if hovered over it
 		if (cursor.intersects(backBTN)) {
 			back = backLight;
 			if (gc.getMouseClick() > 0) {
@@ -123,11 +138,20 @@ public class levels {
 				buttonSound = AudioSystem.getClip();
 				buttonSound.open(buttonEffect);
 				buttonSound.start();
+				// player wants to exit, so shutting down the main loop for this class
 				running = false;
-				new Start(gc, guns);
+				new Start(gc, guns); // going to the next class
 			}
 		} else
 			back = backDark;
+
+		// LEVELS
+		// creates a new animationMAin with appropriate values for each level
+
+		// follow similar button structure
+		// if hovered over, the button will change to a light version of itself
+		// if hovered over and clicked at same time == button being pressed and action
+		// occurs
 
 		if (cursor.intersects(lvl1)) {
 			lvlImages[0] = oneLight;
@@ -202,43 +226,31 @@ public class levels {
 		} else
 			lvlImages[4] = null;
 
-// this fixes a bug with buttons
+		// this fixes a bug with buttons
 		gc.getMouseClick();
 
 	}
 
+	// drawing all graphics for this screen through this method
 	private void drawGraphics() {
 		synchronized (gc) {
 			gc.clear();
 
-// background
+			// background
 			gc.drawImage(lvl, 0, 0, GRWIDTH, GRHEIGHT);
-
+			// iterating through all the level pics
 			for (int i = 0; i < 5; i++) {
 				if (levelss[i])
 					gc.drawImage(lvlImages[i], lvlRectangles[i]);
 				// numbers on levels
 				else if (i != 4)
+					// putting locks on all levels that are locked, except boss button
 					gc.drawImage(lockImg, lvlRectangles[i]);
-				// locks on all levels, except boss
 			}
-
-//// locks on levels
-//			gc.drawImage(lockImg, lvl2);
-//			gc.drawImage(lockImg, lvl3);
-//			gc.drawImage(lockImg, lvl4);
-//
-//// numbers on levels
-//			gc.drawImage(oneImg, lvl1);
-//			gc.drawImage(twoImg, lvl2);
-//			gc.drawImage(threeImg, lvl3);
-//			gc.drawImage(fourImg, lvl4);
-//			gc.drawImage(bossImg, lvlBoss);
-
-// back button
+			// back button
 			gc.drawImage(back, backBTN);
 
-// cursor
+			// cursor
 			if (gc.getMouseButton(0))
 				gc.drawImage(cursorClicked, cursor.x, cursor.y - cursor.width * 2, cursor.width * 15,
 						cursor.height * 15);

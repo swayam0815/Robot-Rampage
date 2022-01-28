@@ -11,6 +11,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.text.AttributeSet.ColorAttribute;
 
 import hsa2.GraphicsConsole;
 
@@ -48,6 +49,7 @@ public class AnimationMain {
 	private Image gunshotFire; // "gunshot fire.png"
 
 	// robot pictures
+	private Image thomasFace; // "Thomas face"
 	private Image tinyRobotImg; // "tinyRobot stand"
 	private Image midRobotImg; // "midRobot stand"
 	private Image bigRobotImg; // "bigRobot stand"
@@ -64,6 +66,7 @@ public class AnimationMain {
 	private boolean reloading; // checks if the gun is reloading
 	private int moveX = 0; // the amount of movement for the player
 	private static int forceStrength = 200; // health of the forcefield protecting the player
+	private int moneyEarned = 0;	//total amount of money the player earns during level
 	
 	// boolean for powerup
 	private static boolean autoReload = false; // code for purchasing to be added later
@@ -90,11 +93,15 @@ public class AnimationMain {
 
 
 	private static boolean newWave = true;
+	private static int wavesLeft;
 	private final int small = 1;
 	private final int mid = 2;
 	private final int big = 6;
 	private static int robotCounter = 0;
 
+	
+//font for HUD
+	private Font HUDfont = new Font("Elephant", Font.PLAIN, GRHEIGHT / 20);
 
 
 	public static void getImg() throws IOException {
@@ -103,6 +110,7 @@ public class AnimationMain {
 	public AnimationMain(GraphicsConsole x, int totalWaves, Gun[] guns, int levelNum)
 			throws LineUnavailableException, IOException, UnsupportedAudioFileException {
 		gc = x;
+		wavesLeft = totalWaves;
 
 // setting up variables
 // more
@@ -167,15 +175,16 @@ public class AnimationMain {
 		gunshotFire = ImageIO.read(new File("gunshot fire.png"));
 
 // robot pictures
+		thomasFace = ImageIO.read(new File("Thomas face.png"));
 		tinyRobotImg = ImageIO.read(new File("tinyRobot stand.png"));
-		
+		midRobotImg = ImageIO.read(new File("midRobot stand.png"));		
 		bigRobotImg = ImageIO.read(new File("bigRobot stand.png"));
 
 		CrossHair = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 10, GRHEIGHT / 10);
 
 		gc.enableMouseMotion();
 		gc.enableMouse(); // enables motion and click for the mouse
-		gc.setFont(new Font("Georgia", Font.PLAIN, 50)); //
+		gc.setFont(HUDfont); //
 
 // set the value for all variables
 		bulletsLeft = equippedGun.getMagazineSize();
@@ -303,18 +312,18 @@ public class AnimationMain {
 
 		if (newWave) {
 			bullets.removeAll(bullets);
-//x, y, width, height, damage, health, speed, ATKSpeed, standImg, rightImg, leftImg, hurtImage
+//x, y, width, height, damage, health, speed, ATKSpeed, money, pic
 			for (int i = 0; i < (2 * (int) (wave * small)); i++)
 				enemies.add(new Robot(ranNum(1, GRWIDTH), 0, size * small, size * small,
-						1, 10, 1, 5, tinyRobotImg));
+						1, 10, 1, 5, 10, tinyRobotImg));
 
 			for (int i = 0; i < wave * mid; i++)
 				enemies.add(new Robot(ranNum(1, GRWIDTH), 0, size * mid, size * mid,
-						3, 18, 2, 10, bigRobotImg));
+						3, 18, 2, 10, 20, midRobotImg));
 
 			for (int i = 0; i < wave * big; i++)
 				enemies.add(new Robot(ranNum(1, GRWIDTH), 0, size * big, size * big,
-						8, 25, 8, 18, bigRobotImg));
+						8, 25, 8, 18, 50, bigRobotImg));
 
 //			for (int i = 0; i < (2 * (int) (wave * small)); i++)
 //				enemies.add(new Robot(ranNum(1, GRWIDTH), 0, size * small, size * small,
@@ -377,11 +386,8 @@ public class AnimationMain {
 
 	private void drawGraphics() {
 		synchronized (gc) {
-			gc.drawString("Robots left in wave: " + String.valueOf(enemies.size()), 250, 250);
-
-			gc.drawString("Wave #: " + String.valueOf(wave), 250, 500);
-
-			if (enemies.size() < 2) {
+			//when robots are killed, new wave starts
+			if (enemies.size() <= 0) {
 				newWave = true;
 				wave++;
 			}
@@ -420,6 +426,7 @@ public class AnimationMain {
 					//if enemy health is zero, it dies
 					if (enem.getHealth() <= 0) {
 						destroyedEnemies.add(enem);
+						moneyEarned += enem.getMoney();
 					}
 					hit.add(rect);
 				
@@ -463,8 +470,30 @@ public class AnimationMain {
 // reload button
 			gc.drawImage(reloadButton, ReloadButton.x, ReloadButton.y, ReloadButton.width, ReloadButton.height);
 
-			gc.drawString("Forcefield Strength: " + String.valueOf(forceStrength), 500, 500);
+			
+			
 
+//HUD{
+//-forcefield power left
+			gc.setStroke(GRWIDTH / 130);
+			gc.setColor(Color.RED);
+			gc.fillRect(GRWIDTH / 4 * 3, GRHEIGHT / 20 * 18, GRWIDTH / 4, GRHEIGHT / 20);
+			gc.setColor(Color.GREEN);
+			gc.fillRect(GRWIDTH / 4 * 3, GRHEIGHT / 20 * 18, (int)(forceStrength * 1.44375), GRHEIGHT / 20);
+			gc.drawString("ForceField Power", (int)(GRWIDTH * 0.74), (int)(GRHEIGHT * 0.99));
+			gc.setColor(Color.BLACK);
+			gc.drawRect(GRWIDTH / 4 * 3, GRHEIGHT / 20 * 18, GRWIDTH / 4, GRHEIGHT / 20);
+			
+//-robots left in the wave
+			gc.setColor(Color.RED);
+			gc.drawString(" X " + String.valueOf(enemies.size()), 550, GRHEIGHT / 20 * 19);
+			gc.drawImage(thomasFace, 450, GRHEIGHT / 20 * 17, 100, 100);
+			
+//-number of waves left}
+			gc.drawString(String.valueOf(wavesLeft - wave), GRWIDTH / 100, GRHEIGHT / 4 * 3);
+			gc.setColor(Color.GREEN);
+			gc.drawString("   Waves Left", GRWIDTH / 100, GRHEIGHT / 4 * 3);
+						
 // bullets
 			if (bulletsLeft < 13) {
 				for (int b = 0; b < bulletsLeft; b++) {

@@ -9,17 +9,19 @@ public class Robot extends Rectangle{
 	private int health;
 	private int speed;
 	private int ATKSpeed;
+	private int money;
 	private Image pic;
 	
 	public static void main(String[] args) {
 	}
 	
-	public Robot(int x, int y, int width, int height, int damage, int health, int speed, int ATKSpeed, Image pic) {
+	public Robot(int x, int y, int width, int height, int damage, int health, int speed, int ATKSpeed, int money, Image pic) {
 		super(x, y, width, height);
 		this.damage = damage;
 		this.health = health;
 		this.speed = speed;
 		this.ATKSpeed = ATKSpeed;
+		this.money = money;
 		this.pic = pic;
 	}
 
@@ -55,6 +57,9 @@ public class Robot extends Rectangle{
 		return ATKSpeed;
 	}
 
+	public int getMoney() {
+		return money;
+	}
 	
 	public Image getPic() {
 		return pic;

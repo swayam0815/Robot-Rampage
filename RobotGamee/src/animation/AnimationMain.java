@@ -124,10 +124,7 @@ public class AnimationMain {
 
 		// statement to add boss to level, if boolean passed in from constructor
 		if (bossFight)
-			// x, y, width, height, damage, health, speed, ATKSpeed, money, pic
-			enemies.add(new Robot(ranNum(1, GRWIDTH), 0, size * 10, size * 10, 1, 1000, 2520, 1, 1500, tinyRobotImg));
-		// x, y, width, height, damage, health, speed, ATKSpeed, money, pic
-		enemies.add(new Robot(ranNum(1, GRWIDTH), 0, size * 10, size * 10, 1, 1000, 5000, 1, 1500, bossRobotImg));
+			enemies.add(new Robot(ranNum(1, GRWIDTH), 0, size * 10, size * 10, 1, 1000, 5000, 1, 1500, bossRobotImg));
 
 		// MAIN GAME LOOP
 		// level runs until all waves in level defeated or player loses due to

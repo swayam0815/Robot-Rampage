@@ -51,6 +51,7 @@ public class AnimationMain {
 	private Image tinyRobotImg; // "tinyRobot stand"
 	private Image midRobotImg; // "midRobot stand"
 	private Image bigRobotImg; // "bigRobot stand"
+	private Image bossRobotImg; // "bigRobot stand"
 
 	// hit boxes for buttons
 	private Rectangle CrossHair; // to aim
@@ -125,6 +126,8 @@ public class AnimationMain {
 		if (bossFight)
 			// x, y, width, height, damage, health, speed, ATKSpeed, money, pic
 			enemies.add(new Robot(ranNum(1, GRWIDTH), 0, size * 10, size * 10, 1, 1000, 2520, 1, 1500, tinyRobotImg));
+		// x, y, width, height, damage, health, speed, ATKSpeed, money, pic
+		enemies.add(new Robot(ranNum(1, GRWIDTH), 0, size * 10, size * 10, 1, 1000, 5000, 1, 1500, bossRobotImg));
 
 		// MAIN GAME LOOP
 		// level runs until all waves in level defeated or player loses due to
@@ -190,6 +193,7 @@ public class AnimationMain {
 		tinyRobotImg = ImageIO.read(new File("tinyRobot stand.png"));
 		midRobotImg = ImageIO.read(new File("midRobot stand.png"));
 		bigRobotImg = ImageIO.read(new File("bigRobot stand.png"));
+		bossRobotImg = ImageIO.read(new File("bossRobot stand.png"));
 
 		// hitbox for crosshair item
 		CrossHair = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 10, GRHEIGHT / 10);
@@ -339,10 +343,10 @@ public class AnimationMain {
 				enemies.add(new Robot(ranNum(1, GRWIDTH), 0, size * big, size * big, 8, 25, 8, 18, 15, bigRobotImg));
 			// setting new wave to false, since just spawned a new wave
 			newWave = false;
-		}	
+		}
 		// for each loop to go through the enemy arraylist and move all enemies
 		for (Robot rect : enemies) {
-			
+
 			// robot tracks the player
 			// and moves according to an if statement scneario
 			if (rect.x + rect.width < player.x + moveX)
@@ -355,7 +359,7 @@ public class AnimationMain {
 				rect.y++;
 
 			}
-			
+
 			// robots size increases to indicate less distance
 			if (counter % 5 == 0) {
 				rect.width++;
@@ -384,8 +388,7 @@ public class AnimationMain {
 		}
 		counter++; // incrementing counter, which help create frame reate
 	}
-	
-	
+
 	// method to draw all graphics for level
 	private void drawGraphics() {
 		synchronized (gc) {
@@ -420,7 +423,7 @@ public class AnimationMain {
 				// removing bullets from screen once they reach a specific size
 				if (rect.width <= equippedGun.getBulletD() - 5 && rect.height <= equippedGun.getBulletD() - 5)
 					hit.add(rect);
-				
+
 				// iterating through enemies list to check if any contact made
 				for (Robot enem : enemies) {
 
@@ -476,8 +479,8 @@ public class AnimationMain {
 			// reload button
 			gc.drawImage(reloadButton, ReloadButton.x, ReloadButton.y, ReloadButton.width, ReloadButton.height);
 
-			//HUD{
-			//-forcefield power left
+			// HUD{
+			// -forcefield power left
 			gc.setStroke(GRWIDTH / 130);
 			gc.setColor(Color.RED);
 			gc.fillRect(GRWIDTH / 4 * 3, GRHEIGHT / 20 * 18, GRWIDTH / 4, GRHEIGHT / 20);
@@ -487,15 +490,15 @@ public class AnimationMain {
 			gc.setColor(Color.BLACK);
 			gc.drawRect(GRWIDTH / 4 * 3, GRHEIGHT / 20 * 18, GRWIDTH / 4, GRHEIGHT / 20);
 
-			//-robots left in the wave
+			// -robots left in the wave
 			gc.setColor(Color.RED);
 			gc.drawString(" X " + String.valueOf(enemies.size()), 550, GRHEIGHT / 20 * 19);
 			gc.drawImage(thomasFace, 450, GRHEIGHT / 20 * 17, 100, 100);
 
-			//-number of waves left}
+			// -number of waves left}
 			gc.drawString(String.valueOf(wavesLeft - wave), GRWIDTH / 100, GRHEIGHT / 4 * 3);
 			gc.setColor(Color.GREEN);
-			gc.drawString("   Waves Left", GRWIDTH / 100, GRHEIGHT / 4 * 3);
+			gc.drawString("    Waves Left", GRWIDTH / 100, GRHEIGHT / 4 * 3);
 
 			// bullets
 			if (bulletsLeft < 13) {

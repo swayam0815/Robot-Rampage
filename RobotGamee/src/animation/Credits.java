@@ -5,6 +5,9 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
@@ -23,6 +26,9 @@ public class Credits {
 	private static Rectangle cursor = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 100, GRHEIGHT / 100); // to aim
 	private static Rectangle backBTN = new Rectangle(GRWIDTH / 54, (int) (GRHEIGHT / 1.09), GRWIDTH / 8, GRHEIGHT / 14);
 
+	// sound effects
+	private static Clip buttonSound;
+	private static AudioInputStream buttonEffect;
 
 // the images that will show on screen
 	private static Image cursorImg;
@@ -72,6 +78,11 @@ public class Credits {
 		if (cursor.intersects(backBTN)) {
 			back = backLight;
 			if (gc.getMouseClick() > 0) {
+				// button sound
+				buttonEffect = AudioSystem.getAudioInputStream(new File("Button Sound.wav").getAbsoluteFile());
+				buttonSound = AudioSystem.getClip();
+				buttonSound.open(buttonEffect);
+				buttonSound.start();
 				running = false;
 				new MainMenu(gc);
 			}

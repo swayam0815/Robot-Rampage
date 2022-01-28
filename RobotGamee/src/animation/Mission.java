@@ -5,6 +5,9 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
@@ -26,6 +29,10 @@ public class Mission {
 
 	private static Rectangle creditsBTN = new Rectangle(GRWIDTH / 141 * 57, GRHEIGHT / 78 * 55, GRWIDTH / 141 * 30,
 			GRHEIGHT / 79 * 9);
+
+	// sound effects
+	private static Clip buttonSound;
+	private static AudioInputStream buttonEffect;
 
 // the images that will show on screen
 	private static Image cursorImg;
@@ -79,8 +86,14 @@ public class Mission {
 
 		if (cursor.intersects(creditsBTN)) {
 			back = backLight;
-			if (gc.getMouseClick() > 0)
-				new levels(gc, guns);
+			if (gc.getMouseClick() > 0) {
+				// button sound
+				buttonEffect = AudioSystem.getAudioInputStream(new File("Button Sound.wav").getAbsoluteFile());
+				buttonSound = AudioSystem.getClip();
+				buttonSound.open(buttonEffect);
+				buttonSound.start();
+				new levels(gc, guns);	
+			}
 		} else
 			back = backDark;
 

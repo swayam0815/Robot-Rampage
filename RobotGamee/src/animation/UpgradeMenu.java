@@ -7,6 +7,9 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.awt.Image;
@@ -44,6 +47,10 @@ public class UpgradeMenu {
 			(int) (GRHEIGHT / 16.25), (int) (GRHEIGHT / 16.25));
 	private static Rectangle fireRateBTN = new Rectangle((int) (GRWIDTH / 1.335), (int) (GRHEIGHT / 1.53),
 			(int) (GRHEIGHT / 16.25), (int) (GRHEIGHT / 16.25));
+
+	// sound effects
+	private static Clip buttonSound;
+	private static AudioInputStream buttonEffect;
 
 // pictures that will show on screen
 	private Image background;
@@ -182,6 +189,11 @@ public class UpgradeMenu {
 		if (cursor.intersects(buyBTN)) {
 			buyImg = buyLight;
 			if (gc.getMouseClick() > 0 && setInitialValues.getMoney() >= currentGun.getPrice()) {
+				// button sound
+				buttonEffect = AudioSystem.getAudioInputStream(new File("Button Sound.wav").getAbsoluteFile());
+				buttonSound = AudioSystem.getClip();
+				buttonSound.open(buttonEffect);
+				buttonSound.start();
 				setInitialValues.setMoney(setInitialValues.getMoney() - currentGun.getPrice());
 				currentGun.setBought(true);
 			}
@@ -190,6 +202,11 @@ public class UpgradeMenu {
 		if (cursor.intersects(equipBTN)) {
 			equipImg = equipLight;
 			if (gc.getMouseClick() > 0) {
+				// button sound
+				buttonEffect = AudioSystem.getAudioInputStream(new File("Button Sound.wav").getAbsoluteFile());
+				buttonSound = AudioSystem.getClip();
+				buttonSound.open(buttonEffect);
+				buttonSound.start();
 				for (int i = 0; i < guns.length; i++) {
 					guns[i].setEquipped(false);
 				}
@@ -200,16 +217,27 @@ public class UpgradeMenu {
 			equipImg = equipDark;
 		if (cursor.intersects(pgDown)) {
 			pgDownImg = pgDownLight;
-			if (gc.getMouseClick() > 0)
+			if (gc.getMouseClick() > 0) {
+				// button sound
+				buttonEffect = AudioSystem.getAudioInputStream(new File("Button Sound.wav").getAbsoluteFile());
+				buttonSound = AudioSystem.getClip();
+				buttonSound.open(buttonEffect);
+				buttonSound.start();
 				if (gunNum - 1 >= 0)
 					gunNum--;
 				else
 					gunNum = guns.length - 1;
+			}
 		} else
 			pgDownImg = pgDownDark;
 		if (cursor.intersects(pgUp)) {
 			pgUpImg = pgUpLight;
 			if (gc.getMouseClick() > 0) {
+				// button sound
+				buttonEffect = AudioSystem.getAudioInputStream(new File("Button Sound.wav").getAbsoluteFile());
+				buttonSound = AudioSystem.getClip();
+				buttonSound.open(buttonEffect);
+				buttonSound.start();
 				if (gunNum + 1 < guns.length) {
 					gunNum++;
 				} else
@@ -220,6 +248,11 @@ public class UpgradeMenu {
 		if (cursor.intersects(backBTN)) {
 			back = backLight;
 			if (gc.getMouseClick() > 0) {
+				// button sound
+				buttonEffect = AudioSystem.getAudioInputStream(new File("Button Sound.wav").getAbsoluteFile());
+				buttonSound = AudioSystem.getClip();
+				buttonSound.open(buttonEffect);
+				buttonSound.start();
 				running = false;
 				new Start(gc, guns);
 			}
@@ -232,6 +265,11 @@ public class UpgradeMenu {
 				damageImg = addLight;
 				if (gc.getMouseClick() > 0) {
 					if (setInitialValues.getMoney() >= currentGun.getUpgradePrice()) {
+						// button sound
+						buttonEffect = AudioSystem.getAudioInputStream(new File("Button Sound.wav").getAbsoluteFile());
+						buttonSound = AudioSystem.getClip();
+						buttonSound.open(buttonEffect);
+						buttonSound.start();
 						currentGun.setDamage(currentGun.getDamage() + 1);
 						setInitialValues.setMoney(setInitialValues.getMoney() - currentGun.getUpgradePrice());
 						currentGun.setUpgradePrice(currentGun.getUpgradePrice() + 100);
@@ -244,6 +282,11 @@ public class UpgradeMenu {
 				magazineImg = addLight;
 				if (gc.getMouseClick() > 0) {
 					if (setInitialValues.getMoney() >= currentGun.getUpgradePrice()) {
+						// button sound
+						buttonEffect = AudioSystem.getAudioInputStream(new File("Button Sound.wav").getAbsoluteFile());
+						buttonSound = AudioSystem.getClip();
+						buttonSound.open(buttonEffect);
+						buttonSound.start();
 						currentGun.setMagazineSize(currentGun.getMagazineSize() + 1);
 						setInitialValues.setMoney(setInitialValues.getMoney() - currentGun.getUpgradePrice());
 						currentGun.setUpgradePrice(currentGun.getUpgradePrice() + 100);
@@ -256,6 +299,11 @@ public class UpgradeMenu {
 				reloadTimeImg = addLight;
 				if (gc.getMouseClick() > 0) {
 					if (setInitialValues.getMoney() >= currentGun.getUpgradePrice()) {
+						// button sound
+						buttonEffect = AudioSystem.getAudioInputStream(new File("Button Sound.wav").getAbsoluteFile());
+						buttonSound = AudioSystem.getClip();
+						buttonSound.open(buttonEffect);
+						buttonSound.start();
 						currentGun.setReloadTime(currentGun.getReloadTime() - 5);
 						setInitialValues.setMoney(setInitialValues.getMoney() - currentGun.getUpgradePrice());
 						currentGun.setUpgradePrice(currentGun.getUpgradePrice() + 100);
@@ -268,6 +316,11 @@ public class UpgradeMenu {
 				fireRateImg = addLight;
 				if (gc.getMouseClick() > 0) {
 					if (setInitialValues.getMoney() >= currentGun.getUpgradePrice()) {
+						// button sound
+						buttonEffect = AudioSystem.getAudioInputStream(new File("Button Sound.wav").getAbsoluteFile());
+						buttonSound = AudioSystem.getClip();
+						buttonSound.open(buttonEffect);
+						buttonSound.start();
 						currentGun.setFireRate(currentGun.getFireRate() - 1);
 						setInitialValues.setMoney(setInitialValues.getMoney() - currentGun.getUpgradePrice());
 						currentGun.setUpgradePrice(currentGun.getUpgradePrice() + 100);

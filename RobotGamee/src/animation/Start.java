@@ -8,6 +8,9 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
@@ -21,6 +24,10 @@ public class Start {
 
 	private static GraphicsConsole gc;
 // = new GraphicsConsole(GRWIDTH, GRHEIGHT);
+
+	// sound effects
+	private static Clip buttonSound;
+	private static AudioInputStream buttonEffect;
 
 // images that will show on screen
 	private static Image cursorImg;
@@ -88,6 +95,11 @@ public class Start {
 		if (cursor.intersects(levelsBTN)) {
 			levels = levelsLight;
 			if (gc.getMouseClick() > 0) {
+				// button sound
+				buttonEffect = AudioSystem.getAudioInputStream(new File("Button Sound.wav").getAbsoluteFile());
+				buttonSound = AudioSystem.getClip();
+				buttonSound.open(buttonEffect);
+				buttonSound.start();
 				running = false;
 				new levels(gc, guns);
 			}
@@ -97,6 +109,11 @@ public class Start {
 		if (cursor.intersects(upgradeBTN)) {
 			Upgrade = UpgradeLight;
 			if (gc.getMouseClick() > 0) {
+				// button sound
+				buttonEffect = AudioSystem.getAudioInputStream(new File("Button Sound.wav").getAbsoluteFile());
+				buttonSound = AudioSystem.getClip();
+				buttonSound.open(buttonEffect);
+				buttonSound.start();
 				running = false;
 				new UpgradeMenu(gc, guns);
 			}
@@ -106,6 +123,11 @@ public class Start {
 		if (cursor.intersects(backBTN)) {
 			back = backLight;
 			if (gc.getMouseClick() > 0) {
+				// button sound
+				buttonEffect = AudioSystem.getAudioInputStream(new File("Button Sound.wav").getAbsoluteFile());
+				buttonSound = AudioSystem.getClip();
+				buttonSound.open(buttonEffect);
+				buttonSound.start();
 				running = false;
 				new MainMenu(gc);
 			}

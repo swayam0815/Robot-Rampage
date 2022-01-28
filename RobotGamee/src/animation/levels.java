@@ -5,6 +5,9 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
@@ -38,6 +41,10 @@ public class levels {
 	private static Rectangle[] lvlRectangles = {lvl1, lvl2, lvl3, lvl4, lvlBoss};
 	
 	private static Rectangle backBTN = new Rectangle(GRWIDTH / 54, (int) (GRHEIGHT / 1.09), GRWIDTH / 8, GRHEIGHT / 14);
+
+	// sound effects
+	private static Clip buttonSound;
+	private static AudioInputStream buttonEffect;
 
 // images
 	private static Image lvl;
@@ -116,6 +123,11 @@ public class levels {
 		if (cursor.intersects(backBTN)) {
 			back = backLight;
 			if (gc.getMouseClick() > 0) {
+				// button sound
+				buttonEffect = AudioSystem.getAudioInputStream(new File("Button Sound.wav").getAbsoluteFile());
+				buttonSound = AudioSystem.getClip();
+				buttonSound.open(buttonEffect);
+				buttonSound.start();
 				running = false;
 				new Start(gc, guns);
 			}
@@ -125,6 +137,11 @@ public class levels {
 		if (cursor.intersects(lvl1)) {
 			lvlImages[0] = oneLight;
 			if (gc.getMouseClick() > 0) {
+				// button sound
+				buttonEffect = AudioSystem.getAudioInputStream(new File("Button Sound.wav").getAbsoluteFile());
+				buttonSound = AudioSystem.getClip();
+				buttonSound.open(buttonEffect);
+				buttonSound.start();
 				new AnimationMain(gc, 5, guns, 0);
 			}
 		} else
@@ -133,8 +150,14 @@ public class levels {
 		if (cursor.intersects(lvl2)) {
 			lvlImages[1] = twoLight;
 			if (gc.getMouseClick() > 0) {
-				if (levelss[1])
+				if (levelss[1]) {
+					// button sound
+					buttonEffect = AudioSystem.getAudioInputStream(new File("Button Sound.wav").getAbsoluteFile());
+					buttonSound = AudioSystem.getClip();
+					buttonSound.open(buttonEffect);
+					buttonSound.start();
 					new AnimationMain(gc, 10, guns, 1);
+				}
 			}
 		} else
 			lvlImages[1] = twoDark;
@@ -142,8 +165,14 @@ public class levels {
 		if (cursor.intersects(lvl3)) {
 			lvlImages[2] = threeLight;
 			if (gc.getMouseClick() > 0) {
-				if (levelss[2])
+				if (levelss[2]) {
+					// button sound
+					buttonEffect = AudioSystem.getAudioInputStream(new File("Button Sound.wav").getAbsoluteFile());
+					buttonSound = AudioSystem.getClip();
+					buttonSound.open(buttonEffect);
+					buttonSound.start();
 					new AnimationMain(gc, 15, guns, 2);
+				}
 			}
 		} else
 			lvlImages[2] = threeDark;
@@ -151,8 +180,14 @@ public class levels {
 		if (cursor.intersects(lvl4)) {
 			lvlImages[3] = fourLight;
 			if (gc.getMouseClick() > 0) {
-				if (levelss[3])
+				if (levelss[3]) {
+					// button sound
+					buttonEffect = AudioSystem.getAudioInputStream(new File("Button Sound.wav").getAbsoluteFile());
+					buttonSound = AudioSystem.getClip();
+					buttonSound.open(buttonEffect);
+					buttonSound.start();
 					new AnimationMain(gc, 20, guns, 4);
+				}
 			}
 		} else
 			lvlImages[3] = fourDark;
@@ -160,7 +195,14 @@ public class levels {
 		if (cursor.intersects(lvlBoss)) {
 			lvlImages[4] = bossLight;
 			if (gc.getMouseClick() > 0) {
-// play boss level
+				if (levelss[5]) {
+					// button sound
+					buttonEffect = AudioSystem.getAudioInputStream(new File("Button Sound.wav").getAbsoluteFile());
+					buttonSound = AudioSystem.getClip();
+					buttonSound.open(buttonEffect);
+					buttonSound.start();
+					// play boss level
+				}
 			}
 		} else
 			lvlImages[4] = null;

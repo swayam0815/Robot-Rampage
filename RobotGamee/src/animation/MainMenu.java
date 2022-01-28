@@ -5,6 +5,9 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
@@ -20,8 +23,7 @@ public class MainMenu {
 // gc
 	private static GraphicsConsole gc = new GraphicsConsole(GRWIDTH, GRHEIGHT);
 
-	private static Rectangle cursor = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 100, GRHEIGHT / 100); // to
-// aim
+	private static Rectangle cursor = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 100, GRHEIGHT / 100); // to aim
 
 	private static Rectangle startBTN = new Rectangle(GRWIDTH / 141 * 57, GRHEIGHT / 79 * 34, GRWIDTH / 141 * 30,
 			GRHEIGHT / 79 * 9);
@@ -29,6 +31,11 @@ public class MainMenu {
 			GRHEIGHT / 79 * 9);
 	private static Rectangle creditsBTN = new Rectangle(GRWIDTH / 141 * 57, GRHEIGHT / 79 * 58, GRWIDTH / 141 * 30,
 			GRHEIGHT / 79 * 9);
+
+	// sound effects
+	private static Clip buttonSound;
+	private static AudioInputStream buttonEffect;
+
 
 // the images that will show on screen
 	private static Image start;
@@ -92,6 +99,11 @@ public class MainMenu {
 		if (cursor.intersects(startBTN)) {
 			start = startLight;
 			if (gc.getMouseClick() > 0) {
+				// button sound
+				buttonEffect = AudioSystem.getAudioInputStream(new File("Button Sound.wav").getAbsoluteFile());
+				buttonSound = AudioSystem.getClip();
+				buttonSound.open(buttonEffect);
+				buttonSound.start();
 				running = false;
 				new Start(gc, setInitialValues.getGuns());
 			}
@@ -101,6 +113,11 @@ public class MainMenu {
 		if (cursor.intersects(creditsBTN)) {
 			credits = creditsLight;
 			if (gc.getMouseClick() > 0) {
+				// button sound
+				buttonEffect = AudioSystem.getAudioInputStream(new File("Button Sound.wav").getAbsoluteFile());
+				buttonSound = AudioSystem.getClip();
+				buttonSound.open(buttonEffect);
+				buttonSound.start();
 				running = false;
 				new Credits(gc);
 			}
@@ -110,8 +127,14 @@ public class MainMenu {
 
 		if (cursor.intersects(quitBTN)) {
 			quit = quitLight;
-			if (gc.getMouseClick() > 0)
+			if (gc.getMouseClick() > 0) {
+				// button sound
+				buttonEffect = AudioSystem.getAudioInputStream(new File("Button Sound.wav").getAbsoluteFile());
+				buttonSound = AudioSystem.getClip();
+				buttonSound.open(buttonEffect);
+				buttonSound.start();
 				gc.close();
+			}
 		} else
 			quit = quitDark;
 

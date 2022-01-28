@@ -33,10 +33,12 @@ public class AnimationMain {
 	private static Clip dryFire;
 	private static Clip shellFall;
 	private static Clip gunCocking;
+	private static Clip waterShot;
 	private static AudioInputStream gunshotEffect;
 	private static AudioInputStream dryFireEffect;
 	private static AudioInputStream gunCockingEffect;
 	private static AudioInputStream shellFallEffect;
+	private static AudioInputStream waterShotEffect;
 
 	// pictures
 	private Image backGround; // "bakground.jpg"
@@ -244,12 +246,20 @@ public class AnimationMain {
 			if (gc.getMouseButton(0) && shotCounter % equippedGun.getFireRate() == 0) {
 				if (bulletsLeft > 0) {
 					Gun.shoot(bullets, CrossHair.x, CrossHair.y, bulletSize);
-
-// gunshot sound
-					gunshotEffect = AudioSystem.getAudioInputStream(new File("gunshot sound.wav").getAbsoluteFile());
-					gunshotSound = AudioSystem.getClip();
-					gunshotSound.open(gunshotEffect);
-					gunshotSound.start();
+					if (equippedGun.getName().equals("hose")) {
+						// gunshot sound
+						gunshotEffect = AudioSystem.getAudioInputStream(new File("water shot.wav").getAbsoluteFile());
+						gunshotSound = AudioSystem.getClip();
+						gunshotSound.open(gunshotEffect);
+						gunshotSound.start();
+					}
+					else {
+						// gunshot sound
+						gunshotEffect = AudioSystem.getAudioInputStream(new File("gunshot sound.wav").getAbsoluteFile());
+						gunshotSound = AudioSystem.getClip();
+						gunshotSound.open(gunshotEffect);
+						gunshotSound.start();
+					}
 
 					bulletsLeft--;
 				} else {

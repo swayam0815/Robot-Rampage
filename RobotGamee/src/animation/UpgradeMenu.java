@@ -34,18 +34,38 @@ public class UpgradeMenu {
 	private static Rectangle pgUp = new Rectangle((int) (GRWIDTH / 1.29), GRHEIGHT / 13, GRWIDTH / 11, GRWIDTH / 11);
 	private static Rectangle equippedBTN = new Rectangle(GRWIDTH / 5, (int) (GRWIDTH / 2.6), (int) (GRWIDTH / 4.125),
 			GRHEIGHT / 7);
-	private static Rectangle buyBTN = new Rectangle(GRWIDTH / 5, (int) (GRWIDTH / 2.6), (int) (GRWIDTH / 4.125),
+	private static Rectangle buyBTN = new Rectangle(GRWIDTH / 5, (int) (GRWIDTH / 2.6), (int) (GRWIDTH / 4.125), // button
+																													// for
+																													// buying
+																													// guns
 			GRHEIGHT / 7);
-	private static Rectangle equipBTN = new Rectangle(GRWIDTH / 5, (int) (GRWIDTH / 2.6), 0, 0);
-	private static Rectangle backBTN = new Rectangle(GRWIDTH / 54, (int) (GRHEIGHT / 1.09), GRWIDTH / 8, GRHEIGHT / 14);
+	private static Rectangle equipBTN = new Rectangle(GRWIDTH / 5, (int) (GRWIDTH / 2.6), 0, 0); // button for equipping
+	private static Rectangle backBTN = new Rectangle(GRWIDTH / 54, (int) (GRHEIGHT / 1.09), GRWIDTH / 8, GRHEIGHT / 14);// button
+																														// for
+																														// going
+																														// back
 
-	private static Rectangle damageBTN = new Rectangle((int) (GRWIDTH / 1.335), (int) (GRHEIGHT / 2.45),
+	private static Rectangle damageBTN = new Rectangle((int) (GRWIDTH / 1.335), (int) (GRHEIGHT / 2.45), // button that
+																											// increases
+																											// damage of
+																											// gun
 			(int) (GRHEIGHT / 16.25), (int) (GRHEIGHT / 16.25));
-	private static Rectangle magazineBTN = new Rectangle((int) (GRWIDTH / 1.335), (int) (GRHEIGHT / 2.06),
+	private static Rectangle magazineBTN = new Rectangle((int) (GRWIDTH / 1.335), (int) (GRHEIGHT / 2.06), // button
+																											// that
+																											// increases
+																											// magazine
+																											// size
 			(int) (GRHEIGHT / 16.25), (int) (GRHEIGHT / 16.25));
-	private static Rectangle reloadTimeBTN = new Rectangle((int) (GRWIDTH / 1.335), (int) (GRHEIGHT / 1.78),
+	private static Rectangle reloadTimeBTN = new Rectangle((int) (GRWIDTH / 1.335), (int) (GRHEIGHT / 1.78), // button
+																												// that
+																												// decreases
+																												// reload
+																												// time
 			(int) (GRHEIGHT / 16.25), (int) (GRHEIGHT / 16.25));
-	private static Rectangle fireRateBTN = new Rectangle((int) (GRWIDTH / 1.335), (int) (GRHEIGHT / 1.53),
+	private static Rectangle fireRateBTN = new Rectangle((int) (GRWIDTH / 1.335), (int) (GRHEIGHT / 1.53), // button
+																											// that
+																											// increases
+																											// fire rate
 			(int) (GRHEIGHT / 16.25), (int) (GRHEIGHT / 16.25));
 
 	// sound effects
@@ -96,27 +116,25 @@ public class UpgradeMenu {
 // le guns
 	private static Gun[] guns;
 
+//	the font for screen
 	Font moneyLeftFont = new Font("Elephant", Font.ITALIC, GRWIDTH / 40); // font for money at the top
 	private static boolean running;
 
 	public UpgradeMenu(GraphicsConsole gc, Gun[] guns)
 			throws IOException, LineUnavailableException, UnsupportedAudioFileException {
-		System.out.println("object declared");
+//		setting the initial values
 		UpgradeMenu.gc = gc;
-		System.out.println("gc");
-
 		running = true;
-		System.out.println("running");
-
 		gunNum = 0;
 		UpgradeMenu.guns = guns;
-
 		currentGun = guns[0];
-		System.out.println("current");
 
 		init();
 	}
 
+	/**
+	 * sets the initial values and starts the main loop
+	 */
 	public void init() throws IOException, LineUnavailableException, UnsupportedAudioFileException {
 		setValues();
 		gc.setFont(moneyLeftFont);
@@ -128,10 +146,16 @@ public class UpgradeMenu {
 		}
 	}
 
+	/**
+	 * @return the gun that's equipped
+	 */
 	public static Gun getGun() {
 		return equippedGun;
 	}
 
+	/**
+	 * sets the initial values for pics, variables, ...
+	 */
 	public void setValues() throws IOException {
 		gc.enableMouseMotion();
 		gc.enableMouse(); // enables motion and click for the mouse
@@ -162,10 +186,16 @@ public class UpgradeMenu {
 
 	}
 
+	/**
+	 * @return an array of guns
+	 */
 	public static Gun[] getGuns() {
 		return guns;
 	}
 
+	/**
+	 * @param the button you need to show
+	 */
 	private void showButton(Rectangle button) {
 		button.width = (int) (GRWIDTH / 4.125);
 		button.height = GRHEIGHT / 7;
@@ -173,11 +203,17 @@ public class UpgradeMenu {
 		button.y = (int) (GRWIDTH / 2.6);
 	}
 
+	/**
+	 * @param the button you need to hide
+	 */
 	private void hideButton(Rectangle button) {
 		button.width = button.height = 0;
 		button.x = button.y = -GRHEIGHT;
 	}
 
+	/**
+	 * the physics of the game
+	 */
 	private void mechanics() throws IOException, LineUnavailableException, UnsupportedAudioFileException {
 		cursor.x = gc.getMouseX() - (cursor.width / 2);
 		cursor.y = gc.getMouseY() - (cursor.height / 2);
@@ -185,7 +221,7 @@ public class UpgradeMenu {
 		currentGun = guns[gunNum];
 
 // buttons light up when hovered over
-		if (cursor.intersects(buyBTN)) {
+		if (cursor.intersects(buyBTN)) { // button for buying
 			buyImg = buyLight;
 			if (gc.getMouseClick() > 0 && setInitialValues.getMoney() >= currentGun.getPrice()) {
 				// button sound
@@ -198,7 +234,7 @@ public class UpgradeMenu {
 			}
 		} else
 			buyImg = buyDark;
-		if (cursor.intersects(equipBTN)) {
+		if (cursor.intersects(equipBTN)) { // button for equipping
 			equipImg = equipLight;
 			if (gc.getMouseClick() > 0) {
 				// button sound
@@ -214,7 +250,7 @@ public class UpgradeMenu {
 			}
 		} else
 			equipImg = equipDark;
-		if (cursor.intersects(pgDown)) {
+		if (cursor.intersects(pgDown)) { // button for moving down a gun
 			pgDownImg = pgDownLight;
 			if (gc.getMouseClick() > 0) {
 				// button sound
@@ -229,7 +265,7 @@ public class UpgradeMenu {
 			}
 		} else
 			pgDownImg = pgDownDark;
-		if (cursor.intersects(pgUp)) {
+		if (cursor.intersects(pgUp)) { // button for moving up a gun
 			pgUpImg = pgUpLight;
 			if (gc.getMouseClick() > 0) {
 				// button sound
@@ -244,7 +280,7 @@ public class UpgradeMenu {
 			}
 		} else
 			pgUpImg = pgUpDark;
-		if (cursor.intersects(backBTN)) {
+		if (cursor.intersects(backBTN)) { // button for going to the previous screen
 			back = backLight;
 			if (gc.getMouseClick() > 0) {
 				// button sound
@@ -260,7 +296,7 @@ public class UpgradeMenu {
 
 // add buttons (works only if gun has been bought)
 		if (currentGun.isBought()) {
-			if (cursor.intersects(damageBTN)) {
+			if (cursor.intersects(damageBTN)) { // button for upgrading damage
 				damageImg = addLight;
 				if (gc.getMouseClick() > 0) {
 					if (setInitialValues.getMoney() >= currentGun.getUpgradePrice()) {
@@ -277,7 +313,7 @@ public class UpgradeMenu {
 			} else
 				damageImg = addDark;
 
-			if (cursor.intersects(magazineBTN)) {
+			if (cursor.intersects(magazineBTN)) { // button for upgrading magazine size
 				magazineImg = addLight;
 				if (gc.getMouseClick() > 0) {
 					if (setInitialValues.getMoney() >= currentGun.getUpgradePrice()) {
@@ -294,7 +330,8 @@ public class UpgradeMenu {
 			} else
 				magazineImg = addDark;
 
-			if (cursor.intersects(reloadTimeBTN) && currentGun.getReloadTime() > 20) {
+			if (cursor.intersects(reloadTimeBTN) && currentGun.getReloadTime() > 20) { // button for upgrading reload
+																						// time
 				reloadTimeImg = addLight;
 				if (gc.getMouseClick() > 0) {
 					if (setInitialValues.getMoney() >= currentGun.getUpgradePrice()) {
@@ -311,7 +348,7 @@ public class UpgradeMenu {
 			} else
 				reloadTimeImg = addDark;
 
-			if (cursor.intersects(fireRateBTN) && currentGun.getFireRate() > 1) {
+			if (cursor.intersects(fireRateBTN) && currentGun.getFireRate() > 1) { // button for upgrading fire rate
 				fireRateImg = addLight;
 				if (gc.getMouseClick() > 0) {
 					if (setInitialValues.getMoney() >= currentGun.getUpgradePrice()) {
@@ -348,6 +385,9 @@ public class UpgradeMenu {
 
 	}
 
+	/**
+	 * draws everything on screen
+	 */
 	public void drawGraphics() throws IOException {
 		synchronized (gc) {
 			gc.setBackgroundColor(Color.BLACK);
@@ -384,10 +424,11 @@ public class UpgradeMenu {
 
 //price of the gun
 			if (!currentGun.isBought()) {
-				gc.drawImage(roboPartsImg, (int)(GRHEIGHT / 1.25), (int)(GRHEIGHT / 1.44444), GRHEIGHT / 10, GRHEIGHT / 10);
-				gc.drawString(currentGun.getPrice() + "", (int)(GRWIDTH / 1.925), (int)(GRHEIGHT / 1.3));
+				gc.drawImage(roboPartsImg, (int) (GRHEIGHT / 1.25), (int) (GRHEIGHT / 1.44444), GRHEIGHT / 10,
+						GRHEIGHT / 10);
+				gc.drawString(currentGun.getPrice() + "", (int) (GRWIDTH / 1.925), (int) (GRHEIGHT / 1.3));
 			}
-			
+
 // add buttons (magazine, damage, ...)
 			gc.drawImage(damageImg, damageBTN);
 			gc.drawImage(magazineImg, magazineBTN);

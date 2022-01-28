@@ -1,5 +1,6 @@
 package animation;
 
+// importing libraries to use
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -15,19 +16,14 @@ import hsa2.*;
 
 public class levels {
 
-	public static void main(String[] args)
-			throws LineUnavailableException, IOException, UnsupportedAudioFileException, InterruptedException {
-	}
-
 	private static Dimension GRsize = Toolkit.getDefaultToolkit().getScreenSize(); // creates a variable to get screen
 	private static boolean[] levelss = new boolean[6];
 	private static int GRHEIGHT = (int) GRsize.getHeight() - 70; // (int)GRsize.getHeight() - 70
 	private static int GRWIDTH = (int) (GRHEIGHT * 1.777777777778); // this sets the size of the grid to fit
 
 	private static GraphicsConsole gc;
-// = new GraphicsConsole(GRWIDTH, GRHEIGHT);
 
-// rectangles
+	// hitboxes for each button
 	private static Rectangle lvl1 = new Rectangle((int) (GRWIDTH / 5.923), (int) (GRHEIGHT / 3.421),
 			(int) (GRWIDTH / 9.625), (int) (GRWIDTH / 9.625));
 	private static Rectangle lvl2 = new Rectangle((int) (GRWIDTH / 1.383), (int) (GRHEIGHT / 3.421),
@@ -39,14 +35,13 @@ public class levels {
 	private static Rectangle lvlBoss = new Rectangle((int) (GRWIDTH / 2.51), (int) (GRHEIGHT / 3.421),
 			(int) (GRWIDTH / 4.957), (int) (GRHEIGHT / 2.407));
 	private static Rectangle[] lvlRectangles = { lvl1, lvl2, lvl3, lvl4, lvlBoss };
-
 	private static Rectangle backBTN = new Rectangle(GRWIDTH / 54, (int) (GRHEIGHT / 1.09), GRWIDTH / 8, GRHEIGHT / 14);
 
 	// sound effects
 	private static Clip buttonSound;
 	private static AudioInputStream buttonEffect;
 
-// images
+	// images
 	private static Image lvl;
 	private static Image cursorImg;
 	private static Image cursorClicked;

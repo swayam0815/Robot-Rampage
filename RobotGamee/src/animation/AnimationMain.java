@@ -140,19 +140,20 @@ public class AnimationMain {
 
 // lose if forcefield dies, win if robots die
 		if (forceStrength <= 0) {
-			new Mission(gc, false, guns);
+			new Mission(gc, false, guns, moneyEarned);
 		} else if (forceStrength > 0) {
 
 			if (levelNum != 5) {
 				if (levelNum + 1 < 5) {
 					levels.win(levelNum + 1);
-					new Mission(gc, true, guns);
+					new Mission(gc, true, guns, moneyEarned);
 				} else {
 					levels.win(levelNum);
 
-					new Mission(gc, true, guns);
+					new Mission(gc, true, guns, moneyEarned);
 				}
-			} else {
+			}
+			else {
 				gc.drawImage(ImageIO.read(new File("bossman.jpg")), 0, 0, GRWIDTH, GRHEIGHT);
 				AudioInputStream boss = AudioSystem.getAudioInputStream(new File("EVILBOSS.wav").getAbsoluteFile());
 				Clip evilBoss = AudioSystem.getClip();
@@ -160,7 +161,7 @@ public class AnimationMain {
 				evilBoss.start();
 
 				if (!evilBoss.isActive())
-					new Mission(gc, true, guns);
+					new Mission(gc, true, guns, moneyEarned);
 			}
 
 		}
@@ -315,15 +316,15 @@ public class AnimationMain {
 //x, y, width, height, damage, health, speed, ATKSpeed, money, pic
 			for (int i = 0; i < (2 * (int) (wave * small)); i++)
 				enemies.add(new Robot(ranNum(1, GRWIDTH), 0, size * small, size * small,
-						1, 10, 1, 5, 10, tinyRobotImg));
+						1, 10, 1, 5, 3, tinyRobotImg));
 
 			for (int i = 0; i < wave * mid; i++)
 				enemies.add(new Robot(ranNum(1, GRWIDTH), 0, size * mid, size * mid,
-						3, 18, 2, 10, 20, midRobotImg));
+						3, 18, 2, 10, 10, midRobotImg));
 
 			for (int i = 0; i < wave * big; i++)
 				enemies.add(new Robot(ranNum(1, GRWIDTH), 0, size * big, size * big,
-						8, 25, 8, 18, 50, bigRobotImg));
+						8, 25, 8, 18, 15, bigRobotImg));
 
 //			for (int i = 0; i < (2 * (int) (wave * small)); i++)
 //				enemies.add(new Robot(ranNum(1, GRWIDTH), 0, size * small, size * small,

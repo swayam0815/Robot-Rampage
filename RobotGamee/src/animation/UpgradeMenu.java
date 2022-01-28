@@ -383,6 +383,12 @@ public class UpgradeMenu {
 			gc.setColor(new Color(0, 200, 20));
 			gc.drawString("" + setInitialValues.getMoney(), GRWIDTH / 8, GRHEIGHT / 11);
 
+//price of the gun
+			if (!currentGun.isBought()) {
+				gc.drawImage(roboPartsImg, (int)(GRHEIGHT / 1.25), (int)(GRHEIGHT / 1.44444), GRHEIGHT / 10, GRHEIGHT / 10);
+				gc.drawString(currentGun.getPrice() + "", (int)(GRWIDTH / 1.925), (int)(GRHEIGHT / 1.3));
+			}
+			
 // add buttons (magazine, damage, ...)
 			gc.drawImage(damageImg, damageBTN);
 			gc.drawImage(magazineImg, magazineBTN);

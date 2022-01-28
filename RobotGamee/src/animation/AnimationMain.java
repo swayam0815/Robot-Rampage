@@ -48,7 +48,15 @@ public class AnimationMain {
 	private Image gunshotFire; // "gunshot fire.png"
 
 	// robot pictures
-	private Image robo; // "Thomas face.png"
+	private Image tinyRobotStand; // "tinyRobot stand"
+	private Image tinyRobotRight; // "tinyRobot right"
+	private Image tinyRobotLeft; // "tinyRobot left"
+	private Image tinyRobotHurt; // "tinyRobot hurt"
+
+	private Image bigRobotStand; // "bigRobot stand"
+	private Image bigRobotRight; // "bigRobot right"
+	private Image bigRobotLeft; // "bigRobot left"
+	private Image bigRobotHurt; // "bigRobot hurt"
 
 	// hit boxes for buttons
 	private Rectangle CrossHair; // to aim
@@ -60,8 +68,6 @@ public class AnimationMain {
 	private int bulletsLeft; // number of bullets left in the gun
 	private int reload; // provides an angle for the arc around the reload button
 	private boolean reloading; // checks if the gun is reloading
-	private boolean shotFired; // checks if the player has shot the gun
-	private int fireCounter; // counter for the fire out of the gun
 	private int moveX = 0; // the amount of movement for the player
 	private static int forceStrength = 200; // health of the forcefield protecting the player
 	
@@ -84,15 +90,15 @@ public class AnimationMain {
 	private Rectangle player = new Rectangle(0, 0, (int) (GRHEIGHT / 2 * 1.777777777777778), GRHEIGHT / 2);
 	
 	// enemy attributes
-	private ArrayList<Rectangle> enemies = new ArrayList<Rectangle>();
+	private ArrayList<Robot> enemies = new ArrayList<Robot>();
 	private static int wave = 1;
-	private ArrayList<Rectangle> destroyedEnemies = new ArrayList<Rectangle>();
+	private ArrayList<Robot> destroyedEnemies = new ArrayList<Robot>();
 
 
 	private static boolean newWave = true;
 	private final int small = 1;
-	private final int big = 2;
-	private final int lar = 6;
+	private final int mid = 2;
+	private final int big = 6;
 	private static int robotCounter = 0;
 
 
@@ -167,7 +173,15 @@ public class AnimationMain {
 		gunshotFire = ImageIO.read(new File("gunshot fire.png"));
 
 // robot pictures
-		robo = ImageIO.read(new File("tinyRobot stand.png"));
+		tinyRobotStand = ImageIO.read(new File("tinyRobot stand.png"));
+		tinyRobotRight = ImageIO.read(new File("tinyRobot right.png"));
+		tinyRobotLeft = ImageIO.read(new File("tinyRobot left.png"));
+		tinyRobotHurt = ImageIO.read(new File("tinyRobot hurt.png"));
+
+		bigRobotStand = ImageIO.read(new File("bigRobot stand.png"));
+		bigRobotRight = ImageIO.read(new File("bigRobot right.png"));
+		bigRobotLeft = ImageIO.read(new File("bigRobot left.png"));
+		bigRobotHurt = ImageIO.read(new File("bigRobot hurt.png"));
 
 		CrossHair = new Rectangle(GRWIDTH / 2, GRHEIGHT / 2, GRHEIGHT / 10, GRHEIGHT / 10);
 
@@ -179,8 +193,6 @@ public class AnimationMain {
 		bulletsLeft = equippedGun.getMagazineSize();
 		reload = 0;
 		reloading = false;
-		shotFired = false;
-		fireCounter = 10;
 
 	}
 
@@ -303,51 +315,63 @@ public class AnimationMain {
 
 		if (newWave) {
 			bullets.removeAll(bullets);
-
+//x, y, width, height, damage, health, speed, ATKSpeed, standImg, rightImg, leftImg, hurtImage
 			for (int i = 0; i < (2 * (int) (wave * small)); i++)
-				enemies.add(new Rectangle(ranNum(1, GRWIDTH), 0, size * small, size * small));
+				enemies.add(new Robot(ranNum(1, GRWIDTH), 0, size * small, size * small,
+						1, 10, 1, 5, tinyRobotStand, tinyRobotRight, tinyRobotLeft, tinyRobotHurt));
+
+			for (int i = 0; i < wave * mid; i++)
+				enemies.add(new Robot(ranNum(1, GRWIDTH), 0, size * mid, size * mid,
+						3, 18, 2, 10, bigRobotStand, bigRobotRight, bigRobotLeft, bigRobotHurt));
 
 			for (int i = 0; i < wave * big; i++)
-				enemies.add(new Rectangle(ranNum(1, GRWIDTH), 0, size * big, size * big));
-
-			for (int i = 0; i < wave * lar; i++)
-				enemies.add(new Rectangle(ranNum(1, GRWIDTH), 0, size * lar, size * lar));
+				enemies.add(new Robot(ranNum(1, GRWIDTH), 0, size * big, size * big,
+						8, 25, 8, 18, bigRobotStand, bigRobotRight, bigRobotLeft, bigRobotHurt));
 
 			newWave = false;
 		}
 
-		for (Rectangle rect : enemies) {
+		for (Robot rect : enemies) {
 
+			//robot tracks the player
 			if (rect.x + rect.width < player.x + moveX)
 				rect.x += 2;
 
 			if (rect.x > player.x + moveX + player.width)
 				rect.x -= 2;
 
-			if (counter % 2 == 0) {
+			//each robot moves at their own speed
+			if (counter % rect.getSpeed() == 0) {
 				rect.y++;
 
 			}
 
+			//robots size increases to indicate less distance
 			if (counter % 5 == 0) {
 				rect.width++;
 				rect.height++;
 			}
-// rect.height = rect.width = rect.y + size;
-// this is for robots to increase size when moving forward
 
-			counter++;
-
-			if (rect.y >= GRHEIGHT - (rect.y + rect.y / 2)) {
-				rect.y = GRHEIGHT - (rect.y + rect.y / 2);
-				forceStrength--;
+			//this stops the robots from getting too big
+			if (rect.height > GRHEIGHT / 10 * 9) {
+				rect.width = rect.height = GRHEIGHT / 10 * 9;
 			}
 
+			//robots deal damage when they get close enough
+			if (rect.y >= GRHEIGHT - rect.height - (GRHEIGHT / 7)) {
+				rect.y = GRHEIGHT - rect.height - (GRHEIGHT / 7);
+				if (counter % rect.getATKSpeed() == 0) {
+					forceStrength -= rect.getDamage();
+				}
+			}
+
+			//sets limits for robots as to not leave the screen
 			if (rect.x < 0)
 				rect.x = 1;
 			if (rect.x + rect.width > GRWIDTH)
 				rect.x = GRWIDTH - rect.width;
 		}
+		counter++;
 	}
 
 	private void drawGraphics() {
@@ -367,9 +391,10 @@ public class AnimationMain {
 			gc.drawImage(backGround, 0, 0, (int) (GRHEIGHT * 1.777777777778), GRHEIGHT);
 
 // drawing enemies
-			for (Rectangle rect : enemies) {
-				gc.drawImage(robo, rect);
+			for (Robot rect : enemies) {
+				gc.drawImage(rect.getStandImg(), rect);
 			}
+			//CHECK
 
 // animating projectiles/bullets
 			for (Rectangle rect : bullets) {
@@ -385,15 +410,18 @@ public class AnimationMain {
 				}
 				if (rect.width <= equippedGun.getBulletD() - 5 && rect.height <= equippedGun.getBulletD() - 5)
 					hit.add(rect);
-				for (Rectangle enem : enemies) {
+				for (Robot enem : enemies) {
 
+					//when hit, enemy loses health the amount of the gun's damage
 					if (rect.intersects(enem)) {
-
-						if (rect.intersects(enem))
-							destroyedEnemies.add(enem);
-						hit.add(rect);
+						enem.setHealth(enem.getHealth() - equippedGun.getDamage());
 					}
-
+					//if enemy health is zero, it dies
+					if (enem.getHealth() <= 0) {
+						destroyedEnemies.add(enem);
+					}
+					hit.add(rect);
+				
 				}
 			}
 			bulletSpeed++; // incrementing counter for above statement
@@ -406,18 +434,6 @@ public class AnimationMain {
 
 // Forcefield
 			gc.drawImage(forcefield, 0, 0, GRWIDTH, GRHEIGHT);
-
-// fire out of the gun
-			if (shotFired || fireCounter < 3) {
-				if (player.x + moveX > GRWIDTH / 3)
-					gc.drawImage(gunshotFire, (int) (player.x - (GRHEIGHT / 5) * 1.85) + moveX, player.y - GRHEIGHT / 5,
-							GRWIDTH / 10 * 6, GRHEIGHT / 10 * 7);
-				else
-					gc.drawImage(gunshotFire, (int) (player.x - (GRHEIGHT / 5) * 0.5) + moveX, player.y - GRHEIGHT / 5,
-							GRWIDTH / 10 * 6, GRHEIGHT / 10 * 7);
-
-				fireCounter++;
-			}
 
 // crosshair
 			gc.drawImage(crosshair, CrossHair.x, CrossHair.y, CrossHair.width, CrossHair.height);
@@ -469,8 +485,6 @@ public class AnimationMain {
 			if (counter > 100000)
 				counter = 0;
 			if (robotCounter > 100000)
-				counter = 0;
-			if (fireCounter > 100000)
 				counter = 0;
 
 		}

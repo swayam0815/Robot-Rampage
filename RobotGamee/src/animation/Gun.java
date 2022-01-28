@@ -46,19 +46,27 @@ public class Gun {
 		this.upgradePrice = upgradePrice;
 
 	}
-
+	
+	
+	// method to add bullets to the arraylist of bullets
+	// basically signfies the player shooting the gun, so this method created bullets on screen
 	public static void shoot(ArrayList<Rectangle> bullets, int x, int y, int size) {
 		bullets.add(new Rectangle(x + 15, y + 15, size, size));
-
 	}
-
+	
+	// OVERLOADED version of above
+	// used for guns who need to spawn multiple bullets, such as shotgun
+	// this one spawns a random number of bullets for a given range
+	// uses ranNum method to get random number of bullets
 	public static void shoot(ArrayList<Rectangle> bullets, int x, int y, int size, int bullet) {
 
 		for (int i = 0; i < bullet; i++) {
 			bullets.add(new Rectangle(x + ranNum(1, 100), y + ranNum(1, 100), size, size));
 		}
 	}
-
+	
+	
+	// getter methdod, generates a random number for a given range
 	public static int ranNum(int low, int high) {
 		return (int) Math.floor(Math.random() * high + low);
 	}

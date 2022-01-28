@@ -97,6 +97,8 @@ public class AnimationMain {
 
 	// font for HUD
 	private Font HUDfont = new Font("Elephant", Font.PLAIN, GRHEIGHT / 20);
+	private static int gunNum = 0;
+	private static Gun[] guns;
 
 	// class constructor
 	// requires graphicconsole to draw on, number of waves in level, array of guns,
@@ -109,6 +111,7 @@ public class AnimationMain {
 		// setting up variables
 		wave = 1;
 		forceStrength = 200;
+		this.guns = guns;
 
 		// giving player a default gun, if they didnt equip anything from upgrade menu
 		if (UpgradeMenu.getGun() != null)
@@ -120,7 +123,7 @@ public class AnimationMain {
 
 		// statement to add boss to level, if boolean passed in from constructor
 		if (bossFight)
-			//x, y, width, height, damage, health, speed, ATKSpeed, money, pic
+			// x, y, width, height, damage, health, speed, ATKSpeed, money, pic
 			enemies.add(new Robot(ranNum(1, GRWIDTH), 0, size * 10, size * 10, 1, 1000, 2520, 1, 1500, tinyRobotImg));
 
 		// MAIN GAME LOOP
@@ -211,14 +214,14 @@ public class AnimationMain {
 	// method to get player I/O mechanics
 	private void mechanics() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
 
-// if (gc.isKeyDown(69)) {
-//
-// if (gunNum + 1 < guns.length) {
-// gunNum++;
-// equippedGun = guns[gunNum];
-// } else
-// gunNum = 0;
-// }
+		if (gc.isKeyDown(69)) {
+
+			if (gunNum + 1 < guns.length) {
+				gunNum++;
+				equippedGun = guns[gunNum];
+			} else
+				gunNum = 0;
+		}
 
 		// moving left and right
 		if (gc.isKeyDown(37) || gc.isKeyDown(65))
@@ -320,9 +323,12 @@ public class AnimationMain {
 
 	public void enemyMechanics() {
 
+		// if new wave is needed add more enemies to enemy list
 		if (newWave) {
+			// clearing all bullets from screen so they dont kill new enemy on spawn
 			bullets.removeAll(bullets);
 			// x, y, width, height, damage, health, speed, ATKSpeed, money, pic
+			// adding new enemies to list of various types
 			for (int i = 0; i < (2 * (int) (wave * small)); i++)
 				enemies.add(new Robot(ranNum(1, GRWIDTH), 0, size * small, size * small, 1, 10, 1, 5, 3, tinyRobotImg));
 
@@ -331,28 +337,16 @@ public class AnimationMain {
 
 			for (int i = 0; i < wave * big; i++)
 				enemies.add(new Robot(ranNum(1, GRWIDTH), 0, size * big, size * big, 8, 25, 8, 18, 15, bigRobotImg));
-
-//			for (int i = 0; i < (2 * (int) (wave * small)); i++)
-//				enemies.add(new Robot(ranNum(1, GRWIDTH), 0, size * small, size * small,
-//						1, 10, 1, 5, tinyRobotStand, tinyRobotRight, tinyRobotLeft, tinyRobotHurt));
-//
-//			for (int i = 0; i < wave * mid; i++)
-//				enemies.add(new Robot(ranNum(1, GRWIDTH), 0, size * mid, size * mid,
-//						3, 18, 2, 10, midRobotStand, midRobotRight, midRobotLeft, midRobotHurt));
-//
-//			for (int i = 0; i < wave * big; i++)
-//				enemies.add(new Robot(ranNum(1, GRWIDTH), 0, size * big, size * big,
-//						8, 25, 8, 18, bigRobotStand, bigRobotRight, bigRobotLeft, bigRobotHurt));
-
+			// setting new wave to false, since just spawned a new wave
 			newWave = false;
-		}
-
+		}	
+		// for each loop to go through the enemy arraylist and move all enemies
 		for (Robot rect : enemies) {
-
+			
 			// robot tracks the player
+			// and moves according to an if statement scneario
 			if (rect.x + rect.width < player.x + moveX)
 				rect.x += 2;
-
 			if (rect.x > player.x + moveX + player.width)
 				rect.x -= 2;
 
@@ -361,7 +355,7 @@ public class AnimationMain {
 				rect.y++;
 
 			}
-
+			
 			// robots size increases to indicate less distance
 			if (counter % 5 == 0) {
 				rect.width++;
@@ -388,9 +382,11 @@ public class AnimationMain {
 				rect.x = GRWIDTH - rect.width;
 
 		}
-		counter++;
+		counter++; // incrementing counter, which help create frame reate
 	}
-
+	
+	
+	// method to draw all graphics for level
 	private void drawGraphics() {
 		synchronized (gc) {
 			// when robots are killed, new wave starts
@@ -401,29 +397,31 @@ public class AnimationMain {
 			gc.setBackgroundColor(Color.BLACK);
 			gc.clear();
 
-// background
+			// background
 			gc.drawImage(backGround, 0, 0, (int) (GRHEIGHT * 1.777777777778), GRHEIGHT);
 
-// drawing enemies
+			// drawing enemies, by going through list
 			for (Robot rect : enemies) {
 				gc.drawImage(rect.getPic(), rect);
 			}
-			// CHECK
 
-// animating projectiles/bullets
+			// animating projectiles/bullets
 			for (Rectangle rect : bullets) {
 				gc.drawImage(equippedGun.getBulletBottom(), rect);
 
-// basically nerfing bullet speed by using this if statement
-// so bullet only moves every factor of bulletSpeed
-
+				// basically nerfing bullet speed by using this if statement
+				// so bullet only moves every factor of bulletSpeed
 				if (bulletSpeed % equippedGun.getBulletSpeed() == 0) {
+					// decreasing size means bullet travelling farther from player
 					rect.y--;
 					rect.width--;
 					rect.height--;
 				}
+				// removing bullets from screen once they reach a specific size
 				if (rect.width <= equippedGun.getBulletD() - 5 && rect.height <= equippedGun.getBulletD() - 5)
 					hit.add(rect);
+				
+				// iterating through enemies list to check if any contact made
 				for (Robot enem : enemies) {
 
 					// when hit, enemy loses health the amount of the gun's damage
@@ -435,38 +433,39 @@ public class AnimationMain {
 						destroyedEnemies.add(enem);
 						moneyEarned += enem.getMoney();
 					}
-					hit.add(rect);
+					hit.add(rect); // removing bullets, since they touched an enemy
 
 				}
 			}
 			bulletSpeed++; // incrementing counter for above statement
 
-// removing hit bullets from main bullets list
+			// removing hit bullets from main bullets list
 			bullets.removeAll(hit);
-			hit.removeAll(hit);
+			hit.removeAll(hit); // clearnign hit list to save memory
+			// removing destroyed enemies from main list
 			enemies.removeAll(destroyedEnemies);
-			destroyedEnemies.removeAll(destroyedEnemies);
+			destroyedEnemies.removeAll(destroyedEnemies); // clearning memeory
 
-// Forcefield
+			// Forcefield
 			gc.drawImage(forcefield, 0, 0, GRWIDTH, GRHEIGHT);
 
-// crosshair
+			// crosshair
 			gc.drawImage(crosshair, CrossHair.x, CrossHair.y, CrossHair.width, CrossHair.height);
 
-// pistol in hand
+			// pistol in hand
 			if (CrossHair.x < player.x + moveX + (player.width / 2))
 				gc.drawImage(equippedGun.getPic(), player.x + moveX, player.y, player.width, player.height);
 			else
 				gc.drawImage(equippedGun.getPicFlipped(), player.x + moveX, player.y, player.width, player.height);
-// player.x + moveX > GRWIDTH / 3 //previous code for flipping
+			// player.x + moveX > GRWIDTH / 3 //previous code for flipping
 
-// reloading process
+			// reloading process
 			if (reloading) {
 				gc.setColor(Color.RED);
 				gc.fillArc(ReloadButton.x - (ReloadButton.width / 6), ReloadButton.y - (ReloadButton.width / 6),
 						ReloadButton.width * 8 / 6, ReloadButton.width * 8 / 6, 0, reload);
 				reload += (int) (GRHEIGHT / equippedGun.getReloadTime());
-// the arc takes a full turn
+				// the arc takes a full turn
 				if (reload > 360) {
 					reload = 0;
 					bulletsLeft = equippedGun.getMagazineSize();
@@ -474,11 +473,11 @@ public class AnimationMain {
 
 				}
 			}
-// reload button
+			// reload button
 			gc.drawImage(reloadButton, ReloadButton.x, ReloadButton.y, ReloadButton.width, ReloadButton.height);
 
-//HUD{
-//-forcefield power left
+			//HUD{
+			//-forcefield power left
 			gc.setStroke(GRWIDTH / 130);
 			gc.setColor(Color.RED);
 			gc.fillRect(GRWIDTH / 4 * 3, GRHEIGHT / 20 * 18, GRWIDTH / 4, GRHEIGHT / 20);
@@ -488,17 +487,17 @@ public class AnimationMain {
 			gc.setColor(Color.BLACK);
 			gc.drawRect(GRWIDTH / 4 * 3, GRHEIGHT / 20 * 18, GRWIDTH / 4, GRHEIGHT / 20);
 
-//-robots left in the wave
+			//-robots left in the wave
 			gc.setColor(Color.RED);
 			gc.drawString(" X " + String.valueOf(enemies.size()), 550, GRHEIGHT / 20 * 19);
 			gc.drawImage(thomasFace, 450, GRHEIGHT / 20 * 17, 100, 100);
 
-//-number of waves left}
+			//-number of waves left}
 			gc.drawString(String.valueOf(wavesLeft - wave), GRWIDTH / 100, GRHEIGHT / 4 * 3);
 			gc.setColor(Color.GREEN);
 			gc.drawString("   Waves Left", GRWIDTH / 100, GRHEIGHT / 4 * 3);
 
-// bullets
+			// bullets
 			if (bulletsLeft < 13) {
 				for (int b = 0; b < bulletsLeft; b++) {
 					gc.drawImage(equippedGun.getBulletPic(),
@@ -515,7 +514,7 @@ public class AnimationMain {
 						GRHEIGHT - (GRWIDTH / 16));
 			}
 
-// reseting counter values, so they don't take up too much memory
+			// reseting counter values, so they don't take up too much memory
 			if (counter > 100000)
 				counter = 0;
 			if (robotCounter > 100000)

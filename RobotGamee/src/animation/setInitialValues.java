@@ -10,7 +10,7 @@ import hsa2.*;
 
 public class setInitialValues {
 	
-	private static int money = 15000;	//the player's in-game currency
+	private static int money = 2000;	//the player's in-game currency
 	
 	private Image normalBullet;
 	private Image shotgunBullet;

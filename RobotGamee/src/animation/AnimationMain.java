@@ -122,7 +122,7 @@ public class AnimationMain {
 		// statement to add boss to level, if boolean passed in from constructor
 		if (bossFight)
 			//x, y, width, height, damage, health, speed, ATKSpeed, money, pic
-			enemies.add(new Robot(ranNum(1, GRWIDTH), 0, size * 10, size * 10, 1, 1000, 2520, 1, 1500, bossRobotImg));
+			enemies.add(new Robot(ranNum(1, GRWIDTH), 0, size * 10, size * 10, 1, 1000, 5000, 1, 1500, bossRobotImg));
 
 		// MAIN GAME LOOP
 		// level runs until all waves in level defeated or player loses due to
@@ -488,7 +488,7 @@ public class AnimationMain {
 //-number of waves left}
 			gc.drawString(String.valueOf(wavesLeft - wave), GRWIDTH / 100, GRHEIGHT / 4 * 3);
 			gc.setColor(Color.GREEN);
-			gc.drawString("   Waves Left", GRWIDTH / 100, GRHEIGHT / 4 * 3);
+			gc.drawString("    Waves Left", GRWIDTH / 100, GRHEIGHT / 4 * 3);
 
 // bullets
 			if (bulletsLeft < 13) {

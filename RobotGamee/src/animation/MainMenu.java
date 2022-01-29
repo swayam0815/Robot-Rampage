@@ -1,3 +1,8 @@
+// Author: Swayam and Aryan
+// Creation Date: December 2022
+// description: creates a main menu GUI for robot rampage
+// Last Modified: January 26 2022
+
 package animation;
 
 import java.awt.*;

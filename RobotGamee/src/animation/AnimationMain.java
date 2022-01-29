@@ -1,3 +1,8 @@
+// Author: Swayam and Aryan
+// Creation Date: December 2022
+// description: creates a game level for robot rampage with enemies and guns
+// Last Modified: January 26 2022
+
 package animation;
 
 // importing libraries to use within program

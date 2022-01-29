@@ -1,3 +1,8 @@
+// Author: Swayam and Aryan
+// Creation Date: December 2022
+// description: import in pictures and create objects for game
+// Last Modified: January 26 2022
+
 package animation;
 
 import java.awt.Image;

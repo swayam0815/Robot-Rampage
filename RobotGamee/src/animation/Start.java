@@ -1,3 +1,8 @@
+// Author: Swayam and Aryan
+// Creation Date: December 2022
+// description: second page of main menu GUI for user
+// Last Modified: January 26 2022
+
 package animation;
 
 import java.awt.Dimension;
